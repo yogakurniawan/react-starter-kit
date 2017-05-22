@@ -8,7 +8,6 @@
  */
 
 @import '../variables.css';
-
 :root {
   --brand-color: #61dafb;
 }
@@ -24,31 +23,155 @@
   max-width: var(--max-content-width);
 }
 
-.brand {
-  color: color(var(--brand-color) lightness(+10%));
-  text-decoration: none;
-  font-size: 1.75em; /* ~28px */
+.fixedHeaderContainer {
+  box-sizing: border-box;
+  background: #dd5555;
+  color: #fff;
+  height: 44px;
+  padding-top: 4px;
+  position: fixed;
+  width: 100%;
+  z-index: 9999;
+  top: 0;
 }
 
-.brandTxt {
-  margin-left: 10px;
+.fixedHeaderContainer header {
+  display: flex;
+  flex-flow: row nowrap;
+  position: relative;
+  text-align: left;
 }
 
-.banner {
+.headerWrapper {
+  margin: 0px auto;
+  max-width: 1024px;
+  padding: 0 10px;
+}
+
+.headerWrapper img {
+  width: 100px;
+  margin: 0 auto;
+  display: block;
+}
+
+@media only screen and (min-width: 1500px) {
+  .headerWrapper {
+    max-width: 1050px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .headerWrapper {
+    max-width: 900px;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .navigationWrapper {
+    margin-left: auto;
+    position: relative;
+    width: 75%;
+  }
+}
+
+.navigationWrapper nav {
+  box-sizing: border-box;
+  position: absolute;
+  left: -10px;
+  right: -10px;
+  top: -10px;
+  bottom: auto;
+}
+
+@media only screen and (min-width: 1024px) {
+  .navigationWrapper nav {
+    background: none;
+    height: auto;
+    position: relative;
+    right: auto;
+    top: auto;
+    width: auto;
+  }
+}
+
+.liWrapper {
+  flex: 0.5;
   text-align: center;
-}
-
-.bannerTitle {
   margin: 0;
-  padding: 10px;
-  font-weight: normal;
-  font-size: 4em;
-  line-height: 1em;
 }
 
-.bannerDesc {
+.liWrapper a {
+  text-decoration: none;
+  color: #e8e8e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  height: 50px;
+  transition: background-color 0.3s;
+  padding-top: 6px;
+  box-sizing: border-box;
+  font-size: 1em;
+}
+
+.liWrapper a:hover {
+  color: inherit;
+}
+
+@media only screen and (min-width: 1024px) {
+  .liWrapper a {
+    border: 0;
+    color: #e8e8e8;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-weight: 300;
+    padding: 6px 10px;
+    height: auto;
+  }
+  .liWrapper a:hover {
+    color: inherit;
+  }
+}
+
+.ulWrapper {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: nowrap;
+  list-style: none;
+  margin-top: 50px;
+  width: 100%;
   padding: 0;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 1.25em;
-  margin: 0;
+  background: #dd5555;
+  color: #fff;
+}
+
+@media only screen and (min-width: 1024px) {
+  .ulWrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    margin: 0 -10px;
+    padding: 0;
+    background: none;
+    width: auto;
+  }
+}
+
+.navSearchWrapper {
+  align-self: center;
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  flex: 3 !important;
+  width: 50%;
+}
+
+@media only screen and (min-width: 1024px) {
+  .navSearchWrapper {
+    position: relative;
+    top: auto;
+    right: auto;
+    padding-left: 10px;
+  }
 }
