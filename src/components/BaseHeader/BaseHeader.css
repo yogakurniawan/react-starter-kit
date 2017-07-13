@@ -1,6 +1,6 @@
 .fixedHeaderContainer {
   box-sizing: border-box;
-  background: #dd5555;
+  background: #d55;
   color: #fff;
   height: 44px;
   padding-top: 4px;
@@ -18,7 +18,7 @@
 }
 
 .headerWrapper {
-  margin: 0px auto;
+  margin: 0 auto;
   max-width: 1024px;
   padding: 0 10px;
 }
@@ -103,7 +103,6 @@
     color: #e8e8e8;
     display: flex;
     margin: 0;
-    padding: 0;
     font-size: 16px;
     font-weight: 400;
     padding: 6px 10px;
@@ -123,7 +122,7 @@
   margin-top: 49px;
   width: 100%;
   padding: 0;
-  background: #dd5555;
+  background: #d55;
   color: #fff;
 }
 

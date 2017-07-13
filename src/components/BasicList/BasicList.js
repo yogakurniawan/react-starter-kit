@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Element(props) {
+function BasicList(props) {
   const ComponentToRender = props.component;
   const onClick = props.onClick;
   const handleOnClick = item => () => onClick(item);
@@ -24,13 +24,13 @@ function Element(props) {
   );
 }
 
-Element.propTypes = {
+BasicList.propTypes = {
   onClick: PropTypes.func,
   component: PropTypes.func.isRequired,
   items: PropTypes.arrayOf,
 };
 
-Element.defaultProps = {
+BasicList.defaultProps = {
   onClick: () => { },
   items: [],
 };
