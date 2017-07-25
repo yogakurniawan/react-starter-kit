@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import ContentList from 'components/ContentList';
 import BrandTile from 'components/BrandTile';
 import TopNavigation from 'components/TopNavigation';
-import FilterBrands from 'components/FilterBrands';
+import FilterBrand from 'components/FilterBrand';
 import { loadBrands, filter as filterBrands } from 'actions/brand';
 import {
   makeSelectBrands,
@@ -38,7 +38,7 @@ class BrandsPage extends Component { // eslint-disable-line react/prefer-statele
         <TopNavigation title={'Brands'} subTitle="Find your favourite mobile phone brands and see a lot of devices. " />
         <div className="row center-xs no-gap">
           <div className="col-xs-12 col-sm-8 col-md-8 col-lg-6">
-            { !loading && <FilterBrands onChange={evt => this.handleFilterBrand(evt)} /> }
+            { !loading && <FilterBrand onChange={evt => this.handleFilterBrand(evt)} /> }
             <ContentList {...contentListProps} />
           </div>
         </div>

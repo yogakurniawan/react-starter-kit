@@ -10,6 +10,8 @@
 @import '../variables.css';
 
 @global-import 'normalize.css' ;
+@global-import 'sanitize.css/sanitize.css' ;
+@global-import 'flexboxgrid/css/flexboxgrid.css' ;
 
 /*
  * Base styles

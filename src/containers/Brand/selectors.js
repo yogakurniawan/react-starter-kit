@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-const selectBrands = state => state.get('brands');
+const selectBrands = state => state.get('brand');
 
 const makeSelectBrands = () => createSelector(
   selectBrands,

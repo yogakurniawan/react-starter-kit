@@ -3315,7 +3315,7 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
-flexboxgrid@^6.3.0:
+flexboxgrid@^6.3.1:
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/flexboxgrid/-/flexboxgrid-6.3.1.tgz#e99898afc07b7047722bb81a958a5fba4d4e20fd"
 
@@ -6642,13 +6642,6 @@ react-error-overlay@^1.0.9:
     settle-promise "1.0.0"
     source-map "0.5.6"
 
-react-flexbox-grid@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/react-flexbox-grid/-/react-flexbox-grid-1.1.3.tgz#4e61c7ff68d1eb1ae131c01a7c29b39803c54a0e"
-  dependencies:
-    flexboxgrid "^6.3.0"
-    prop-types "^15.5.8"
-
 react-hot-loader@^3.0.0-beta.7:
   version "3.0.0-beta.7"
   resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-3.0.0-beta.7.tgz#d5847b8165d731c4d5b30d86d5d4716227a0fa83"
@@ -7242,6 +7235,10 @@ sane@~1.6.0:
     minimist "^1.1.1"
     walker "~1.0.5"
     watch "~0.10.0"
+
+sanitize.css@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/sanitize.css/-/sanitize.css-5.0.0.tgz#84184b40678f72bb8898c768a27be7578257271a"
 
 sax@^1.2.1, sax@~1.2.1:
   version "1.2.4"

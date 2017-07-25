@@ -9,7 +9,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col } from 'react-flexbox-grid';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { FaChevronLeft } from 'react-icons/lib/fa/';
 import s from './TopNavigation.css';
@@ -17,13 +16,13 @@ import s from './TopNavigation.css';
 function Component({ title, subTitle, onClick }) {
   return (
     <div className={s.wrapper}>
-      <Row center="xs">
-        <Col xs={12} sm={9} md={8} lg={8}>
+      <div className="row center-xs">
+        <div className="col-xs-12 col-sm-9 col-md-8 col-lg-8">
           {onClick && <FaChevronLeft onClick={onClick} size={22} />}
           <span><h1 className={s.h1}>{title}</h1></span>
           <p className={s.p}>{subTitle}</p>
-        </Col>
-      </Row>
+        </div>
+      </div>
     </div>
   );
 }

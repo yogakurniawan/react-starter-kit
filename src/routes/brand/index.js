@@ -9,14 +9,13 @@
 
 import React from 'react';
 import BaseLayout from '../../components/BaseLayout';
-import Page from '../../components/Page';
-import about from './about.md';
+import Brand from '../../containers/Brand';
 
 function action() {
   return {
     chunks: ['about'],
-    title: about.title,
-    component: <BaseLayout><Page {...about} /></BaseLayout>,
+    title: 'Brands Page',
+    component: <BaseLayout><Brand /></BaseLayout>,
   };
 }
 

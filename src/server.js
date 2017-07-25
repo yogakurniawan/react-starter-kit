@@ -69,11 +69,7 @@ app.get('*', async (req, res, next) => {
       cookie: req.headers.cookie,
     });
 
-    const initialState = {
-      user: req.user || null,
-    };
-
-    const store = configureStore(initialState, {
+    const store = configureStore({}, {
       fetch,
       // I should not use `history` on server.. but how I do redirection? follow universal-router
     });

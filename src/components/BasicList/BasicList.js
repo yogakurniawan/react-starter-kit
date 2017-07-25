@@ -35,4 +35,4 @@ BasicList.defaultProps = {
   items: [],
 };
 
-export default Element;
+export default BasicList;
