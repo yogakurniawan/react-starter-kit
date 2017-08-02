@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -6,7 +7,7 @@ import ContentList from 'components/ContentList';
 import BrandTile from 'components/BrandTile';
 import TopNavigation from 'components/TopNavigation';
 import FilterBrand from 'components/FilterBrand';
-import { filter as filterBrands } from 'actions/brand';
+import { brandsLoaded, filter as filterBrands } from 'actions/brand';
 import {
   // makeSelectBrands,
   makeSelectFilteredBrands,
@@ -17,9 +18,10 @@ import {
 
 class BrandsPage extends Component { // eslint-disable-line react/prefer-stateless-function
 
-  // componentDidMount() {
-  //   this.props.getBrands();
-  // }
+  componentDidMount() {
+    const { brands } = this.props;
+    this.props.brandsLoaded(brands);
+  }
 
   handleFilterBrand(evt) {
     this.props.filterBrands(evt.target.value);
@@ -27,7 +29,6 @@ class BrandsPage extends Component { // eslint-disable-line react/prefer-statele
 
   render() {
     const { loading, error, isFiltered, filteredBrands, brands } = this.props;
-    console.log(brands);
     const contentListProps = {
       loading,
       error,
@@ -50,28 +51,28 @@ class BrandsPage extends Component { // eslint-disable-line react/prefer-statele
 }
 
 BrandsPage.propTypes = {
-  loading: React.PropTypes.bool,
-  isFiltered: React.PropTypes.bool,
-  filteredBrands: React.PropTypes.oneOfType([
-    React.PropTypes.array,
-    React.PropTypes.bool,
+  loading: PropTypes.bool,
+  isFiltered: PropTypes.bool,
+  filteredBrands: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.bool,
   ]),
-  error: React.PropTypes.oneOfType([
-    React.PropTypes.object,
-    React.PropTypes.bool,
+  error: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.bool,
   ]),
-  brands: React.PropTypes.oneOfType([
-    React.PropTypes.array,
-    React.PropTypes.bool,
+  brands: PropTypes.oneOfType([
+    PropTypes.array,
   ]),
-  // getBrands: React.PropTypes.func,
-  filterBrands: React.PropTypes.func,
+  brandsLoaded: PropTypes.func,
+  filterBrands: PropTypes.func,
 };
 
 BrandsPage.defaultProps = {
   loading: false,
   isFiltered: false,
   filteredBrands: false,
+  brandsLoaded: () => {},
   error: null,
   brands: null,
   getBrands: () => {},
@@ -79,7 +80,7 @@ BrandsPage.defaultProps = {
 };
 
 const mapDispatchToProps = {
-  // getBrands,
+  brandsLoaded,
   filterBrands,
 };
 

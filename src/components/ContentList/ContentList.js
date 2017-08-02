@@ -10,7 +10,7 @@ function Element({ loading, error, onClick = () => {}, component, payload }) {
     return <List component={LoadingIndicator} />;
   }
 
-  if (error !== false) {
+  if (error) {
     const ErrorComponent = () => (
       <ListItem item={'Something went wrong, please try again!'} />
     );
@@ -31,7 +31,7 @@ Element.propTypes = {
     PropTypes.func,
   ]),
   payload: PropTypes.oneOfType([
-    PropTypes.arrayOf,
+    PropTypes.array,
   ]),
   component: PropTypes.func,
   onClick: PropTypes.func,

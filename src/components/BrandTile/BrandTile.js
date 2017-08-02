@@ -1,30 +1,32 @@
 import React, { PropTypes } from 'react';
-import Img from 'components/Img';
-import s from './BrandTile.css';
+import H4 from './H4';
+import Img from './Img';
+import RoundedBox from './RoundedBox';
+import Overlay from './Overlay';
 
 function Component({ item }) {
   return (
     <div className="col-xs-6 col-sm-6 col-md-4 col-lg-3">
-      <div className={`${s.roundedBox} row`} to={`/devices/${encodeURIComponent(item.title)}?page=1`}>
+      <RoundedBox className="row" href={`/devices/${encodeURIComponent(item.title)}?page=1`}>
         <div className="col-xs-12">
-          <Img style={{ width: 117, height: 40 }} src={item.logoUrl} />
-          <h4 className={s.orangeH4}>{item.title}</h4>
-          <div className={`${s.overlay} ${s.roundedBox}`}>
-            <h4 className={s.whiteH4}>{item.title}</h4>
-            <h4 className={s.whiteH4}>{item.totalProducts} devices</h4>
-          </div>
+          <Img src={item.logoUrl} />
+          <H4 color="primary">{item.title}</H4>
+          <Overlay className="overlay">
+            <H4 color="white">{item.title}</H4>
+            <H4 color="white">{item.totalProducts} devices</H4>
+          </Overlay>
         </div>
-      </div>
+      </RoundedBox>
     </div>
   );
 }
 
 Component.propTypes = {
-  item: PropTypes.shape({
-    title: PropTypes.string,
-    logoUrl: PropTypes.string,
-    totalProducts: PropTypes.string,
-  }).isRequired,
+  item: PropTypes.node,
+};
+
+Component.defaultProps = {
+  item: null,
 };
 
 export default Component;

@@ -6,6 +6,7 @@ import nodeFetch from 'node-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import PrettyError from 'pretty-error';
+import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 import App from './components/App';
 import Html from './components/Html';
 import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
@@ -107,13 +108,17 @@ app.get('*', async (req, res, next) => {
     }
 
     const data = { ...route };
+    const sheet = new ServerStyleSheet();
     data.children = ReactDOM.renderToString(
       <App context={context} store={store}>
-        {route.component}
+        <StyleSheetManager sheet={sheet.instance}>
+          {route.component}
+        </StyleSheetManager>
       </App>,
     );
     data.styles = [
       { id: 'css', cssText: [...css].join('') },
+      { id: 'cssStyledComponents', cssText: [...sheet.getStyleTags()].join('') },
     ];
     data.scripts = [assets.vendor.js];
     if (route.chunks) {
