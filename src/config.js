@@ -20,9 +20,9 @@ module.exports = {
   // API Gateway
   api: {
     // API URL to be used in the client-side code
-    clientUrl: process.env.API_CLIENT_URL || 'https://reactstarter.com',
+    clientUrl: process.env.API_CLIENT_URL || 'http://phonecatalogues.com',
     // API URL to be used in the server-side code
-    serverUrl: process.env.API_SERVER_URL || 'https://reactstarter.com',
+    serverUrl: process.env.API_SERVER_URL || 'http://phonecatalogues.com',
   },
 
   // Web analytics

@@ -6,9 +6,9 @@ import ContentList from 'components/ContentList';
 import BrandTile from 'components/BrandTile';
 import TopNavigation from 'components/TopNavigation';
 import FilterBrand from 'components/FilterBrand';
-import { getBrands, filter as filterBrands } from 'actions/brand';
+import { filter as filterBrands } from 'actions/brand';
 import {
-  makeSelectBrands,
+  // makeSelectBrands,
   makeSelectFilteredBrands,
   makeSelectIsFiltered,
   makeSelectLoading,
@@ -17,9 +17,9 @@ import {
 
 class BrandsPage extends Component { // eslint-disable-line react/prefer-stateless-function
 
-  componentDidMount() {
-    this.props.getBrands();
-  }
+  // componentDidMount() {
+  //   this.props.getBrands();
+  // }
 
   handleFilterBrand(evt) {
     this.props.filterBrands(evt.target.value);
@@ -27,6 +27,7 @@ class BrandsPage extends Component { // eslint-disable-line react/prefer-statele
 
   render() {
     const { loading, error, isFiltered, filteredBrands, brands } = this.props;
+    console.log(brands);
     const contentListProps = {
       loading,
       error,
@@ -63,7 +64,7 @@ BrandsPage.propTypes = {
     React.PropTypes.array,
     React.PropTypes.bool,
   ]),
-  getBrands: React.PropTypes.func,
+  // getBrands: React.PropTypes.func,
   filterBrands: React.PropTypes.func,
 };
 
@@ -78,12 +79,12 @@ BrandsPage.defaultProps = {
 };
 
 const mapDispatchToProps = {
-  getBrands,
+  // getBrands,
   filterBrands,
 };
 
 const mapStateToProps = createStructuredSelector({
-  brands: makeSelectBrands(),
+  // brands: makeSelectBrands(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
   isFiltered: makeSelectIsFiltered(),
