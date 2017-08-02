@@ -45,7 +45,6 @@ export function* getBrands() {
     'filter[order]': 'title ASC',
   };
   const requestURL = `${BASE_API_URL}/brands`;
-  yield takeLatest(LOAD_BRANDS);
   try {
     // Call our request helper (see 'utils/request')
     const brands = yield call(request, requestURL, {
@@ -55,4 +54,8 @@ export function* getBrands() {
   } catch (err) {
     yield put(brandsLoadingError(err));
   }
+}
+
+export function* brandsList() {
+  yield takeLatest(LOAD_BRANDS, getBrands);
 }

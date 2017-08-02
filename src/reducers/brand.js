@@ -10,11 +10,11 @@ import {
 // The initial state of the App
 const initialState = fromJS({
   loading: false,
-  error: false,
+  error: null,
   isFiltered: false,
   data: {
-    brands: false,
-    filteredBrands: false,
+    brands: null,
+    filteredBrands: null,
   },
 });
 
@@ -24,8 +24,8 @@ function brandsReducer(state = initialState, action) {
       return state
         .set('isFiltered', false)
         .set('loading', true)
-        .set('error', false)
-        .setIn(['data', 'brands'], false);
+        .set('error', null)
+        .setIn(['data', 'brands'], null);
     case FILTER_BRANDS: {
       const brands = state.getIn(['data', 'brands']);
       const filter = brand => brand.title.toLowerCase().includes(action.keyword.toLowerCase());

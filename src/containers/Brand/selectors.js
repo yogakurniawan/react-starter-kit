@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 const selectBrands = state => state.get('brand');
-
+console.log('called');
 const makeSelectBrands = () => createSelector(
   selectBrands,
   brandsState => brandsState.getIn(['data', 'brands']),

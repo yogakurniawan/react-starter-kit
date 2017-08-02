@@ -17,7 +17,7 @@ function Element({ loading, error, onClick = () => {}, component, payload }) {
     return <List component={ErrorComponent} />;
   }
 
-  if (payload !== false) {
+  if (payload) {
     return <List items={payload} component={component} onClick={onClick} />;
   }
 
@@ -26,8 +26,13 @@ function Element({ loading, error, onClick = () => {}, component, payload }) {
 
 Element.propTypes = {
   loading: PropTypes.bool,
-  error: PropTypes.anyOf,
-  payload: PropTypes.anyOf,
+  error: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.func,
+  ]),
+  payload: PropTypes.oneOfType([
+    PropTypes.arrayOf,
+  ]),
   component: PropTypes.func,
   onClick: PropTypes.func,
 };
@@ -35,8 +40,8 @@ Element.propTypes = {
 Element.defaultProps = {
   onClick: () => { },
   loading: () => { },
-  error: {},
-  payload: {},
+  error: null,
+  payload: [],
   component: () => { },
 };
 

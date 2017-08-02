@@ -27,7 +27,7 @@ function BasicList(props) {
 BasicList.propTypes = {
   onClick: PropTypes.func,
   component: PropTypes.func.isRequired,
-  items: PropTypes.arrayOf,
+  items: PropTypes.arrayOf(PropTypes.object),
 };
 
 BasicList.defaultProps = {

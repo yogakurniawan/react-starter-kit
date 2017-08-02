@@ -34,7 +34,7 @@ const routes = {
     },
     {
       path: '/brand',
-      load: () => import(/* webpackChunkName: 'about' */ './brand'),
+      load: () => import(/* webpackChunkName: 'brand' */ './brand'),
     },
     {
       path: '/privacy',

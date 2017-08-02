@@ -6,7 +6,7 @@ import ContentList from 'components/ContentList';
 import BrandTile from 'components/BrandTile';
 import TopNavigation from 'components/TopNavigation';
 import FilterBrand from 'components/FilterBrand';
-import { loadBrands, filter as filterBrands } from 'actions/brand';
+import { getBrands, filter as filterBrands } from 'actions/brand';
 import {
   makeSelectBrands,
   makeSelectFilteredBrands,
@@ -18,7 +18,7 @@ import {
 class BrandsPage extends Component { // eslint-disable-line react/prefer-stateless-function
 
   componentDidMount() {
-    this.props.loadBrands();
+    this.props.getBrands();
   }
 
   handleFilterBrand(evt) {
@@ -33,6 +33,7 @@ class BrandsPage extends Component { // eslint-disable-line react/prefer-statele
       component: BrandTile,
       payload: isFiltered ? filteredBrands : brands,
     };
+
     return (
       <div>
         <TopNavigation title={'Brands'} subTitle="Find your favourite mobile phone brands and see a lot of devices. " />
@@ -62,7 +63,7 @@ BrandsPage.propTypes = {
     React.PropTypes.array,
     React.PropTypes.bool,
   ]),
-  loadBrands: React.PropTypes.func,
+  getBrands: React.PropTypes.func,
   filterBrands: React.PropTypes.func,
 };
 
@@ -70,14 +71,14 @@ BrandsPage.defaultProps = {
   loading: false,
   isFiltered: false,
   filteredBrands: false,
-  error: false,
-  brands: false,
-  loadBrands: () => {},
+  error: null,
+  brands: null,
+  getBrands: () => {},
   filterBrands: () => {},
 };
 
 const mapDispatchToProps = {
-  loadBrands,
+  getBrands,
   filterBrands,
 };
 
