@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Row } from 'react-styled-flexboxgrid';
 
 function BasicList(props) {
   const ComponentToRender = props.component;
@@ -18,9 +19,9 @@ function BasicList(props) {
   }
 
   return (
-    <div className="row center-xs">
+    <Row center="xs">
       {content}
-    </div>
+    </Row>
   );
 }
 

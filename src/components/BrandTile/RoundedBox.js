@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import { Row } from 'react-styled-flexboxgrid';
 import RoundedBox from 'components/RoundedBox';
 
-const StyledLink = styled.a`${RoundedBox}`;
+const StyledLink = styled(Row)`${RoundedBox}`;
 
 const Element = styled(StyledLink) `
   text-decoration: none;

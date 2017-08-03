@@ -40,7 +40,7 @@ export function brandsLoadingError(error) {
 }
 
 // export function fetchSomething() {
-//     // the withExtraArgument function injects a third argument here (you could use an object too and 
+//     // the withExtraArgument function injects a third argument here (you could use an object too and
 //     // destructure it where you need the different parts if you need more things injected) - if we wouldn't
 //     // have set it above in the root app, we would still fall back to fetch
 //     return (dispatch, getState, fetchModule = fetch) => {

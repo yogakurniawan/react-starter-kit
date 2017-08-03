@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { Row, Col } from 'react-styled-flexboxgrid';
 
 import ContentList from 'components/ContentList';
 import BrandTile from 'components/BrandTile';
@@ -39,12 +40,12 @@ class BrandsPage extends Component { // eslint-disable-line react/prefer-statele
     return (
       <div>
         <TopNavigation title={'Brands'} subTitle="Find your favourite mobile phone brands and see a lot of devices. " />
-        <div className="row center-xs no-gap">
-          <div className="col-xs-12 col-sm-8 col-md-8 col-lg-6">
+        <Row center="xs">
+          <Col xs={12} sm={8} md={8} lg={6}>
             { !loading && <FilterBrand onChange={evt => this.handleFilterBrand(evt)} /> }
             <ContentList {...contentListProps} />
-          </div>
-        </div>
+          </Col>
+        </Row>
       </div>
     );
   }
