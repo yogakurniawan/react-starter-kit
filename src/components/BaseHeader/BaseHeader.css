@@ -202,7 +202,6 @@
 }
 
 .autoSuggestWrapper input {
-  border: 1px solid #bdc3c7;
   border-bottom: none;
   color: #2c3e50;
   background-color: #f9f9f9;
@@ -211,9 +210,14 @@
   padding-left: 10px;
   line-height: 1.4;
   font-size: 14px;
-  width: 97%;
+  width: 80%;
   outline: 0;
   box-shadow: none;
+  transition: width 0.2s ease;
+}
+
+.autoSuggestWrapper input:focus {
+  width: 100%;
 }
 
 .inputGroupButton {

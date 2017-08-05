@@ -1,42 +1,31 @@
-/**
- * React Starter Kit (https://www.reactstarterkit.com/)
- *
- * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import { FaChevronLeft } from 'react-icons/lib/fa/';
-import s from './TopNavigation.css';
+import { Row, Col } from 'react-styled-flexboxgrid';
+import H1 from './H1';
+import P from './P';
+import Wrapper from './Wrapper';
 
-function Component({ title, subTitle, onClick }) {
+function Component({ title, subTitle }) {
   return (
-    <div className={s.wrapper}>
-      <div className="row center-xs">
-        <div className="col-xs-12 col-sm-9 col-md-8 col-lg-8">
-          {onClick && <FaChevronLeft onClick={onClick} size={22} />}
-          <span><h1 className={s.h1}>{title}</h1></span>
-          <p className={s.p}>{subTitle}</p>
-        </div>
-      </div>
-    </div>
+    <Wrapper>
+      <Row center="xs">
+        <Col xs={12} sm={9} md={8} lg={8}>
+          <span><H1>{title}</H1></span>
+          <P>{subTitle}</P>
+        </Col>
+      </Row>
+    </Wrapper>
   );
 }
 
 Component.propTypes = {
   title: PropTypes.string,
   subTitle: PropTypes.string,
-  onClick: PropTypes.func,
 };
 
 Component.defaultProps = {
   title: '',
   subTitle: '',
-  onClick: () => {},
 };
 
-export default withStyles(s)(Component);
+export default Component;
