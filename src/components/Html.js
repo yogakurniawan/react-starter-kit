@@ -33,6 +33,7 @@ class Html extends React.Component {
           <title>{title}</title>
           <meta name="description" content={description} />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <script src="https://use.fontawesome.com/8b8fce0090.js" />
           {scripts.map(script => <link key={script} rel="preload" href={script} as="script" />)}
           <link rel="apple-touch-icon" href="apple-touch-icon.png" />
           <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" />

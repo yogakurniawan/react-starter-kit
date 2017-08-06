@@ -4,7 +4,7 @@ const selectBrands = state => state.get('brand');
 
 const makeSelectBrands = () => createSelector(
   selectBrands,
-  brandsState => brandsState.getIn(['data', 'brands']),
+  brandsState => brandsState.getIn(['payload', 'brands']),
 );
 
 const makeSelectLoading = () => createSelector(
@@ -19,7 +19,7 @@ const makeSelectError = () => createSelector(
 
 const makeSelectFilteredBrands = () => createSelector(
   selectBrands,
-  brandsState => brandsState.getIn(['data', 'filteredBrands']),
+  brandsState => brandsState.getIn(['payload', 'filteredBrands']),
 );
 
 const makeSelectIsFiltered = () => createSelector(
