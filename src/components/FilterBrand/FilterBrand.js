@@ -8,8 +8,8 @@ function Component({ onChange }) {
   return (
     <Wrapper start="xs">
       <InputGroup xs={12} sm={6} md={4} lg={4}>
-        <Input onChange={onChange} type="search" placeholder="Filter Brand" />
         <InputGroupButton className="fa fa-search" />
+        <Input onChange={onChange} type="search" placeholder="Find your brand..." />
       </InputGroup>
     </Wrapper>
   );

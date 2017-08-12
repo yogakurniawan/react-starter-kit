@@ -1,6 +1,6 @@
 import {
   LOAD_BRANDS,
-  FILTER_BRANDS,
+  SET_FILTER_KEYWORD,
   LOAD_BRANDS_SUCCESS,
   LOAD_BRANDS_ERROR,
 } from 'constants/ActionTypes';
@@ -8,15 +8,6 @@ import {
 export function loadBrands() {
   return {
     type: LOAD_BRANDS,
-  };
-}
-
-export function filter(keyword) {
-  return {
-    type: FILTER_BRANDS,
-    payload: {
-      keyword,
-    },
   };
 }
 
@@ -33,5 +24,14 @@ export function brandsLoadingError(error) {
   return {
     type: LOAD_BRANDS_ERROR,
     error,
+  };
+}
+
+export function filter(filterKeyword) {
+  return {
+    type: SET_FILTER_KEYWORD,
+    payload: {
+      filterKeyword,
+    },
   };
 }

@@ -2,9 +2,16 @@ import { createSelector } from 'reselect';
 
 const selectBrands = state => state.get('brand');
 
-const makeSelectBrands = () => createSelector(
+const filterBrands = () => createSelector(
   selectBrands,
-  brandsState => brandsState.getIn(['payload', 'brands']),
+  state => ({ keyword }) => {
+    let payload = state.getIn(['payload', 'brands']);
+    if (keyword) {
+      payload = payload.filter(item => (new RegExp(keyword, 'i')).test(item.title));
+    }
+
+    return payload;
+  },
 );
 
 const makeSelectLoading = () => createSelector(
@@ -17,20 +24,14 @@ const makeSelectError = () => createSelector(
   brandsState => brandsState.get('error'),
 );
 
-const makeSelectFilteredBrands = () => createSelector(
+const selectFilterKeyword = () => createSelector(
   selectBrands,
-  brandsState => brandsState.getIn(['payload', 'filteredBrands']),
-);
-
-const makeSelectIsFiltered = () => createSelector(
-  selectBrands,
-  brandsState => brandsState.get('isFiltered'),
+  brandsState => brandsState.getIn(['payload', 'filterKeyword']),
 );
 
 export {
-  makeSelectBrands,
+  filterBrands,
   makeSelectLoading,
   makeSelectError,
-  makeSelectFilteredBrands,
-  makeSelectIsFiltered,
+  selectFilterKeyword,
 };

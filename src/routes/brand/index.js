@@ -11,7 +11,7 @@ async function action({ fetch }) {
   return {
     chunks: ['brand'],
     title: 'Brands Page',
-    component: <BaseLayout><Brand brands={data} /></BaseLayout>,
+    component: <BaseLayout><Brand loading brands={data} /></BaseLayout>,
   };
 }
 

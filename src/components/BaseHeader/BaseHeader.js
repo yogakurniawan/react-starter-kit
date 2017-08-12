@@ -1,13 +1,35 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import Autosuggest from 'react-autosuggest';
-import FaSearch from 'react-icons/lib/fa/search';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import s from './BaseHeader.css'; // eslint-disable-line
-import Link from '../Link';
+import Link from 'components/Link';
+import {
+  escapeRegexCharacters,
+} from 'utils/common';
+import Paragraph from './P';
+import Img from './Img';
+import HeaderWrapper from './HeaderWrapper';
 import Logo from './PhoneCataloguesLogo.svg';
+import FixedHeaderContainer from './FixedHeaderContainer';
+import AutosuggestWrapper from './AutosuggestWrapper';
+import NavigationWrapper from './NavigationWrapper';
+import NavSearchWrapper from './NavSearchWrapper';
+import UnorderedListWrapper from './UnorderedListWrapper';
+import ListItemWrapper from './ListItemWrapper';
+import RenderSuggestionsContainer from './RenderSuggestionsContainer';
+import InputGroupButton from './InputGroupButton';
 
-const escapeRegexCharacters = str => (str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+const Thumbnail = styled(Img) `
+  width: 30px;
+  margin: 0;
+`;
+
+const SuggestionDiv = styled.div`
+  display: flex;
+`;
+
+const SuggestionText = styled.div`
+  margin-left: 10px;
+`;
 
 const getSuggestions = (value, allDevices) => {
   const escapedValue = escapeRegexCharacters(value.trim());
@@ -16,7 +38,7 @@ const getSuggestions = (value, allDevices) => {
     const regex = new RegExp(`${escapedValue}`, 'i');
     const results = [];
     allDevices.map((device) => {
-      if (results.length < 8) {
+      if (results.length < 100) {
         if (regex.test(device.description)) {
           results.push(device);
         }
@@ -31,22 +53,20 @@ const getSuggestions = (value, allDevices) => {
 const getSuggestionValue = suggestion => (suggestion.name);
 
 const renderSuggestion = suggestion => (
-  <div>
-    <span style={{ marginRight: '20px', display: 'inline' }}>
-      <img alt={suggestion.name} className={s.thumbnail} src={suggestion.imageurl} />
-    </span>
-    <span style={{ display: 'inline' }}>{suggestion.name}</span>
-  </div>
+  <SuggestionDiv>
+    <span><Thumbnail src={suggestion.imageurl} /></span>
+    <SuggestionText><Paragraph>{suggestion.name}</Paragraph></SuggestionText>
+  </SuggestionDiv>
 );
 
 const renderInputComponent = inputProps => (
   <div className="inputContainer">
-    <FaSearch className={s.inputGroupButton} />
+    <InputGroupButton className="fa fa-search" />
     <input {...inputProps} />
   </div>
 );
 
-class BaseHeader extends React.Component {
+class Header extends React.Component {
   constructor() {
     super();
 
@@ -75,64 +95,75 @@ class BaseHeader extends React.Component {
     });
   };
 
+  onFormSubmit = (event) => {
+    event.preventDefault();
+    const { onFormSubmit } = this.props;
+    onFormSubmit(this.state.value);
+  };
+
   render() {
     const { value, suggestions } = this.state;
     const { onSuggestionSelected } = this.props;
     const inputProps = {
-      placeholder: 'Search phone',
+      placeholder: 'Search PhoneCatalogues',
       value,
       onChange: this.onChange,
     };
+
     return (
-      <div className={s.fixedHeaderContainer}>
-        <div className={s.headerWrapper}>
+      <FixedHeaderContainer>
+        <HeaderWrapper>
           <header>
             <Link to="/">
-              <img src={Logo} alt="React" />
+              <Img src={Logo} alt="Phone Catalogues - Logo" />
             </Link>
-            <div className={s.navigationWrapper}>
+            <NavigationWrapper>
               <nav>
-                <ul className={s.ulWrapper}>
-                  <li className={s.navSearchWrapper}>
-                    <div className={s.autoSuggestWrapper}>
-                      <Autosuggest
-                        suggestions={suggestions}
-                        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                        onSuggestionSelected={onSuggestionSelected}
-                        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                        getSuggestionValue={getSuggestionValue}
-                        renderSuggestion={renderSuggestion}
-                        inputProps={inputProps}
-                        renderInputComponent={renderInputComponent}
-                      />
-                    </div>
-                  </li>
-                  <li className={s.liWrapper}>
+                <UnorderedListWrapper>
+                  <NavSearchWrapper>
+                    <AutosuggestWrapper>
+                      <form onSubmit={this.onFormSubmit}>
+                        <Autosuggest
+                          suggestions={suggestions}
+                          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                          onSuggestionSelected={onSuggestionSelected}
+                          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                          getSuggestionValue={getSuggestionValue}
+                          renderSuggestion={renderSuggestion}
+                          inputProps={inputProps}
+                          renderSuggestionsContainer={RenderSuggestionsContainer}
+                          renderInputComponent={renderInputComponent}
+                        />
+                      </form>
+                    </AutosuggestWrapper>
+                  </NavSearchWrapper>
+                  <ListItemWrapper>
                     <Link to="/">
                       Home
                     </Link>
-                  </li>
-                  <li className={s.liWrapper}>
+                  </ListItemWrapper>
+                  <ListItemWrapper>
                     <Link to="/reviews">
                       Reviews
                     </Link>
-                  </li>
-                </ul>
+                  </ListItemWrapper>
+                </UnorderedListWrapper>
               </nav>
-            </div>
+            </NavigationWrapper>
           </header>
-        </div>
-      </div>
+        </HeaderWrapper>
+      </FixedHeaderContainer>
     );
   }
 }
 
-BaseHeader.propTypes = {
-  onSuggestionSelected: PropTypes.func,
+Header.propTypes = {
+  onSuggestionSelected: React.PropTypes.func,
+  onFormSubmit: React.PropTypes.func,
   allDevices: React.PropTypes.oneOfType([
     React.PropTypes.array,
     React.PropTypes.bool,
   ]),
 };
 
-export default withStyles(s)(BaseHeader);
+export default Header;

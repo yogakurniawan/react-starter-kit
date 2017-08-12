@@ -8,14 +8,8 @@ import ContentList from 'components/ContentList';
 import BrandTile from 'components/BrandTile';
 import TopNavigation from 'components/TopNavigation';
 import FilterBrand from 'components/FilterBrand';
-import { brandsLoaded, filter as filterBrands } from 'actions/brand';
-import {
-  // makeSelectBrands,
-  makeSelectFilteredBrands,
-  makeSelectIsFiltered,
-  makeSelectLoading,
-  makeSelectError,
-} from './selectors';
+import { brandsLoaded, filter } from 'actions/brand';
+import * as selectors from './selectors';
 
 class BrandsPage extends Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -25,16 +19,19 @@ class BrandsPage extends Component { // eslint-disable-line react/prefer-statele
   }
 
   handleFilterBrand(evt) {
-    this.props.filterBrands(evt.target.value);
+    this.props.filter(evt.target.value);
   }
 
   render() {
-    const { loading, error, isFiltered, filteredBrands, brands } = this.props;
+    const { filterBrands, filterKeyword, brands } = this.props;
+    const filteredBrands = filterBrands({
+      keyword: filterKeyword,
+    });
     const contentListProps = {
-      loading,
-      error,
+      loading: false,
+      error: null,
       component: BrandTile,
-      payload: isFiltered ? filteredBrands : brands,
+      payload: filterKeyword ? filteredBrands : brands,
     };
 
     return (
@@ -42,7 +39,7 @@ class BrandsPage extends Component { // eslint-disable-line react/prefer-statele
         <TopNavigation title={'Brands'} subTitle="Find your favourite mobile phone brands and see a lot of devices. " />
         <Row center="xs">
           <Col xs={12} sm={8} md={8} lg={6}>
-            { !loading && <FilterBrand onChange={evt => this.handleFilterBrand(evt)} /> }
+            <FilterBrand onChange={evt => this.handleFilterBrand(evt)} />
             <ContentList {...contentListProps} />
           </Col>
         </Row>
@@ -52,45 +49,31 @@ class BrandsPage extends Component { // eslint-disable-line react/prefer-statele
 }
 
 BrandsPage.propTypes = {
-  loading: PropTypes.bool,
-  isFiltered: PropTypes.bool,
-  filteredBrands: PropTypes.oneOfType([
-    PropTypes.array,
-    PropTypes.bool,
-  ]),
-  error: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.bool,
-  ]),
   brands: PropTypes.oneOfType([
     PropTypes.array,
   ]),
   brandsLoaded: PropTypes.func,
+  filterKeyword: PropTypes.string,
   filterBrands: PropTypes.func,
+  filter: PropTypes.func,
 };
 
 BrandsPage.defaultProps = {
-  loading: false,
-  isFiltered: false,
-  filteredBrands: false,
   brandsLoaded: () => {},
-  error: null,
   brands: null,
-  getBrands: () => {},
+  filterKeyword: '',
   filterBrands: () => {},
+  filter: () => {},
 };
 
 const mapDispatchToProps = {
   brandsLoaded,
-  filterBrands,
+  filter,
 };
 
 const mapStateToProps = createStructuredSelector({
-  // brands: makeSelectBrands(),
-  loading: makeSelectLoading(),
-  error: makeSelectError(),
-  isFiltered: makeSelectIsFiltered(),
-  filteredBrands: makeSelectFilteredBrands(),
+  filterBrands: selectors.filterBrands(),
+  filterKeyword: selectors.selectFilterKeyword(),
 });
 
 // Wrap the component to inject dispatch and state into it
