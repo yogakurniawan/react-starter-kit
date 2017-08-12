@@ -8,7 +8,7 @@ const InputGroupButton = styled.span`
   -webkit-font-smoothing: antialiased;
   line-height: 1;
   display: inline-block;
-  right: 10px;
+  left: 9px;
   top: -1px;
 `;
 

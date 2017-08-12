@@ -22,6 +22,17 @@ class BrandsPage extends Component { // eslint-disable-line react/prefer-statele
     this.props.filter(evt.target.value);
   }
 
+  // download() {
+  //   const url = 'http://iphonewalls.net/wp-content/uploads/2017/07/Curious%20Tree%20Frog%20Funny%20iPhone%206+%20HD%20Wallpaper.jpg';
+  //   const tempLink = document.createElement('a');
+  //   tempLink.style.display = 'none';
+  //   tempLink.href = url;
+  //   tempLink.setAttribute('download', '');
+  //   tempLink.setAttribute('target', '_blank');
+  //   document.body.appendChild(tempLink);
+  //   tempLink.click();
+  // }
+
   render() {
     const { filterBrands, filterKeyword, brands } = this.props;
     const filteredBrands = filterBrands({
@@ -59,11 +70,11 @@ BrandsPage.propTypes = {
 };
 
 BrandsPage.defaultProps = {
-  brandsLoaded: () => {},
+  brandsLoaded: () => { },
   brands: null,
   filterKeyword: '',
-  filterBrands: () => {},
-  filter: () => {},
+  filterBrands: () => { },
+  filter: () => { },
 };
 
 const mapDispatchToProps = {
