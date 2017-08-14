@@ -37,6 +37,7 @@ class Html extends React.Component {
           {scripts.map(script => <link key={script} rel="preload" href={script} as="script" />)}
           <link rel="apple-touch-icon" href="apple-touch-icon.png" />
           <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" />
+          <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.css" />
           {styles.map(style => (
             <style
               key={style.id}
