@@ -11,7 +11,7 @@ import FilterBrand from 'components/FilterBrand';
 import { brandsLoaded, filter } from 'actions/brand';
 import * as selectors from './selectors';
 
-class BrandsPage extends Component { // eslint-disable-line react/prefer-stateless-function
+class Home extends Component { // eslint-disable-line react/prefer-stateless-function
 
   componentDidMount() {
     const { brands } = this.props;
@@ -59,7 +59,7 @@ class BrandsPage extends Component { // eslint-disable-line react/prefer-statele
   }
 }
 
-BrandsPage.propTypes = {
+Home.propTypes = {
   brands: PropTypes.oneOfType([
     PropTypes.array,
   ]),
@@ -69,7 +69,7 @@ BrandsPage.propTypes = {
   filter: PropTypes.func,
 };
 
-BrandsPage.defaultProps = {
+Home.defaultProps = {
   brandsLoaded: () => { },
   brands: null,
   filterKeyword: '',
@@ -88,4 +88,4 @@ const mapStateToProps = createStructuredSelector({
 });
 
 // Wrap the component to inject dispatch and state into it
-export default connect(mapStateToProps, mapDispatchToProps)(BrandsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
