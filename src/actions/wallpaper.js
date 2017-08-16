@@ -7,7 +7,8 @@ import {
 import {
   BASE_API_URL,
   PER_PAGE,
-} from 'constants';
+} from 'constants/index';
+import request from 'utils/request';
 
 const WALLPAPERS_API = `${BASE_API_URL}/Wallpapers`;
 
@@ -41,14 +42,13 @@ export function setPage(page) {
 }
 
 export function getWallpapers(page) {
-  return (dispatch, getState, fetch) => (
-    fetch(WALLPAPERS_API, {
-      method: 'get',
-      body: JSON.stringify({
-        'filter[limit]': PER_PAGE,
-        'filter[skip]': page > 1 ? ((page - 1) * PER_PAGE) : 0,
-      }),
-    })
+  return (dispatch) => {
+    dispatch(loadWallpapers());
+    const queryParams = {
+      'filter[limit]': PER_PAGE,
+      'filter[skip]': page > 1 ? ((page - 1) * PER_PAGE) : 0,
+    };
+    return request(WALLPAPERS_API, queryParams)
       .then((response) => {
         if (response.status === 200) {
           return response.json();
@@ -58,5 +58,5 @@ export function getWallpapers(page) {
       })
       .then(wallpapers => dispatch(loadWallpapersSuccess(wallpapers)))
       .catch(error => dispatch(loadWallpapersError(error.message)))
-  );
+  };
 }
