@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { Grid, Loader } from 'semantic-ui-react';
 import { getWallpapers } from 'actions/wallpaper';
+import WallpaperCard from '../../components/WallpaperCard';
 import * as selectors from './selectors';
 
 class Home extends Component { // eslint-disable-line react/prefer-stateless-function
@@ -24,19 +26,40 @@ class Home extends Component { // eslint-disable-line react/prefer-stateless-fun
   // }
 
   render() {
+    const { wallpapers } = this.props;
     return (
-      <div>
-        <h1>Hello World</h1>
-      </div>
+      <Grid>
+        {
+          !wallpapers.length &&
+          <Loader
+            active
+            style={{ marginTop: '50vh' }}
+            inline="centered"
+          />
+        }
+        {
+          wallpapers.map(wallpaper => (
+            <WallpaperCard key={wallpaper.id} wallpaper={wallpaper} />
+          ))
+        }
+      </Grid>
     );
   }
 }
 
 Home.propTypes = {
   getWallpapers: PropTypes.func.isRequired,
-};
-
-Home.defaultProps = {
+  wallpapers: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string,
+      thumbnail: PropTypes.string,
+      original: PropTypes.string,
+      categoryId: PropTypes.string,
+      iphoneModelId: PropTypes.string,
+      id: PropTypes.string,
+    })).isRequired,
+    PropTypes.object,
+  ]).isRequired,
 };
 
 const mapDispatchToProps = {
@@ -44,7 +67,7 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  selectWallpapers: selectors.selectWallpapers(),
+  wallpapers: selectors.selectWallpapers(),
 });
 
 // Wrap the component to inject dispatch and state into it

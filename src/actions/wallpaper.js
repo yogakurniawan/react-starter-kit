@@ -48,15 +48,8 @@ export function getWallpapers(page) {
       'filter[limit]': PER_PAGE,
       'filter[skip]': page > 1 ? ((page - 1) * PER_PAGE) : 0,
     };
-    return request(WALLPAPERS_API, queryParams)
-      .then((response) => {
-        if (response.status === 200) {
-          return response.json();
-        }
-
-        throw new Error(`${response.status}: ${response.statusText}`);
-      })
+    return request(WALLPAPERS_API, { queryParams })
       .then(wallpapers => dispatch(loadWallpapersSuccess(wallpapers)))
-      .catch(error => dispatch(loadWallpapersError(error.message)))
+      .catch(error => dispatch(loadWallpapersError(error.message)));
   };
 }

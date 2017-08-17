@@ -1,12 +1,12 @@
 import React from 'react';
-import BaseLayout from '../../components/BaseLayout';
+import Layout from '../../containers/Layout';
 import Home from '../../containers/Home';
 
 async function action() {
   return {
     chunks: ['home'],
     title: 'Home Page',
-    component: <BaseLayout><Home /></BaseLayout>,
+    component: <Layout><Home /></Layout>,
   };
 }
 

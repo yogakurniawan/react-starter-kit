@@ -11,7 +11,7 @@ const initialState = fromJS({
   loading: false,
   error: null,
   payload: {
-    wallpapers: null,
+    wallpapers: [],
     page: 0,
   },
 });
@@ -26,7 +26,7 @@ function wallpaper(state = initialState, action) {
       return state
         .set('loading', true)
         .set('error', null)
-        .setIn(['payload', 'wallpapers'], null);
+        .setIn(['payload', 'wallpapers'], []);
     case LOAD_WALLPAPERS_SUCCESS:
       return state
         .set('loading', false)
@@ -36,7 +36,7 @@ function wallpaper(state = initialState, action) {
       return state
         .set('error', error)
         .set('loading', false)
-        .setIn(['payload', 'wallpapers'], null);
+        .setIn(['payload', 'wallpapers'], []);
     default:
       return state;
   }

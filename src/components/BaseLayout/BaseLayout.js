@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { ThemeProvider } from 'styled-components';
 import Dimensions from 'react-sizer';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import { Grid, Sidebar, Segment, Menu } from 'semantic-ui-react';
+import { Grid, Sidebar, Menu } from 'semantic-ui-react';
 import s from './BaseLayout.css';
 import ChildrenWrapper from './ChildrenWrapper';
 import BaseHeader from '../BaseHeader';
@@ -22,13 +22,13 @@ class Layout extends React.Component {
 
   render() {
     const { visible } = this.state;
-    const { width } = this.props;
+    const { width, menuItems } = this.props;
     const isMobile = width <= 414;
     return (
       <ThemeProvider theme={Theme}>
         <div>
           <BaseHeader displaySidebar={isMobile} toggleSidebar={this.toggleVisibility} />
-          <Sidebar.Pushable as={Segment}>
+          <Sidebar.Pushable>
             <Sidebar as={Menu} animation="push" width="thin" visible={visible} icon="labeled" vertical inverted>
               <Menu.Item name="home">
                 Home
@@ -44,7 +44,7 @@ class Layout extends React.Component {
               <ChildrenWrapper>
                 <Grid>
                   {!isMobile && <Grid.Column mobile={16} tablet={4} computer={3}>
-                    <VerticalMenu />
+                    <VerticalMenu menuItems={menuItems} />
                   </Grid.Column>}
                   {!isMobile && <Grid.Column mobile={16} tablet={12} computer={13}>
                     {this.props.children}
@@ -65,6 +65,12 @@ class Layout extends React.Component {
 Layout.propTypes = {
   width: PropTypes.number.isRequired,
   children: PropTypes.node.isRequired,
+  menuItems: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string,
+    })),
+    PropTypes.object,
+  ]).isRequired,
 };
 
 const enhancedLayout = Dimensions()(Layout);

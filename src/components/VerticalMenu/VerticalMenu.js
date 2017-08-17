@@ -1,34 +1,54 @@
 import React, { Component } from 'react';
-import { Input, Label, Menu } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+import { Menu } from 'semantic-ui-react';
 
-export default class MenuExampleVertical extends Component {
-  state = { activeItem: 'inbox' }
-
+export default class VerticalMenu extends Component {
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   render() {
-    const { activeItem } = this.state;
-
+    const { activeItem, menuItems } = this.props;
+    if (!menuItems.length) {
+      return (
+        <Menu vertical>
+          <Menu.Item
+            name="Loading"
+          >
+            Loading...
+          </Menu.Item>
+        </Menu>
+      );
+    }
     return (
       <Menu vertical>
-        <Menu.Item name="inbox" active={activeItem === 'inbox'} onClick={this.handleItemClick}>
-          <Label color="teal">1</Label>
-          Inbox
-        </Menu.Item>
-
-        <Menu.Item name="spam" active={activeItem === 'spam'} onClick={this.handleItemClick}>
-          <Label>51</Label>
-          Spam
-        </Menu.Item>
-
-        <Menu.Item name="updates" active={activeItem === 'updates'} onClick={this.handleItemClick}>
-          <Label>1</Label>
-          Updates
-        </Menu.Item>
-        <Menu.Item>
-          <Input icon="search" placeholder="Search mail..." />
-        </Menu.Item>
+        {
+          menuItems.map(item => (
+            <Menu.Item
+              key={item.name}
+              name={item.name}
+              active={activeItem === item.name}
+              onClick={this.handleItemClick}
+            >
+              {item.name}
+            </Menu.Item>
+          ))
+        }
       </Menu>
     );
   }
 }
+
+VerticalMenu.propTypes = {
+  menuItems: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string,
+    })),
+    PropTypes.object,
+  ]),
+  activeItem: PropTypes.string,
+};
+
+VerticalMenu.defaultProps = {
+  menuItems: [],
+  activeItem: null,
+};
+
