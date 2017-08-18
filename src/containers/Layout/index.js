@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { getCategories } from 'actions/category';
+import Dimensions from 'react-sizer';
+import setScreenSize from '../../actions/global';
+import { loadCategoriesSuccess } from 'actions/category';
 import BaseLayout from '../../components/BaseLayout';
-import * as selectors from './selectors';
 
 class Layout extends Component { // eslint-disable-line react/prefer-stateless-function
 
   componentDidMount() {
-    const loadCategories = this.props.getCategories;
-    loadCategories();
+    const setCategories = this.props.loadCategoriesSuccess;
+    setCategories(this.props.categories);
+  }
+
+  componentWillReceiveProps(props) {
+    this.props.setScreenSize(props.width);
   }
 
   render() {
@@ -24,7 +28,7 @@ class Layout extends Component { // eslint-disable-line react/prefer-stateless-f
 }
 
 Layout.propTypes = {
-  getCategories: PropTypes.func.isRequired,
+  loadCategoriesSuccess: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
   categories: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.shape({
@@ -32,14 +36,15 @@ Layout.propTypes = {
     })),
     PropTypes.object,
   ]).isRequired,
+  setScreenSize: PropTypes.func.isRequired,
+  width: PropTypes.number.isRequired,
 };
 
 const mapDispatchToProps = {
-  getCategories,
+  loadCategoriesSuccess,
+  setScreenSize,
 };
 
-const mapStateToProps = createStructuredSelector({
-  categories: selectors.selectCategories(),
-});
+const enhancedLayout = Dimensions()(Layout);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Layout);
+export default connect(null, mapDispatchToProps)(enhancedLayout);

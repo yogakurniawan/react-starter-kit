@@ -5,6 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { Grid, Loader } from 'semantic-ui-react';
 import { getWallpapers } from 'actions/wallpaper';
 import WallpaperCard from '../../components/WallpaperCard';
+import Pagination from '../../components/Pagination';
 import * as selectors from './selectors';
 
 class Home extends Component { // eslint-disable-line react/prefer-stateless-function
@@ -42,6 +43,16 @@ class Home extends Component { // eslint-disable-line react/prefer-stateless-fun
             <WallpaperCard key={wallpaper.id} wallpaper={wallpaper} />
           ))
         }
+        {wallpapers.length && <Grid.Row columns={1}>
+          <Grid.Column textAlign="center">
+            <Pagination
+              page={3}
+              perPage={5}
+              total={20}
+              setPage={() => { }}
+            />
+          </Grid.Column>
+        </Grid.Row>}
       </Grid>
     );
   }
