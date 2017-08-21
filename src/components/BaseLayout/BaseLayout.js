@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { ThemeProvider } from 'styled-components';
 import Dimensions from 'react-sizer';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import { Grid, Sidebar, Menu } from 'semantic-ui-react';
+import { Grid, Dropdown } from 'semantic-ui-react';
 import s from './BaseLayout.css';
 import ChildrenWrapper from './ChildrenWrapper';
 import BaseHeader from '../BaseHeader';
@@ -11,51 +11,42 @@ import VerticalMenu from '../VerticalMenu';
 import Theme from '../../utils/theme';
 
 class Layout extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      visible: false,
-    };
-  }
-
-  toggleVisibility = () => this.setState({ visible: !this.state.visible })
-
   render() {
-    const { visible } = this.state;
-    const { width, menuItems } = this.props;
-    const isMobile = width <= 414;
+    const { width, menuItems, onCategoryClick, activeCategory } = this.props;
+    const isMobileOrTablet = width <= 1024;
+    const isSmallMobile = width <= 320;
+    const categories = menuItems.map(item => ({
+      key: item.id,
+      value: item.name,
+      text: item.name,
+    }));
     return (
       <ThemeProvider theme={Theme}>
         <div>
-          <BaseHeader displaySidebar={isMobile} toggleSidebar={this.toggleVisibility} />
-          <Sidebar.Pushable>
-            <Sidebar as={Menu} animation="push" width="thin" visible={visible} icon="labeled" vertical inverted>
-              <Menu.Item name="home">
-                Home
-                </Menu.Item>
-              <Menu.Item name="gamepad">
-                Games
-                </Menu.Item>
-              <Menu.Item name="camera">
-                Channels
-              </Menu.Item>
-            </Sidebar>
-            <Sidebar.Pusher>
-              <ChildrenWrapper>
-                <Grid>
-                  {!isMobile && <Grid.Column mobile={16} tablet={4} computer={3}>
-                    <VerticalMenu menuItems={menuItems} />
-                  </Grid.Column>}
-                  {!isMobile && <Grid.Column mobile={16} tablet={12} computer={13}>
-                    {this.props.children}
-                  </Grid.Column>}
-                  {isMobile && <Grid.Column mobile={16} tablet={16} computer={16}>
-                    {this.props.children}
-                  </Grid.Column>}
-                </Grid>
-              </ChildrenWrapper>
-            </Sidebar.Pusher>
-          </Sidebar.Pushable>
+          <BaseHeader
+            categories={menuItems}
+            miniHeader={isSmallMobile}
+          />
+          <ChildrenWrapper>
+            <Grid>
+              {!isMobileOrTablet && <Grid.Column mobile={16} tablet={4} computer={3}>
+                <VerticalMenu
+                  activeCategory={activeCategory}
+                  onCategoryClick={onCategoryClick}
+                  menuItems={menuItems}
+                />
+              </Grid.Column>}
+              {!isMobileOrTablet && <Grid.Column mobile={16} tablet={12} computer={13}>
+                {this.props.children}
+              </Grid.Column>}
+              {isMobileOrTablet && <Grid.Column width={16}>
+                <Dropdown fluid placeholder="Categories" search selection options={categories} />
+              </Grid.Column>}
+              {isMobileOrTablet && <Grid.Column mobile={16} tablet={16} computer={16}>
+                {this.props.children}
+              </Grid.Column>}
+            </Grid>
+          </ChildrenWrapper>
         </div>
       </ThemeProvider>
     );
@@ -64,6 +55,8 @@ class Layout extends React.Component {
 
 Layout.propTypes = {
   width: PropTypes.number.isRequired,
+  activeCategory: PropTypes.string.isRequired,
+  onCategoryClick: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
   menuItems: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.shape({

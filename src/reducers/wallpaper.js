@@ -4,6 +4,7 @@ import {
   LOAD_WALLPAPERS,
   LOAD_WALLPAPERS_SUCCESS,
   LOAD_WALLPAPERS_ERROR,
+  SET_TOTAL_WALLPAPER,
   SET_PAGE,
 } from 'constants/ActionTypes';
 
@@ -13,6 +14,7 @@ const initialState = fromJS({
   payload: {
     wallpapers: [],
     page: 0,
+    total: 0,
   },
 });
 
@@ -22,6 +24,9 @@ function wallpaper(state = initialState, action) {
     case SET_PAGE:
       return state
         .setIn(['payload', 'page'], page);
+    case SET_TOTAL_WALLPAPER:
+      return state
+        .setIn(['payload', 'total'], payload.total);
     case LOAD_WALLPAPERS:
       return state
         .set('loading', true)
@@ -43,4 +48,3 @@ function wallpaper(state = initialState, action) {
 }
 
 export default wallpaper;
-

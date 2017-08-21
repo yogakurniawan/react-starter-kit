@@ -1,8 +1,9 @@
 import {
   SET_SCREEN_SIZE,
+  SET_ACTIVE_CATEGORY,
 } from 'constants/ActionTypes';
 
-export default function setScreenSize(width) {
+export function setScreenSize(width) {
   return {
     type: SET_SCREEN_SIZE,
     payload: {
@@ -11,3 +12,11 @@ export default function setScreenSize(width) {
   };
 }
 
+export function setActiveCategory(category) {
+  return {
+    type: SET_ACTIVE_CATEGORY,
+    payload: {
+      category,
+    },
+  };
+}

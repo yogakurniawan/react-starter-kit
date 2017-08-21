@@ -13,6 +13,21 @@ const routes = {
     },
 
     {
+      path: '/page/:pageNumber',
+      load: () => import(/* webpackChunkName: 'home' */ './home'),
+    },
+
+    {
+      path: '/:category',
+      load: () => import(/* webpackChunkName: 'category' */ './category'),
+    },
+
+    {
+      path: '/:category/page/:pageNumber',
+      load: () => import(/* webpackChunkName: 'category' */ './category'),
+    },
+
+    {
       path: '/:category/:name',
       load: () => import(/* webpackChunkName: 'wallpaper' */ './wallpaper'),
     },

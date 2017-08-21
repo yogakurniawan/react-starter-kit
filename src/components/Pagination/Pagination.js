@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Menu, Icon } from 'semantic-ui-react';
+import MenuItem from '../../components/MenuItem';
 
 class Pagination extends Component {
 
@@ -70,23 +71,29 @@ class Pagination extends Component {
   }
 
   renderPageNums() {
+    const { route } = this.props;
+    const pageRoute = route ? `/${route}/page` : '/page';
     return this.range().map(pageNum =>
       (
         (pageNum === '.') ?
-          <Menu.Item key={`hyphen_${pageNum}`} disabled>...</Menu.Item> :
-          <Menu.Item
+          <Menu.Item key={`hyphen_${Math.random()}`} disabled>...</Menu.Item> :
+          <MenuItem
+            to={`${pageRoute}/${pageNum}`}
             key={pageNum}
             onClick={this.gotoPage}
+            data-page={pageNum}
             active={pageNum === this.props.page}
           >
             {pageNum}
-          </Menu.Item>
+          </MenuItem>
       ),
     );
   }
 
   render() {
-    const { page, total } = this.props;
+    const { page, total, route } = this.props;
+    const pageRoutePrev = route ? `/${route}/page/${page - 1}` : `/page/${page - 1}`;
+    const pageRouteNext = route ? `/${route}/page/${page + 1}` : `/page/${page + 1}`;
     if (total === 0) return null;
     const nbPages = this.getNbPages();
 
@@ -97,18 +104,22 @@ class Pagination extends Component {
     return (
       <Menu size="mini" pagination>
         {page > 1 &&
-
-          <Menu.Item name="angle left" key="prev" onClick={this.prevPage}>
+          <MenuItem
+            to={`${pageRoutePrev}`}
+            name="angle left"
+            key="prev"
+            onClick={this.prevPage}
+          >
             <Icon name="angle left" />
             Previous
-          </Menu.Item>
+          </MenuItem>
         }
         {this.renderPageNums()}
         {page !== nbPages &&
-          <Menu.Item name="angle right" key="next" onClick={this.nextPage}>
+          <MenuItem to={`${pageRouteNext}`} name="angle right" key="next" onClick={this.nextPage}>
             Next
             <Icon name="angle right" />
-          </Menu.Item>
+          </MenuItem>
         }
       </Menu>
     );
@@ -120,6 +131,7 @@ Pagination.propTypes = {
   perPage: PropTypes.number,
   total: PropTypes.number,
   setPage: PropTypes.func,
+  route: PropTypes.string,
 };
 
 Pagination.defaultProps = {
@@ -127,6 +139,7 @@ Pagination.defaultProps = {
   perPage: 12,
   total: 0,
   setPage: null,
+  route: null,
 };
 
 export default Pagination;
