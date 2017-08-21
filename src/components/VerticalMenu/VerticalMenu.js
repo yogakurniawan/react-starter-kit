@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Menu, Header, Label } from 'semantic-ui-react';
-import MenuItem from '../../components/MenuItem';
+import Link from '../../components/Link';
 
 export default class VerticalMenu extends Component {
   handleItemClick = (event) => {
@@ -32,13 +32,14 @@ export default class VerticalMenu extends Component {
         <Menu vertical>
           {
             menuItems.map(item => (
-              <MenuItem
+              <Link
                 to={`/${item.name}`}
                 key={item.name}
                 data-name={item.name}
                 data-id={item.id}
                 active={activeCategory === item.name}
                 onClick={this.handleItemClick}
+                component={Menu.Item}
               >
                 {
                   activeCategory === item.name &&
@@ -49,7 +50,7 @@ export default class VerticalMenu extends Component {
                     <Label>{item.total_wallpaper}</Label>
                 }
                 {item.name}
-              </MenuItem>
+              </Link>
             ))
           }
         </Menu>

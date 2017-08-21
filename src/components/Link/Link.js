@@ -22,12 +22,14 @@ function isModifiedEvent(event) {
 class Link extends React.Component {
   static propTypes = {
     to: PropTypes.string.isRequired,
-    children: PropTypes.node.isRequired,
+    children: PropTypes.node,
     onClick: PropTypes.func,
+    component: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
     onClick: null,
+    children: null,
   };
 
   handleClick = (event) => {
@@ -48,8 +50,26 @@ class Link extends React.Component {
   };
 
   render() {
-    const { to, children, ...props } = this.props;
-    return <a href={to} {...props} onClick={this.handleClick}>{children}</a>;
+    const { component, to, children, ...props } = this.props;
+    const ComponentToRender = component;
+    if (children) {
+      return (
+        <ComponentToRender
+          href={to}
+          {...props}
+          onClick={this.handleClick}
+        >
+          {children}
+        </ComponentToRender>
+      );
+    }
+    return (
+      <ComponentToRender
+        href={to}
+        {...props}
+        onClick={this.handleClick}
+      />
+    );
   }
 }
 

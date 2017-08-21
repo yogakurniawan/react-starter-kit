@@ -1,22 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Card, Label, Image } from 'semantic-ui-react';
+import { Grid, Popup, Card, Label, Image } from 'semantic-ui-react';
 import {
   IPHONE_MODELS,
 } from 'constants/index';
+import Link from '../../components/Link';
+import { replaceSpaceWithDash } from '../../utils/common';
 
-function WallpaperCard({ wallpaper }) {
+function WallpaperCard({ wallpaper, onImageClick }) {
   const iphoneModels = IPHONE_MODELS[wallpaper.iphoneModelId];
-  const name = wallpaper.name.length > 50 ? `${wallpaper.name.substring(0, 50)} ...`
-                : wallpaper.name;
+  const name = wallpaper.name.length > 50 ?
+                `${wallpaper.name.substring(0, 50)} ...` : wallpaper.name;
+  const WallpaperHeader =
+    wallpaper.name.length > 50 ?
+    (<Popup
+      trigger={
+        <Card.Header style={{ fontSize: '1em' }}>
+          {name}
+        </Card.Header>
+      }
+      content={wallpaper.name}
+      basic
+    />) :
+      (<Card.Header style={{ fontSize: '1em' }}>
+        {name}
+      </Card.Header>);
   return (
     <Grid.Column style={{ marginBottom: 15 }} mobile={16} tablet={5} computer={4}>
       <Card centered>
-        <Image src={wallpaper.thumbnail} />
+        <Link
+          as="a"
+          src={wallpaper.thumbnail}
+          onClick={onImageClick}
+          to={`/wallpaper/${replaceSpaceWithDash(wallpaper.name)}`}
+          component={Image}
+        />
         <Card.Content>
-          <Card.Header style={{ fontSize: '1em' }}>
-            {name}
-          </Card.Header>
+          {WallpaperHeader}
         </Card.Content>
         <Card.Content extra>
           <Label.Group size="mini" color="teal">
@@ -41,6 +61,11 @@ WallpaperCard.propTypes = {
     iphoneModelId: PropTypes.string,
     id: PropTypes.string,
   }).isRequired,
+  onImageClick: PropTypes.func,
+};
+
+WallpaperCard.defaultProps = {
+  onImageClick: null,
 };
 
 export default WallpaperCard;

@@ -7,6 +7,7 @@ import * as globalActions from '../../actions/global';
 import * as categoryActions from '../../actions/category';
 import * as wallpaperActions from '../../actions/wallpaper';
 import BaseLayout from '../../components/BaseLayout';
+import * as selectors from './selectors';
 
 class Layout extends Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -18,6 +19,7 @@ class Layout extends Component { // eslint-disable-line react/prefer-stateless-f
 
   componentDidMount() {
     const {
+      selectCategories,
       // params,
       // getCategoryByName,
       categories,
@@ -27,7 +29,9 @@ class Layout extends Component { // eslint-disable-line react/prefer-stateless-f
     // if (!category.name && params.category) {
       // getCategoryByName(params.category);
     // }
-    loadCategoriesSuccess(categories);
+    if (!selectCategories) {
+      loadCategoriesSuccess(categories);
+    }
   }
 
   componentWillReceiveProps(props) {
@@ -77,6 +81,16 @@ Layout.propTypes = {
   categories: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
+      id: PropTypes.string,
+      total_wallpaper: PropTypes.number,
+    })),
+    PropTypes.object,
+  ]).isRequired,
+  selectCategories: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string,
+      id: PropTypes.string,
+      total_wallpaper: PropTypes.number,
     })),
     PropTypes.object,
   ]).isRequired,
@@ -107,7 +121,7 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  // category: selectors.selectSelectedCategory(),
+  selectCategories: selectors.selectCategories(),
 });
 
 const enhancedLayout = Dimensions()(Layout);

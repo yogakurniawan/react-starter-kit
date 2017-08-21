@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Menu, Icon } from 'semantic-ui-react';
-import MenuItem from '../../components/MenuItem';
+import Link from '../../components/Link';
 
 class Pagination extends Component {
 
@@ -77,15 +77,16 @@ class Pagination extends Component {
       (
         (pageNum === '.') ?
           <Menu.Item key={`hyphen_${Math.random()}`} disabled>...</Menu.Item> :
-          <MenuItem
+          <Link
             to={`${pageRoute}/${pageNum}`}
             key={pageNum}
             onClick={this.gotoPage}
             data-page={pageNum}
             active={pageNum === this.props.page}
+            component={Menu.Item}
           >
             {pageNum}
-          </MenuItem>
+          </Link>
       ),
     );
   }
@@ -104,22 +105,29 @@ class Pagination extends Component {
     return (
       <Menu size="mini" pagination>
         {page > 1 &&
-          <MenuItem
+          <Link
             to={`${pageRoutePrev}`}
             name="angle left"
             key="prev"
             onClick={this.prevPage}
+            component={Menu.Item}
           >
             <Icon name="angle left" />
             Previous
-          </MenuItem>
+          </Link>
         }
         {this.renderPageNums()}
         {page !== nbPages &&
-          <MenuItem to={`${pageRouteNext}`} name="angle right" key="next" onClick={this.nextPage}>
+          <Link
+            to={`${pageRouteNext}`}
+            name="angle right"
+            key="next"
+            onClick={this.nextPage}
+            component={Menu.Item}
+          >
             Next
             <Icon name="angle right" />
-          </MenuItem>
+          </Link>
         }
       </Menu>
     );

@@ -55,7 +55,7 @@ class Layout extends React.Component {
 
 Layout.propTypes = {
   width: PropTypes.number.isRequired,
-  activeCategory: PropTypes.string.isRequired,
+  activeCategory: PropTypes.string,
   onCategoryClick: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
   menuItems: PropTypes.oneOfType([
@@ -64,6 +64,10 @@ Layout.propTypes = {
     })),
     PropTypes.object,
   ]).isRequired,
+};
+
+Layout.defaultProps = {
+  activeCategory: null,
 };
 
 const enhancedLayout = Dimensions()(Layout);

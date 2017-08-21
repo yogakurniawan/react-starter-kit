@@ -8,8 +8,7 @@ import { Grid } from 'semantic-ui-react';
 class Wallpaper extends Component { // eslint-disable-line react/prefer-stateless-function
 
   componentDidMount() {
-    console.log(this.props.category);
-    console.log(this.props.name);
+    // console.log(this.props.name);
   }
 
   // download() {
@@ -35,7 +34,6 @@ class Wallpaper extends Component { // eslint-disable-line react/prefer-stateles
 }
 
 Wallpaper.propTypes = {
-  category: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
 };
 

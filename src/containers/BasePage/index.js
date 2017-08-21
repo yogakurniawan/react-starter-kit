@@ -9,6 +9,10 @@ import { PER_PAGE } from '../../constants/index';
 import * as selectors from './selectors';
 
 class BasePage extends Component { // eslint-disable-line react/prefer-stateless-function
+
+  onImageClick = () => {
+  }
+
   render() {
     const { wallpapers, page, total, category, categoryFromRoute } = this.props;
     let route = category.name;
@@ -33,7 +37,11 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
         <Grid.Row centered>
           {
             wallpapers.map(wallpaper => (
-              <WallpaperCard key={wallpaper.id} wallpaper={wallpaper} />
+              <WallpaperCard
+                onImageClick={this.onImageClick}
+                key={wallpaper.id}
+                wallpaper={wallpaper}
+              />
             ))
           }
         </Grid.Row>

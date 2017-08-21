@@ -28,7 +28,7 @@ const routes = {
     },
 
     {
-      path: '/:category/:name',
+      path: '/wallpaper/:name',
       load: () => import(/* webpackChunkName: 'wallpaper' */ './wallpaper'),
     },
 
