@@ -4,13 +4,22 @@ import {
   LOAD_WALLPAPERS,
   LOAD_WALLPAPERS_SUCCESS,
   LOAD_WALLPAPERS_ERROR,
+  GET_TOTAL_WALLPAPER,
+  GET_TOTAL_WALLPAPER_SUCCESS,
+  GET_TOTAL_WALLPAPER_ERROR,
   SET_TOTAL_WALLPAPER,
   SET_PAGE,
 } from 'constants/ActionTypes';
 
 const initialState = fromJS({
-  loading: false,
-  error: null,
+  loading: {
+    loadWallpapers: false,
+    getTotalWallpaper: false,
+  },
+  error: {
+    loadWallpapers: null,
+    getTotalWallpaper: null,
+  },
   payload: {
     wallpapers: [],
     page: 0,
@@ -19,29 +28,44 @@ const initialState = fromJS({
 });
 
 function wallpaper(state = initialState, action) {
-  const { page, payload, error } = action;
+  const { payload, error } = action;
   switch (action.type) {
     case SET_PAGE:
       return state
-        .setIn(['payload', 'page'], page);
+        .setIn(['payload', 'page'], payload);
     case SET_TOTAL_WALLPAPER:
       return state
-        .setIn(['payload', 'total'], payload.total);
+        .setIn(['payload', 'total'], payload);
     case LOAD_WALLPAPERS:
       return state
-        .set('loading', true)
-        .set('error', null)
+        .setIn(['loadWallpapers', 'loading'], true)
+        .setIn(['loadWallpapers', 'error'], null)
         .setIn(['payload', 'wallpapers'], []);
     case LOAD_WALLPAPERS_SUCCESS:
       return state
-        .set('loading', false)
-        .set('error', null)
-        .setIn(['payload', 'wallpapers'], payload.wallpapers);
+        .setIn(['loadWallpapers', 'loading'], false)
+        .setIn(['loadWallpapers', 'error'], null)
+        .setIn(['payload', 'wallpapers'], payload);
     case LOAD_WALLPAPERS_ERROR:
       return state
-        .set('error', error)
-        .set('loading', false)
+        .setIn(['loadWallpapers', 'error'], error)
+        .setIn(['loadWallpapers', 'loading'], false)
         .setIn(['payload', 'wallpapers'], []);
+    case GET_TOTAL_WALLPAPER:
+      return state
+        .setIn(['getTotalWallpaper', 'loading'], true)
+        .setIn(['getTotalWallpaper', 'error'], null)
+        .setIn(['payload', 'total'], 0);
+    case GET_TOTAL_WALLPAPER_SUCCESS:
+      return state
+        .setIn(['getTotalWallpaper', 'loading'], false)
+        .setIn(['getTotalWallpaper', 'error'], null)
+        .setIn(['payload', 'total'], payload.count);
+    case GET_TOTAL_WALLPAPER_ERROR:
+      return state
+        .setIn(['getTotalWallpaper', 'error'], error)
+        .setIn(['getTotalWallpaper', 'loading'], false)
+        .setIn(['payload', 'total'], 0);
     default:
       return state;
   }

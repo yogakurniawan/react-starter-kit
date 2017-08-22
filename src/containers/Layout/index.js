@@ -20,15 +20,9 @@ class Layout extends Component { // eslint-disable-line react/prefer-stateless-f
   componentDidMount() {
     const {
       selectCategories,
-      // params,
-      // getCategoryByName,
       categories,
       loadCategoriesSuccess,
-      // category,
     } = this.props;
-    // if (!category.name && params.category) {
-      // getCategoryByName(params.category);
-    // }
     if (!selectCategories) {
       loadCategoriesSuccess(categories);
     }
@@ -42,13 +36,13 @@ class Layout extends Component { // eslint-disable-line react/prefer-stateless-f
     const {
       setSelectedCategory,
       setPage,
-      loadWallpapersSuccess,
+      setWallpapers,
       categories,
     } = this.props;
     const thisCategory = categories.find(item => item.id === id);
     setPage(0);
     this.setState({ activeCategory: name });
-    loadWallpapersSuccess([]);
+    setWallpapers([]);
     setSelectedCategory({ name, id, total: thisCategory.total_wallpaper });
   }
 
@@ -73,8 +67,7 @@ class Layout extends Component { // eslint-disable-line react/prefer-stateless-f
 Layout.propTypes = {
   activeCategory: PropTypes.string,
   loadCategoriesSuccess: PropTypes.func.isRequired,
-  loadWallpapersSuccess: PropTypes.func.isRequired,
-  // getCategoryByName: PropTypes.func.isRequired,
+  setWallpapers: PropTypes.func.isRequired,
   setSelectedCategory: PropTypes.func.isRequired,
   setPage: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
@@ -96,14 +89,6 @@ Layout.propTypes = {
   ]).isRequired,
   setScreenSize: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired,
-  // params: PropTypes.shape({
-    // category: PropTypes.string,
-    // pageNumber: PropTypes.number
-  // }),
-  // category: PropTypes.shape({
-    // name: PropTypes.string,
-    // id: PropTypes.string,
-  // }).isRequired,
 };
 
 Layout.defaultProps = {
@@ -113,7 +98,7 @@ Layout.defaultProps = {
 
 const mapDispatchToProps = {
   setPage: wallpaperActions.setPage,
-  loadWallpapersSuccess: wallpaperActions.loadWallpapersSuccess,
+  setWallpapers: wallpaperActions.setWallpapers,
   loadCategoriesSuccess: categoryActions.loadCategoriesSuccess,
   getCategoryByName: categoryActions.getCategoryByName,
   setSelectedCategory: categoryActions.setSelectedCategory,

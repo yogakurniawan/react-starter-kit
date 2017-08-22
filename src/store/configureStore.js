@@ -4,10 +4,11 @@ import { fromJS } from 'immutable';
 import rootReducer from '../reducers';
 import createHelpers from './createHelpers';
 import createLogger from './logger';
+import clientMiddleware from '../utils/clientMiddleware';
 
 export default function configureStore(initialState, helpersConfig) {
   const helpers = createHelpers(helpersConfig);
-  const middleware = [thunk.withExtraArgument(helpers)];
+  const middleware = [clientMiddleware(), thunk.withExtraArgument(helpers)];
 
   let enhancer;
 

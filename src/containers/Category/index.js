@@ -9,13 +9,24 @@ import * as selectors from '../BasePage/selectors';
 class Category extends Component { // eslint-disable-line react/prefer-stateless-function
 
   componentDidMount() {
-    const { category, params, page, getWallpapersByCategory } = this.props;
+    const {
+      setTotalWallpaper,
+      setPage,
+      category,
+      params,
+      page,
+      getWallpapersByCategory,
+    } = this.props;
+    const thisCategory = category.name ? category : params.category;
+    setTotalWallpaper(thisCategory.total);
     if (page !== params.pageNumber) {
+      setPage(params.pageNumber);
       getWallpapersByCategory({
         page: params.pageNumber,
         category: category.name ? category : params.category,
       });
     } else {
+      setPage(1);
       getWallpapersByCategory({
         page: 1,
         category: category.name ? category : params.category,
@@ -24,8 +35,18 @@ class Category extends Component { // eslint-disable-line react/prefer-stateless
   }
 
   componentWillReceiveProps(props) {
-    const { category, params, page, getWallpapersByCategory } = props;
+    const {
+      setPage,
+      setTotalWallpaper,
+      category,
+      params,
+      page,
+      getWallpapersByCategory,
+    } = props;
+    const thisCategory = category.name ? category : params.category;
+    setTotalWallpaper(thisCategory.total);
     if (page !== params.pageNumber) {
+      setPage(params.pageNumber);
       getWallpapersByCategory({
         page: params.pageNumber,
         category: category.name ? category : params.category,
@@ -46,6 +67,8 @@ Category.propTypes = {
     id: PropTypes.string,
   }).isRequired,
   getWallpapersByCategory: PropTypes.func.isRequired,
+  setPage: PropTypes.func.isRequired,
+  setTotalWallpaper: PropTypes.func.isRequired,
   params: PropTypes.shape({
     category: PropTypes.object,
     pageNumber: PropTypes.number,
@@ -57,11 +80,14 @@ Category.defaultProps = {
 };
 
 const mapDispatchToProps = {
+  setPage: wallpaperActions.setPage,
   getWallpapersByCategory: wallpaperActions.getWallpapersByCategory,
+  setTotalWallpaper: wallpaperActions.setTotalWallpaper,
 };
 
 const mapStateToProps = createStructuredSelector({
   page: selectors.selectPage(),
+  total: selectors.selectTotal(),
   category: selectors.selectSelectedCategory(),
 });
 

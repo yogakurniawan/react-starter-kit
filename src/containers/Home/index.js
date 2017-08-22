@@ -9,17 +9,43 @@ import * as selectors from '../BasePage/selectors';
 class Home extends Component { // eslint-disable-line react/prefer-stateless-function
 
   componentDidMount() {
-    const { getWallpapers, params, page } = this.props;
+    const {
+      total,
+      getWallpapers,
+      params,
+      page,
+      setPage,
+      getTotalWallpaper,
+    } = this.props;
+    if (total === 0) {
+      getTotalWallpaper();
+    }
+
     if (page !== params.pageNumber) {
       getWallpapers({ page: params.pageNumber });
+      setPage(params.pageNumber);
     } else {
+      setPage(1);
       getWallpapers({ page: 1 });
     }
   }
 
   componentWillReceiveProps(props) {
-    const { params, page, getWallpapers, category } = props;
+    const {
+      total,
+      getTotalWallpaper,
+      params,
+      page,
+      getWallpapers,
+      category,
+      setPage,
+    } = props;
+    if (total === 0) {
+      getTotalWallpaper();
+    }
+
     if (!category.name && page !== params.pageNumber) {
+      setPage(params.pageNumber);
       getWallpapers({ page: params.pageNumber });
     }
   }
@@ -32,6 +58,8 @@ class Home extends Component { // eslint-disable-line react/prefer-stateless-fun
 Home.propTypes = {
   page: PropTypes.number.isRequired,
   getWallpapers: PropTypes.func.isRequired,
+  setPage: PropTypes.func.isRequired,
+  getTotalWallpaper: PropTypes.func.isRequired,
   params: PropTypes.shape({
     pageNumber: PropTypes.number,
   }),
@@ -39,6 +67,7 @@ Home.propTypes = {
     name: PropTypes.string,
     id: PropTypes.string,
   }),
+  total: PropTypes.number.isRequired,
 };
 
 Home.defaultProps = {
@@ -47,11 +76,14 @@ Home.defaultProps = {
 };
 
 const mapDispatchToProps = {
+  setPage: wallpaperActions.setPage,
   getWallpapers: wallpaperActions.getWallpapers,
+  getTotalWallpaper: wallpaperActions.getTotalWallpaper,
 };
 
 const mapStateToProps = createStructuredSelector({
   page: selectors.selectPage(),
+  total: selectors.selectTotal(),
   category: selectors.selectSelectedCategory(),
 });
 
