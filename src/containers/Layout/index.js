@@ -7,7 +7,7 @@ import * as globalActions from '../../actions/global';
 import * as categoryActions from '../../actions/category';
 import * as wallpaperActions from '../../actions/wallpaper';
 import BaseLayout from '../../components/BaseLayout';
-import * as selectors from './selectors';
+import * as selectors from '../BasePage/selectors';
 
 class Layout extends Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -23,7 +23,7 @@ class Layout extends Component { // eslint-disable-line react/prefer-stateless-f
       categories,
       loadCategoriesSuccess,
     } = this.props;
-    if (!selectCategories) {
+    if (!selectCategories.size) {
       loadCategoriesSuccess(categories);
     }
   }

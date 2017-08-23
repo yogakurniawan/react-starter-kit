@@ -12,7 +12,14 @@ import * as selectors from './selectors';
 class BasePage extends Component { // eslint-disable-line react/prefer-stateless-function
 
   onImageClick = (wallpaper) => {
-    saveItem('selectedWallpaper', wallpaper);
+    const { categories, category } = this.props;
+    let thisCategory = category.name;
+    debugger;
+    if (!thisCategory) {
+      thisCategory = categories.find(item => item.id === wallpaper.categoryId).name;
+    }
+
+    saveItem('selectedWallpaper', { ...wallpaper, category: thisCategory });
   }
 
   render() {
@@ -70,6 +77,14 @@ BasePage.propTypes = {
     id: PropTypes.string,
     total: PropTypes.number,
   }),
+  categories: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string,
+      id: PropTypes.string,
+      total_wallpaper: PropTypes.number,
+    })),
+    PropTypes.object,
+  ]),
   category: PropTypes.shape({
     name: PropTypes.string,
     id: PropTypes.string,
@@ -90,6 +105,7 @@ BasePage.propTypes = {
 
 BasePage.defaultProps = {
   categoryFromRoute: null,
+  categories: null,
 };
 
 const mapDispatchToProps = {
@@ -100,6 +116,7 @@ const mapStateToProps = createStructuredSelector({
   category: selectors.selectSelectedCategory(),
   page: selectors.selectPage(),
   total: selectors.selectTotal(),
+  categories: selectors.selectCategories(),
 });
 
 // Wrap the component to inject dispatch and state into it

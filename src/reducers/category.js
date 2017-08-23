@@ -33,33 +33,33 @@ function category(state = initialState, action) {
   switch (action.type) {
     case LOAD_CATEGORIES:
       return state
-        .setIn(['loadCategories', 'loading'], true)
-        .setIn(['loadCategories', 'error'], null)
+        .setIn(['loading', 'loadCategories'], true)
+        .setIn(['error', 'loadCategories'], null)
         .setIn(['payload', 'categories'], []);
     case LOAD_CATEGORIES_SUCCESS:
       return state
-        .setIn(['loadCategories', 'loading'], false)
-        .setIn(['loadCategories', 'error'], null)
+        .setIn(['loading', 'loadCategories'], false)
+        .setIn(['error', 'loadCategories'], null)
         .setIn(['payload', 'categories'], payload.categories);
     case LOAD_CATEGORIES_ERROR:
       return state
-        .setIn(['loadCategories', 'error'], error)
-        .setIn(['loadCategories', 'loading'], false)
+        .setIn(['error', 'loadCategories'], error)
+        .setIn(['loading', 'loadCategories'], false)
         .setIn(['payload', 'categories'], []);
     case LOAD_CATEGORY_BY_NAME:
       return state
-        .setIn(['loadCategoryByName', 'loading'], true)
-        .setIn(['loadCategoryByName', 'error'], null)
+        .setIn(['loading', 'loadCategoryByName'], true)
+        .setIn(['error', 'loadCategoryByName'], null)
         .setIn(['payload', 'selectedCategory'], initialState.payload.selectedCategory);
     case SET_SELECTED_CATEGORY:
       return state
-        .setIn(['loadCategoryByName', 'loading'], false)
-        .setIn(['loadCategoryByName', 'error'], null)
+        .setIn(['loading', 'loadCategoryByName'], false)
+        .setIn(['error', 'loadCategoryByName'], null)
         .setIn(['payload', 'selectedCategory'], payload.category);
     case LOAD_CATEGORY_BY_NAME_ERROR:
       return state
-        .setIn(['loadCategoryByName', 'error'], error)
-        .setIn(['loadCategoryByName', 'loading'], false)
+        .setIn(['error', 'loadCategoryByName'], error)
+        .setIn(['loading', 'loadCategoryByName'], false)
         .setIn(['payload', 'selectedCategory'], initialState.payload.selectedCategory);
     default:
       return state;
