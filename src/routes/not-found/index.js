@@ -8,7 +8,7 @@
  */
 
 import React from 'react';
-import Layout from '../../components/Layout';
+import Layout from '../../components/BaseLayout';
 import NotFound from './NotFound';
 
 const title = 'Page Not Found';

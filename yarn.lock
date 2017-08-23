@@ -697,6 +697,13 @@ babel-plugin-jscript@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/babel-plugin-jscript/-/babel-plugin-jscript-1.0.4.tgz#8f342c38276e87a47d5fa0a8bd3d5eb6ccad8fcc"
 
+babel-plugin-lodash@^3.2.11:
+  version "3.2.11"
+  resolved "https://registry.yarnpkg.com/babel-plugin-lodash/-/babel-plugin-lodash-3.2.11.tgz#21c8fdec9fe1835efaa737873e3902bdd66d5701"
+  dependencies:
+    glob "^7.1.1"
+    lodash "^4.17.2"
+
 babel-plugin-member-expression-literals@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-member-expression-literals/-/babel-plugin-member-expression-literals-1.0.1.tgz#cc5edb0faa8dc927170e74d6d1c02440021624d3"

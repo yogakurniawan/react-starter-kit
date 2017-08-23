@@ -1,6 +1,0 @@
-{
-  "name": "filterbrands",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./FilterBrand.js"
-}

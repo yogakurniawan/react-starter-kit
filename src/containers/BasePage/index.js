@@ -6,11 +6,13 @@ import { Grid, Header, Loader } from 'semantic-ui-react';
 import WallpaperCard from '../../components/WallpaperCard';
 import Pagination from '../../components/Pagination';
 import { PER_PAGE } from '../../constants/index';
+import { saveItem } from '../../utils/common';
 import * as selectors from './selectors';
 
 class BasePage extends Component { // eslint-disable-line react/prefer-stateless-function
 
-  onImageClick = () => {
+  onImageClick = (wallpaper) => {
+    saveItem('selectedWallpaper', wallpaper);
   }
 
   render() {
@@ -38,7 +40,7 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
           {
             wallpapers.map(wallpaper => (
               <WallpaperCard
-                onImageClick={this.onImageClick}
+                onImageClick={() => this.onImageClick(wallpaper)}
                 key={wallpaper.id}
                 wallpaper={wallpaper}
               />
