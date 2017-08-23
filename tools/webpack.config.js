@@ -62,6 +62,7 @@ const config = {
                 browsers: pkg.browserslist,
                 uglify: true,
               },
+              loose: true,
               modules: false,
               useBuiltIns: false,
               debug: false,
@@ -77,7 +78,6 @@ const config = {
             ...isDebug ? [] : ['react-optimize'],
           ],
           plugins: [
-            ['lodash', { id: ['lodash', 'semantic-ui-react'] }],
             // Adds component stack to warning messages
             // https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-jsx-source
             ...isDebug ? ['transform-react-jsx-source'] : [],
@@ -286,6 +286,7 @@ const clientConfig = {
       path: path.resolve(__dirname, '../build'),
       filename: 'assets.json',
       prettyPrint: true,
+      update: true,
     }),
 
     // Move modules that occur in multiple entry chunks to a new entry chunk (the commons chunk).

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Breadcrumb, Button, Grid, Header, Icon, Image } from 'semantic-ui-react';
+import { Breadcrumb, Button, Card, Grid, Header, Icon, Image } from 'semantic-ui-react';
 import { loadItem } from '../../utils/common';
 import history from '../../history';
 import Link from '../../components/Link';
@@ -39,13 +39,13 @@ class Wallpaper extends Component { // eslint-disable-line react/prefer-stateles
     return (
       <Grid>
         <Grid.Row centered style={{ borderBottom: '1px solid #e1e4e8' }}>
-          <Grid.Column width={12}>
-            <Breadcrumb>
+          <Grid.Column width={14}>
+            <Breadcrumb size="tiny">
               <Link to="/" component={Breadcrumb.Section}>Home</Link>
               <Breadcrumb.Divider icon="right angle" />
-              <Link to="/" component={Breadcrumb.Section}>Home</Link>
+              <Link to={`/${wallpaper.category}`} component={Breadcrumb.Section}>{wallpaper.category}</Link>
               <Breadcrumb.Divider icon="right angle" />
-              <Link to="/" component={Breadcrumb.Section}>Home</Link>
+              <Breadcrumb.Section active>{wallpaper.name}</Breadcrumb.Section>
             </Breadcrumb>
           </Grid.Column>
         </Grid.Row>
@@ -55,7 +55,7 @@ class Wallpaper extends Component { // eslint-disable-line react/prefer-stateles
           </Grid.Column>
         </Grid.Row>
         <Grid.Row centered>
-          <Grid.Column width={3}>
+          <Grid.Column width={4}>
             <Button fluid color="green" onClick={() => this.download(wallpaper.original)}>
               <Icon name="cloud download" />Download Wallpaper
             </Button>
@@ -63,10 +63,10 @@ class Wallpaper extends Component { // eslint-disable-line react/prefer-stateles
         </Grid.Row>
         <Grid.Row>
           <Grid.Column width={16}>
-            <Image
+            <Card
               centered
-              src={wallpaper.original}
-              size="medium"
+              raised
+              image={wallpaper.original}
             />
           </Grid.Column>
         </Grid.Row>

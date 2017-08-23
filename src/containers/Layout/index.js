@@ -23,7 +23,7 @@ class Layout extends Component { // eslint-disable-line react/prefer-stateless-f
       categories,
       loadCategoriesSuccess,
     } = this.props;
-    if (!selectCategories.size) {
+    if (!selectCategories.size && categories) {
       loadCategoriesSuccess(categories);
     }
   }

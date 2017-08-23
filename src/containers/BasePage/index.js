@@ -14,7 +14,6 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
   onImageClick = (wallpaper) => {
     const { categories, category } = this.props;
     let thisCategory = category.name;
-    debugger;
     if (!thisCategory) {
       thisCategory = categories.find(item => item.id === wallpaper.categoryId).name;
     }
