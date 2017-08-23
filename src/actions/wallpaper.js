@@ -1,5 +1,6 @@
 import {
   LOAD_WALLPAPERS,
+  LOAD_WALLPAPER,
   LOAD_WALLPAPERS_SUCCESS,
   SET_TOTAL_WALLPAPER,
   GET_TOTAL_WALLPAPER,
@@ -45,6 +46,16 @@ export function getWallpapersByCategory({ page, category }) {
   }
   return {
     type: LOAD_WALLPAPERS,
+    promise: request(WALLPAPERS_API, { queryParams }),
+  };
+}
+
+export function getWallpaper({ id }) {
+  const queryParams = {
+    'filter[where][id]': id,
+  };
+  return {
+    type: LOAD_WALLPAPER,
     promise: request(WALLPAPERS_API, { queryParams }),
   };
 }

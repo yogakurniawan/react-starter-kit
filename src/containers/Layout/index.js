@@ -56,7 +56,7 @@ class Layout extends Component { // eslint-disable-line react/prefer-stateless-f
       <BaseLayout
         activeCategory={thisActiveCategory}
         onCategoryClick={this.handleCategoryClick}
-        menuItems={categories}
+        categories={categories}
       >
         {children}
       </BaseLayout>
@@ -78,7 +78,7 @@ Layout.propTypes = {
       total_wallpaper: PropTypes.number,
     })),
     PropTypes.object,
-  ]).isRequired,
+  ]),
   selectCategories: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
@@ -94,6 +94,7 @@ Layout.propTypes = {
 Layout.defaultProps = {
   params: null,
   activeCategory: null,
+  categories: null,
 };
 
 const mapDispatchToProps = {

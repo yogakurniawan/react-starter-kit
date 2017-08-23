@@ -2,16 +2,11 @@ import React from 'react';
 import Layout from '../../containers/Layout';
 import Wallpaper from '../../containers/Wallpaper';
 
-async function action({ fetch, params }) {
-  const resp = await fetch('/api/Categories', {
-    method: 'GET',
-  });
-  const data = await resp.json();
-  if (!data) throw new Error('Failed to load the categories.');
+async function action({ params }) {
   return {
     chunks: ['wallpaper'],
     title: 'Wallpaper Page',
-    component: <Layout categories={data}>
+    component: <Layout>
       <Wallpaper name={params.name} />
     </Layout>,
   };

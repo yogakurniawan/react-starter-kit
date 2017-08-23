@@ -12,10 +12,10 @@ import Theme from '../../utils/theme';
 
 class Layout extends React.Component {
   render() {
-    const { width, menuItems, onCategoryClick, activeCategory } = this.props;
+    const { width, categories, onCategoryClick, activeCategory } = this.props;
     const isMobileOrTablet = width <= 1024;
     const isSmallMobile = width <= 320;
-    const categories = menuItems.map(item => ({
+    const thisCategories = categories && categories.map(item => ({
       key: item.id,
       value: item.name,
       text: item.name,
@@ -24,23 +24,27 @@ class Layout extends React.Component {
       <ThemeProvider theme={Theme}>
         <div>
           <BaseHeader
-            categories={menuItems}
             miniHeader={isSmallMobile}
           />
           <ChildrenWrapper>
             <Grid>
-              {!isMobileOrTablet && <Grid.Column mobile={16} tablet={4} computer={3}>
+              {!isMobileOrTablet && categories && <Grid.Column mobile={16} tablet={4} computer={3}>
                 <VerticalMenu
                   activeCategory={activeCategory}
                   onCategoryClick={onCategoryClick}
-                  menuItems={menuItems}
+                  menuItems={categories}
                 />
               </Grid.Column>}
-              {!isMobileOrTablet && <Grid.Column mobile={16} tablet={12} computer={13}>
-                {this.props.children}
-              </Grid.Column>}
+              {!isMobileOrTablet &&
+                <Grid.Column
+                  mobile={16}
+                  tablet={categories ? 12 : 16}
+                  computer={categories ? 13 : 16}
+                >
+                  {this.props.children}
+                </Grid.Column>}
               {isMobileOrTablet && <Grid.Column width={16}>
-                <Dropdown fluid placeholder="Categories" search selection options={categories} />
+                <Dropdown fluid placeholder="Categories" search selection options={thisCategories} />
               </Grid.Column>}
               {isMobileOrTablet && <Grid.Column mobile={16} tablet={16} computer={16}>
                 {this.props.children}
@@ -58,16 +62,17 @@ Layout.propTypes = {
   activeCategory: PropTypes.string,
   onCategoryClick: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
-  menuItems: PropTypes.oneOfType([
+  categories: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
     })),
     PropTypes.object,
-  ]).isRequired,
+  ]),
 };
 
 Layout.defaultProps = {
   activeCategory: null,
+  categories: null,
 };
 
 const enhancedLayout = Dimensions()(Layout);

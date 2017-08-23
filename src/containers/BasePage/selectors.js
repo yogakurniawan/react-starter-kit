@@ -8,6 +8,11 @@ const selectWallpapers = () => createSelector(
   state => state.getIn(['payload', 'wallpapers']),
 );
 
+const selectWallpaper = () => createSelector(
+  wallpaper,
+  state => state.getIn(['payload', 'wallpaper']),
+);
+
 const selectPage = () => createSelector(
   wallpaper,
   state => state.getIn(['payload', 'page']),
@@ -27,6 +32,7 @@ export {
   selectSelectedCategory,
   selectPage,
   selectWallpapers,
+  selectWallpaper,
   selectTotal,
   wallpaper,
 };

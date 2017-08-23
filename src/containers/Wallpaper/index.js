@@ -1,14 +1,26 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Grid } from 'semantic-ui-react';
-// import * as selectors from './selectors';
+import { Breadcrumb, Grid, Image } from 'semantic-ui-react';
+import { loadItem } from '../../utils/common';
+import history from '../../history';
+// import * as selectors from '../BasePage/selectors';
 
 class Wallpaper extends Component { // eslint-disable-line react/prefer-stateless-function
 
   componentDidMount() {
-    // console.log(this.props.name);
+    const wallpaperFromStorage = loadItem('selectedWallpaper');
+    if (!wallpaperFromStorage) {
+      history.push('/');
+    }
+  }
+
+  componentWillReceiveProps() {
+    const wallpaperFromStorage = loadItem('selectedWallpaper');
+    if (!wallpaperFromStorage) {
+      history.push('/');
+    }
   }
 
   // download() {
@@ -23,18 +35,38 @@ class Wallpaper extends Component { // eslint-disable-line react/prefer-stateles
   // }
 
   render() {
+    const wallpaperFromStorage = loadItem('selectedWallpaper');
     return (
       <Grid>
-        <Grid.Column textAlign="center">
-          Hello World
-        </Grid.Column>
+        <Grid.Row centered style={{ borderBottom: '1px solid #e1e4e8' }}>
+          <Grid.Column width={12}>
+            <Breadcrumb>
+              <Breadcrumb.Section link>Home</Breadcrumb.Section>
+              <Breadcrumb.Divider />
+              <Breadcrumb.Section link>Store</Breadcrumb.Section>
+              <Breadcrumb.Divider />
+              <Breadcrumb.Section active>T-Shirt</Breadcrumb.Section>
+            </Breadcrumb>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={16}>
+            <Image
+              centered
+              src={wallpaperFromStorage.original}
+              size="medium"
+            />
+          </Grid.Column>
+        </Grid.Row>
       </Grid>
     );
   }
 }
 
 Wallpaper.propTypes = {
-  name: PropTypes.string.isRequired,
+};
+
+Wallpaper.defaultProps = {
 };
 
 const mapDispatchToProps = {

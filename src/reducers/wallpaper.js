@@ -4,6 +4,9 @@ import {
   LOAD_WALLPAPERS,
   LOAD_WALLPAPERS_SUCCESS,
   LOAD_WALLPAPERS_ERROR,
+  LOAD_WALLPAPER,
+  LOAD_WALLPAPER_SUCCESS,
+  LOAD_WALLPAPER_ERROR,
   GET_TOTAL_WALLPAPER,
   GET_TOTAL_WALLPAPER_SUCCESS,
   GET_TOTAL_WALLPAPER_ERROR,
@@ -14,14 +17,17 @@ import {
 const initialState = fromJS({
   loading: {
     loadWallpapers: false,
+    loadWallpaper: false,
     getTotalWallpaper: false,
   },
   error: {
     loadWallpapers: null,
+    loadWallpaper: null,
     getTotalWallpaper: null,
   },
   payload: {
     wallpapers: [],
+    wallpaper: null,
     page: 0,
     total: 0,
   },
@@ -36,6 +42,21 @@ function wallpaper(state = initialState, action) {
     case SET_TOTAL_WALLPAPER:
       return state
         .setIn(['payload', 'total'], payload);
+    case LOAD_WALLPAPER:
+      return state
+        .setIn(['loadWallpaper', 'loading'], true)
+        .setIn(['loadWallpaper', 'error'], null)
+        .setIn(['payload', 'wallpaper'], null);
+    case LOAD_WALLPAPER_SUCCESS:
+      return state
+        .setIn(['loadWallpaper', 'loading'], false)
+        .setIn(['loadWallpaper', 'error'], null)
+        .setIn(['payload', 'wallpaper'], payload);
+    case LOAD_WALLPAPER_ERROR:
+      return state
+        .setIn(['loadWallpaper', 'error'], error)
+        .setIn(['loadWallpaper', 'loading'], false)
+        .setIn(['payload', 'wallpaper'], null);
     case LOAD_WALLPAPERS:
       return state
         .setIn(['loadWallpapers', 'loading'], true)
