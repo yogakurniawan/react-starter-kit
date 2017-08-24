@@ -22,10 +22,12 @@ class Layout extends Component { // eslint-disable-line react/prefer-stateless-f
       selectCategories,
       categories,
       loadCategoriesSuccess,
+      width,
     } = this.props;
     if (!selectCategories.size && categories) {
       loadCategoriesSuccess(categories);
     }
+    this.props.setScreenSize(width);
   }
 
   componentWillReceiveProps(props) {

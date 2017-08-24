@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { ThemeProvider } from 'styled-components';
 import Dimensions from 'react-sizer';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import { Grid, Dropdown } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import s from './BaseLayout.css';
 import ChildrenWrapper from './ChildrenWrapper';
 import BaseHeader from '../BaseHeader';
@@ -15,26 +15,24 @@ class Layout extends React.Component {
     const { width, categories, onCategoryClick, activeCategory } = this.props;
     const isMobileOrTablet = width <= 1024;
     const isSmallMobile = width <= 320;
-    const thisCategories = categories && categories.map(item => ({
-      key: item.id,
-      value: item.name,
-      text: item.name,
-    }));
     return (
       <ThemeProvider theme={Theme}>
         <div>
           <BaseHeader
+            isMobileOrTablet={isMobileOrTablet}
+            categories={categories}
             miniHeader={isSmallMobile}
           />
           <ChildrenWrapper>
             <Grid>
-              {!isMobileOrTablet && categories && <Grid.Column mobile={16} tablet={4} computer={3}>
-                <VerticalMenu
-                  activeCategory={activeCategory}
-                  onCategoryClick={onCategoryClick}
-                  menuItems={categories}
-                />
-              </Grid.Column>}
+              {!isMobileOrTablet && categories &&
+                <Grid.Column style={{ paddingRight: 0 }} mobile={16} tablet={4} computer={3}>
+                  <VerticalMenu
+                    activeCategory={activeCategory}
+                    onCategoryClick={onCategoryClick}
+                    menuItems={categories}
+                  />
+                </Grid.Column>}
               {!isMobileOrTablet &&
                 <Grid.Column
                   mobile={16}
@@ -43,9 +41,6 @@ class Layout extends React.Component {
                 >
                   {this.props.children}
                 </Grid.Column>}
-              {isMobileOrTablet && <Grid.Column width={16}>
-                <Dropdown fluid placeholder="Categories" search selection options={thisCategories} />
-              </Grid.Column>}
               {isMobileOrTablet && <Grid.Column mobile={16} tablet={16} computer={16}>
                 {this.props.children}
               </Grid.Column>}

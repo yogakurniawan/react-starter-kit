@@ -22,7 +22,7 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
   }
 
   render() {
-    const { wallpapers, page, total, category, categoryFromRoute } = this.props;
+    const { wallpapers, page, total, width, category, categoryFromRoute } = this.props;
     let route = category.name;
     if (categoryFromRoute && !route) {
       route = categoryFromRoute.name;
@@ -31,7 +31,7 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
       <Grid>
         <Grid.Row columns={1}>
           <Grid.Column>
-            <Header as="h2">Cool iPhone Wallpapers</Header>
+            <Header as="h2" textAlign="center">Cool iPhone Wallpapers</Header>
           </Grid.Column>
         </Grid.Row>
         {
@@ -56,6 +56,7 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
         {wallpapers.length > 0 && <Grid.Row columns={1}>
           <Grid.Column textAlign="center">
             <Pagination
+              screenWidth={width}
               route={route}
               page={page}
               perPage={parseInt(PER_PAGE, 10)}
@@ -71,6 +72,7 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
 
 BasePage.propTypes = {
   page: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired,
   categoryFromRoute: PropTypes.shape({
     name: PropTypes.string,
     id: PropTypes.string,
@@ -112,6 +114,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = createStructuredSelector({
   wallpapers: selectors.selectWallpapers(),
+  width: selectors.selectScreenWidth(),
   category: selectors.selectSelectedCategory(),
   page: selectors.selectPage(),
   total: selectors.selectTotal(),

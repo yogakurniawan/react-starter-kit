@@ -26,8 +26,13 @@ function WallpaperCard({ wallpaper, onImageClick }) {
         {name}
       </Card.Header>);
   return (
-    <Grid.Column style={{ marginBottom: 15 }} mobile={16} tablet={5} computer={4}>
-      <Card centered>
+    <Grid.Column
+      style={{ marginBottom: 15, paddingRight: 20, paddingLeft: 20 }}
+      mobile={16}
+      tablet={5}
+      computer={4}
+    >
+      <Card fluid centered>
         <Link
           as="a"
           src={wallpaper.thumbnail}

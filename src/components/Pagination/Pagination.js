@@ -92,7 +92,7 @@ class Pagination extends Component {
   }
 
   render() {
-    const { page, total, route } = this.props;
+    const { page, total, route, screenWidth } = this.props;
     const pageRoutePrev = route ? `/${route}/page/${page - 1}` : `/page/${page - 1}`;
     const pageRouteNext = route ? `/${route}/page/${page + 1}` : `/page/${page + 1}`;
     if (total === 0) return null;
@@ -116,7 +116,7 @@ class Pagination extends Component {
             Previous
           </Link>
         }
-        {this.renderPageNums()}
+        { screenWidth >= 600 && this.renderPageNums()}
         {page !== nbPages &&
           <Link
             to={`${pageRouteNext}`}
@@ -136,6 +136,7 @@ class Pagination extends Component {
 
 Pagination.propTypes = {
   page: PropTypes.number,
+  screenWidth: PropTypes.number,
   perPage: PropTypes.number,
   total: PropTypes.number,
   setPage: PropTypes.func,
@@ -144,6 +145,7 @@ Pagination.propTypes = {
 
 Pagination.defaultProps = {
   page: 0,
+  screenWidth: 0,
   perPage: 12,
   total: 0,
   setPage: null,

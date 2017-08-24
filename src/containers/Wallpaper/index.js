@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Breadcrumb, Button, Card, Grid, Header, Icon, Image } from 'semantic-ui-react';
+import { Breadcrumb, Button, Card, Grid, Header, Icon } from 'semantic-ui-react';
 import { loadItem } from '../../utils/common';
 import history from '../../history';
 import Link from '../../components/Link';
-// import * as selectors from '../BasePage/selectors';
+import * as selectors from '../BasePage/selectors';
 
 class Wallpaper extends Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -35,17 +35,20 @@ class Wallpaper extends Component { // eslint-disable-line react/prefer-stateles
   }
 
   render() {
+    const { width } = this.props;
     const wallpaper = loadItem('selectedWallpaper');
+    const name = wallpaper.name.length > 20 ?
+    `${wallpaper.name.substring(0, 20)} ...` : wallpaper.name;
     return (
       <Grid>
         <Grid.Row centered style={{ borderBottom: '1px solid #e1e4e8' }}>
-          <Grid.Column width={14}>
+          <Grid.Column mobile={16} tablet={14} computer={14}>
             <Breadcrumb size="tiny">
               <Link to="/" component={Breadcrumb.Section}>Home</Link>
               <Breadcrumb.Divider icon="right angle" />
               <Link to={`/${wallpaper.category}`} component={Breadcrumb.Section}>{wallpaper.category}</Link>
               <Breadcrumb.Divider icon="right angle" />
-              <Breadcrumb.Section active>{wallpaper.name}</Breadcrumb.Section>
+              <Breadcrumb.Section active>{width <= 414 ? name : wallpaper.name}</Breadcrumb.Section>
             </Breadcrumb>
           </Grid.Column>
         </Grid.Row>
@@ -55,7 +58,7 @@ class Wallpaper extends Component { // eslint-disable-line react/prefer-stateles
           </Grid.Column>
         </Grid.Row>
         <Grid.Row centered>
-          <Grid.Column width={4}>
+          <Grid.Column mobile={16} tablet={6} computer={4}>
             <Button fluid color="green" onClick={() => this.download(wallpaper.original)}>
               <Icon name="cloud download" />Download Wallpaper
             </Button>
@@ -76,6 +79,7 @@ class Wallpaper extends Component { // eslint-disable-line react/prefer-stateles
 }
 
 Wallpaper.propTypes = {
+  width: PropTypes.number.isRequired,
 };
 
 Wallpaper.defaultProps = {
@@ -85,6 +89,7 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = createStructuredSelector({
+  width: selectors.selectScreenWidth(),
 });
 
 // Wrap the component to inject dispatch and state into it
