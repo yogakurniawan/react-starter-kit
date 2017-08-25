@@ -50,6 +50,19 @@ export function getWallpapersByCategory({ page, category }) {
   };
 }
 
+export function getWallpapersByIphoneModel({ page, modelId }) {
+  const queryParams = {
+    'filter[where][iphoneModelId]': modelId,
+    'filter[limit]': PER_PAGE,
+    'filter[skip]': page > 1 ? ((page - 1) * PER_PAGE) : 0,
+  };
+
+  return {
+    type: LOAD_WALLPAPERS,
+    promise: request(WALLPAPERS_API, { queryParams }),
+  };
+}
+
 export function getWallpaper({ id }) {
   const queryParams = {
     'filter[where][id]': id,

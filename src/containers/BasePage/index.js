@@ -6,6 +6,7 @@ import { Grid, Header, Loader } from 'semantic-ui-react';
 import WallpaperCard from '../../components/WallpaperCard';
 import Pagination from '../../components/Pagination';
 import { PER_PAGE } from '../../constants/index';
+import { setSelectedIphoneModel } from '../../actions/global';
 import { saveItem } from '../../utils/common';
 import * as selectors from './selectors';
 
@@ -21,12 +22,14 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
     saveItem('selectedWallpaper', { ...wallpaper, category: thisCategory });
   }
 
+  onLabelClick = (wallpaper) => {
+    const { setIphoneModel } = this.props;
+    setIphoneModel(wallpaper.iphoneModelId);
+    saveItem('selectedIphoneModel', wallpaper.iphoneModelId);
+  }
+
   render() {
-    const { wallpapers, page, total, width, category, categoryFromRoute } = this.props;
-    let route = category.name;
-    if (categoryFromRoute && !route) {
-      route = categoryFromRoute.name;
-    }
+    const { wallpapers, page, total, width, route } = this.props;
     return (
       <Grid>
         <Grid.Row columns={1}>
@@ -46,6 +49,7 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
           {
             wallpapers.map(wallpaper => (
               <WallpaperCard
+                onLabelClick={() => this.onLabelClick(wallpaper)}
                 onImageClick={() => this.onImageClick(wallpaper)}
                 key={wallpaper.id}
                 wallpaper={wallpaper}
@@ -71,13 +75,9 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
 }
 
 BasePage.propTypes = {
+  route: PropTypes.string,
   page: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
-  categoryFromRoute: PropTypes.shape({
-    name: PropTypes.string,
-    id: PropTypes.string,
-    total: PropTypes.number,
-  }),
   categories: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
@@ -91,6 +91,7 @@ BasePage.propTypes = {
     id: PropTypes.string,
   }).isRequired,
   total: PropTypes.number.isRequired,
+  setIphoneModel: PropTypes.func.isRequired,
   wallpapers: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
@@ -107,9 +108,11 @@ BasePage.propTypes = {
 BasePage.defaultProps = {
   categoryFromRoute: null,
   categories: null,
+  route: null,
 };
 
 const mapDispatchToProps = {
+  setIphoneModel: setSelectedIphoneModel,
 };
 
 const mapStateToProps = createStructuredSelector({

@@ -39,7 +39,13 @@ const selectScreenWidth = () => createSelector(
   state => state.getIn(['payload', 'width']),
 );
 
+const selectSelectedIphoneModel = () => createSelector(
+  global,
+  state => state.getIn(['payload', 'selectedIphoneModel']),
+);
+
 export {
+  selectSelectedIphoneModel,
   selectScreenWidth,
   selectCategories,
   selectSelectedCategory,

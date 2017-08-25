@@ -55,8 +55,13 @@ class Category extends Component { // eslint-disable-line react/prefer-stateless
   }
 
   render() {
-    const { params } = this.props;
-    return <BasePage categoryFromRoute={params.category} />;
+    const { category, params } = this.props;
+    const categoryFromRoute = params.category;
+    let route = category.name;
+    if (categoryFromRoute && !route) {
+      route = categoryFromRoute.name;
+    }
+    return <BasePage route={route} />;
   }
 }
 

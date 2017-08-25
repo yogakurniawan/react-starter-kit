@@ -2,12 +2,18 @@ import React from 'react';
 import Layout from '../../containers/Layout';
 import Home from '../../containers/Home';
 
-async function action({ fetch, params }) {
-  const resp = await fetch('/api/Categories', {
-    method: 'GET',
-  });
-  const data = await resp.json();
-  if (!data) throw new Error('Failed to load the categories.');
+async function action({ fetch, params, store }) {
+  const state = store.getState();
+  const categoryReducer = state.get('category');
+  const categories = categoryReducer.getIn(['payload', 'categories']);
+  let data = categories;
+  if (!data.length) {
+    const resp = await fetch('/api/Categories', {
+      method: 'GET',
+    });
+    data = await resp.json();
+    if (!data) throw new Error('Failed to load the categories.');
+  }
   const { pageNumber } = params;
   const parameters = {
     pageNumber: pageNumber ? parseInt(pageNumber, 10) : 1,

@@ -1,6 +1,0 @@
-{
-  "name": "roundedbox",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./RoundedBox.js"
-}

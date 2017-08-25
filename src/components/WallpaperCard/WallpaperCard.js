@@ -7,12 +7,12 @@ import {
 import Link from '../../components/Link';
 import { replaceSpaceWithDash } from '../../utils/common';
 
-function WallpaperCard({ wallpaper, onImageClick }) {
+function WallpaperCard({ wallpaper, onImageClick, onLabelClick }) {
   const iphoneModels = IPHONE_MODELS[wallpaper.iphoneModelId];
-  const name = wallpaper.name.length > 50 ?
-                `${wallpaper.name.substring(0, 50)} ...` : wallpaper.name;
+  const name = wallpaper.name.length > 45 ?
+                `${wallpaper.name.substring(0, 45)} ...` : wallpaper.name;
   const WallpaperHeader =
-    wallpaper.name.length > 50 ?
+    wallpaper.name.length > 45 ?
     (<Popup
       trigger={
         <Card.Header style={{ fontSize: '1em' }}>
@@ -47,7 +47,15 @@ function WallpaperCard({ wallpaper, onImageClick }) {
           <Label.Group size="mini" color="teal">
             {
               iphoneModels.map(model => (
-                <Label as="a" key={model}>{model}</Label>
+                <Link
+                  key={Math.random()}
+                  as="a"
+                  onClick={onLabelClick}
+                  to={`/model/${replaceSpaceWithDash(model)}`}
+                  component={Label}
+                >
+                  {model}
+                </Link>
               ))
             }
           </Label.Group>
@@ -67,10 +75,12 @@ WallpaperCard.propTypes = {
     id: PropTypes.string,
   }).isRequired,
   onImageClick: PropTypes.func,
+  onLabelClick: PropTypes.func,
 };
 
 WallpaperCard.defaultProps = {
   onImageClick: null,
+  onLabelClick: null,
 };
 
 export default WallpaperCard;

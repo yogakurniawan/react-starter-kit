@@ -37,14 +37,13 @@ class Home extends Component { // eslint-disable-line react/prefer-stateless-fun
       params,
       page,
       getWallpapers,
-      category,
       setPage,
     } = props;
     if (total === 0) {
       getTotalWallpaper();
     }
 
-    if (!category.name && page !== params.pageNumber) {
+    if (Object.keys(params).length === 1 && page !== params.pageNumber) {
       setPage(params.pageNumber);
       getWallpapers({ page: params.pageNumber });
     }
@@ -63,16 +62,11 @@ Home.propTypes = {
   params: PropTypes.shape({
     pageNumber: PropTypes.number,
   }),
-  category: PropTypes.shape({
-    name: PropTypes.string,
-    id: PropTypes.string,
-  }),
   total: PropTypes.number.isRequired,
 };
 
 Home.defaultProps = {
   params: null,
-  category: null,
 };
 
 const mapDispatchToProps = {
@@ -84,7 +78,6 @@ const mapDispatchToProps = {
 const mapStateToProps = createStructuredSelector({
   page: selectors.selectPage(),
   total: selectors.selectTotal(),
-  category: selectors.selectSelectedCategory(),
 });
 
 // Wrap the component to inject dispatch and state into it

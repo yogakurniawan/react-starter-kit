@@ -12,7 +12,7 @@ import Theme from '../../utils/theme';
 
 class Layout extends React.Component {
   render() {
-    const { width, categories, onCategoryClick, activeCategory } = this.props;
+    const { width, categories, showCategories, onCategoryClick, activeCategory } = this.props;
     const isMobileOrTablet = width <= 1024;
     const isSmallMobile = width <= 320;
     return (
@@ -25,7 +25,7 @@ class Layout extends React.Component {
           />
           <ChildrenWrapper>
             <Grid>
-              {!isMobileOrTablet && categories &&
+              {!isMobileOrTablet && showCategories &&
                 <Grid.Column style={{ paddingRight: 0 }} mobile={16} tablet={4} computer={3}>
                   <VerticalMenu
                     activeCategory={activeCategory}
@@ -36,8 +36,8 @@ class Layout extends React.Component {
               {!isMobileOrTablet &&
                 <Grid.Column
                   mobile={16}
-                  tablet={categories ? 12 : 16}
-                  computer={categories ? 13 : 16}
+                  tablet={showCategories ? 12 : 16}
+                  computer={showCategories ? 13 : 16}
                 >
                   {this.props.children}
                 </Grid.Column>}
@@ -53,6 +53,7 @@ class Layout extends React.Component {
 }
 
 Layout.propTypes = {
+  showCategories: PropTypes.bool,
   width: PropTypes.number.isRequired,
   activeCategory: PropTypes.string,
   onCategoryClick: PropTypes.func.isRequired,
@@ -68,6 +69,7 @@ Layout.propTypes = {
 Layout.defaultProps = {
   activeCategory: null,
   categories: null,
+  showCategories: true,
 };
 
 const enhancedLayout = Dimensions()(Layout);

@@ -28,6 +28,16 @@ const routes = {
     },
 
     {
+      path: '/model/:iphoneModel',
+      load: () => import(/* webpackChunkName: 'iphone-model' */ './iphone-model'),
+    },
+
+    {
+      path: '/model/:iphoneModel/page/:pageNumber',
+      load: () => import(/* webpackChunkName: 'iphone-model' */ './iphone-model'),
+    },
+
+    {
       path: '/wallpaper/:name',
       load: () => import(/* webpackChunkName: 'wallpaper' */ './wallpaper'),
     },

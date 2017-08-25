@@ -49,13 +49,14 @@ class Layout extends Component { // eslint-disable-line react/prefer-stateless-f
   }
 
   render() {
-    const { children, categories, activeCategory } = this.props;
+    const { children, categories, showCategories, activeCategory } = this.props;
     let thisActiveCategory = activeCategory;
     if (!thisActiveCategory) {
       thisActiveCategory = this.state.activeCategory;
     }
     return (
       <BaseLayout
+        showCategories={showCategories}
         activeCategory={thisActiveCategory}
         onCategoryClick={this.handleCategoryClick}
         categories={categories}
@@ -68,6 +69,7 @@ class Layout extends Component { // eslint-disable-line react/prefer-stateless-f
 
 Layout.propTypes = {
   activeCategory: PropTypes.string,
+  showCategories: PropTypes.bool,
   loadCategoriesSuccess: PropTypes.func.isRequired,
   setWallpapers: PropTypes.func.isRequired,
   setSelectedCategory: PropTypes.func.isRequired,
@@ -97,6 +99,7 @@ Layout.defaultProps = {
   params: null,
   activeCategory: null,
   categories: null,
+  showCategories: true,
 };
 
 const mapDispatchToProps = {
