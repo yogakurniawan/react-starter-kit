@@ -1,16 +1,18 @@
 import React from 'react';
 import Layout from '../../containers/Layout';
 import IphoneModel from '../../containers/IphoneModel';
+import * as globalActions from '../../actions/global';
 
 async function action({ fetch, params, store }) {
+  debugger;
   const state = store.getState();
   const categoryReducer = state.get('category');
   const globalReducer = state.get('global');
   const selectedIphoneModel = globalReducer.getIn(['payload', 'selectedIphoneModel']);
-  const iphoneModels = globalReducer.getIn(['payload', 'iphoneModels']);
+  const iphoneModelState = globalReducer.getIn(['payload', 'iphoneModel']);
   const categories = categoryReducer.getIn(['payload', 'categories']);
   let data = categories;
-  let iphoneModelsData = iphoneModels;
+  let thisIphoneModel = iphoneModelState;
   if (!data.length) {
     const resp = await fetch('/api/Categories', {
       method: 'GET',
@@ -18,20 +20,20 @@ async function action({ fetch, params, store }) {
     data = await resp.json();
     if (!data) throw new Error('Failed to load the categories.');
   }
-
-  if (!iphoneModelsData) {
-    const resp = await fetch('/api/IphoneModels', {
+  const { pageNumber, iphoneModel } = params;
+  if (!thisIphoneModel) {
+    const resp = await fetch(`/api/IphoneModels/${selectedIphoneModel}`, {
       method: 'GET',
     });
-    iphoneModelsData = await resp.json();
-    if (!iphoneModelsData) throw new Error('Failed to load the iphone models.');
+    thisIphoneModel = await resp.json();
+    store.dispatch(globalActions.setIphoneModel(thisIphoneModel));
+    if (!thisIphoneModel) throw new Error('Failed to load the iphone models.');
   }
-  const { pageNumber, iphoneModel } = params;
-  const theIphoneModel = iphoneModelsData.find(model => model.id === selectedIphoneModel);
+
   const parameters = {
     pageNumber: pageNumber ? parseInt(pageNumber, 10) : 1,
     iphoneModel: {
-      total: theIphoneModel.total_wallpaper,
+      total: thisIphoneModel.total_wallpaper,
       name: iphoneModel,
     },
   };

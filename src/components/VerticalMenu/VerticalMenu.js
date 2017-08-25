@@ -33,7 +33,7 @@ export default class VerticalMenu extends Component {
           {
             menuItems.map(item => (
               <Link
-                to={`/${item.name}`}
+                to={`/category/${item.name}`}
                 key={item.name}
                 data-name={item.name}
                 data-id={item.id}

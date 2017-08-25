@@ -37,15 +37,18 @@ class Layout extends Component { // eslint-disable-line react/prefer-stateless-f
   handleCategoryClick = ({ name, id }) => {
     const {
       setSelectedCategory,
-      setPage,
       setWallpapers,
       categories,
+      getWallpapersByCategory,
     } = this.props;
     const thisCategory = categories.find(item => item.id === id);
-    setPage(0);
     this.setState({ activeCategory: name });
     setWallpapers([]);
     setSelectedCategory({ name, id, total: thisCategory.total_wallpaper });
+    getWallpapersByCategory({
+      page: 1,
+      category: thisCategory,
+    });
   }
 
   render() {
@@ -72,8 +75,8 @@ Layout.propTypes = {
   showCategories: PropTypes.bool,
   loadCategoriesSuccess: PropTypes.func.isRequired,
   setWallpapers: PropTypes.func.isRequired,
+  getWallpapersByCategory: PropTypes.func.isRequired,
   setSelectedCategory: PropTypes.func.isRequired,
-  setPage: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
   categories: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.shape({
@@ -103,6 +106,7 @@ Layout.defaultProps = {
 };
 
 const mapDispatchToProps = {
+  getWallpapersByCategory: wallpaperActions.getWallpapersByCategory,
   setPage: wallpaperActions.setPage,
   setWallpapers: wallpaperActions.setWallpapers,
   loadCategoriesSuccess: categoryActions.loadCategoriesSuccess,

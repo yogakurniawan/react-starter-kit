@@ -4,7 +4,7 @@ import {
   SET_SCREEN_SIZE,
   SET_ACTIVE_CATEGORY,
   SET_SELECTED_IPHONE_MODEL,
-  SET_IPHONE_MODELS,
+  SET_IPHONE_MODEL,
 } from 'constants/ActionTypes';
 
 const initialState = fromJS({
@@ -12,16 +12,16 @@ const initialState = fromJS({
     width: null,
     activeCategory: null,
     selectedIphoneModel: null,
-    iphoneModels: null,
+    iphoneModel: null,
   },
 });
 
 function global(state = initialState, action) {
   const { payload } = action;
   switch (action.type) {
-    case SET_IPHONE_MODELS:
+    case SET_IPHONE_MODEL:
       return state
-        .setIn(['payload', 'iphoneModels'], payload);
+        .setIn(['payload', 'iphoneModel'], payload);
     case SET_SELECTED_IPHONE_MODEL:
       return state
         .setIn(['payload', 'selectedIphoneModel'], payload);

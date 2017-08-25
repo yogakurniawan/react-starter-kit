@@ -2,6 +2,7 @@ import {
   SET_SCREEN_SIZE,
   SET_ACTIVE_CATEGORY,
   SET_SELECTED_IPHONE_MODEL,
+  SET_IPHONE_MODEL,
 } from 'constants/ActionTypes';
 
 export function setScreenSize(width) {
@@ -21,6 +22,13 @@ export function setActiveCategory(category) {
 export function setSelectedIphoneModel(model) {
   return {
     type: SET_SELECTED_IPHONE_MODEL,
+    payload: model,
+  };
+}
+
+export function setIphoneModel(model) {
+  return {
+    type: SET_IPHONE_MODEL,
     payload: model,
   };
 }

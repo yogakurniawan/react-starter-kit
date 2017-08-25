@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Grid, Header, Loader } from 'semantic-ui-react';
+import { Grid, Loader } from 'semantic-ui-react';
 import WallpaperCard from '../../components/WallpaperCard';
-import Pagination from '../../components/Pagination';
-import { PER_PAGE } from '../../constants/index';
 import { setSelectedIphoneModel } from '../../actions/global';
 import { saveItem } from '../../utils/common';
 import * as selectors from './selectors';
@@ -29,14 +27,9 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
   }
 
   render() {
-    const { wallpapers, page, total, width, route } = this.props;
+    const { wallpapers } = this.props;
     return (
       <Grid>
-        <Grid.Row columns={1}>
-          <Grid.Column>
-            <Header as="h2" textAlign="center">Cool iPhone Wallpapers</Header>
-          </Grid.Column>
-        </Grid.Row>
         {
           !wallpapers.length &&
           <Loader
@@ -57,27 +50,12 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
             ))
           }
         </Grid.Row>
-        {wallpapers.length > 0 && <Grid.Row columns={1}>
-          <Grid.Column textAlign="center">
-            <Pagination
-              screenWidth={width}
-              route={route}
-              page={page}
-              perPage={parseInt(PER_PAGE, 10)}
-              total={total}
-              setPage={() => { }}
-            />
-          </Grid.Column>
-        </Grid.Row>}
       </Grid>
     );
   }
 }
 
 BasePage.propTypes = {
-  route: PropTypes.string,
-  page: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
   categories: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
@@ -90,7 +68,6 @@ BasePage.propTypes = {
     name: PropTypes.string,
     id: PropTypes.string,
   }).isRequired,
-  total: PropTypes.number.isRequired,
   setIphoneModel: PropTypes.func.isRequired,
   wallpapers: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.shape({
@@ -117,10 +94,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = createStructuredSelector({
   wallpapers: selectors.selectWallpapers(),
-  width: selectors.selectScreenWidth(),
   category: selectors.selectSelectedCategory(),
-  page: selectors.selectPage(),
-  total: selectors.selectTotal(),
   categories: selectors.selectCategories(),
 });
 

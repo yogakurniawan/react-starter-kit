@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Dropdown, Input, Menu } from 'semantic-ui-react';
+import Link from '../../components/Link';
 
 class Header extends React.Component {
   constructor(props) {
@@ -20,13 +21,20 @@ class Header extends React.Component {
         <Menu.Item>
           <h4>Logo</h4>
         </Menu.Item>
+        <Link
+          to="/"
+          name="home"
+          component={Menu.Item}
+        >
+          Home
+        </Link>
         <Menu.Item
           name="MyCollection"
           active={activeItem === 'MyCollection'}
           content="My Collection"
           onClick={this.handleItemClick}
         />
-        { isMobileOrTablet &&
+        {isMobileOrTablet &&
           <Dropdown scrolling item text="Category">
             <Dropdown.Menu>
               {

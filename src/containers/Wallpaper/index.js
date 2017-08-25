@@ -46,7 +46,7 @@ class Wallpaper extends Component { // eslint-disable-line react/prefer-stateles
             <Breadcrumb size="tiny">
               <Link to="/" component={Breadcrumb.Section}>Home</Link>
               <Breadcrumb.Divider icon="right angle" />
-              <Link to={`/${wallpaper.category}`} component={Breadcrumb.Section}>{wallpaper.category}</Link>
+              <Link to={`/category/${wallpaper.category}`} component={Breadcrumb.Section}>{wallpaper.category}</Link>
               <Breadcrumb.Divider icon="right angle" />
               <Breadcrumb.Section active>{width <= 414 ? name : wallpaper.name}</Breadcrumb.Section>
             </Breadcrumb>

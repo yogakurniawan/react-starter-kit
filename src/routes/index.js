@@ -18,12 +18,12 @@ const routes = {
     },
 
     {
-      path: '/:category',
+      path: '/category/:category',
       load: () => import(/* webpackChunkName: 'category' */ './category'),
     },
 
     {
-      path: '/:category/page/:pageNumber',
+      path: '/category/:category/page/:pageNumber',
       load: () => import(/* webpackChunkName: 'category' */ './category'),
     },
 
