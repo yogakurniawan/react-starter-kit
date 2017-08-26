@@ -12,12 +12,12 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
 
   onImageClick = (wallpaper) => {
     const { categories, category } = this.props;
-    let thisCategory = category.name;
+    let thisCategory = category;
     if (!thisCategory) {
-      thisCategory = categories.find(item => item.id === wallpaper.categoryId).name;
+      thisCategory = categories.find(item => item.id === wallpaper.categoryId);
     }
 
-    saveItem('selectedWallpaper', { ...wallpaper, category: thisCategory });
+    saveItem('selectedWallpaper', { ...wallpaper, category: thisCategory.name });
   }
 
   onLabelClick = (wallpaper) => {
