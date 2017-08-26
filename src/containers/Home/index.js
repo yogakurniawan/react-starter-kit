@@ -5,6 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { Grid, Header } from 'semantic-ui-react';
 import * as wallpaperActions from 'actions/wallpaper';
 import BasePage from '../BasePage';
+import * as categoryActions from '../../actions/category';
 import Pagination from '../../components/Pagination';
 import { PER_PAGE } from '../../constants/index';
 import * as selectors from '../BasePage/selectors';
@@ -20,24 +21,24 @@ class Home extends Component { // eslint-disable-line react/prefer-stateless-fun
 
   componentDidMount() {
     const {
-      total,
       getWallpapers,
       getTotalWallpaper,
+      setSelectedCategory,
     } = this.props;
     const { page } = this.state;
-    if (total === 0) {
-      getTotalWallpaper();
-    }
+    getTotalWallpaper();
     getWallpapers({ page });
+    setSelectedCategory(null);
   }
 
   componentWillReceiveProps(props) {
     const {
-      total,
-      getTotalWallpaper,
+      params,
+      getWallpapers,
     } = props;
-    if (total === 0) {
-      getTotalWallpaper();
+    if (params.pageNumber !== this.state.page) {
+      getWallpapers({ page: params.pageNumber });
+      this.setState({ page: params.pageNumber });
     }
   }
 
@@ -83,6 +84,7 @@ class Home extends Component { // eslint-disable-line react/prefer-stateless-fun
 Home.propTypes = {
   width: PropTypes.number.isRequired,
   getWallpapers: PropTypes.func.isRequired,
+  setSelectedCategory: PropTypes.func.isRequired,
   getTotalWallpaper: PropTypes.func.isRequired,
   params: PropTypes.shape({
     pageNumber: PropTypes.number,
@@ -91,6 +93,7 @@ Home.propTypes = {
   wallpapers: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
+      code: PropTypes.string,
       thumbnail: PropTypes.string,
       original: PropTypes.string,
       categoryId: PropTypes.string,
@@ -106,6 +109,7 @@ Home.defaultProps = {
 };
 
 const mapDispatchToProps = {
+  setSelectedCategory: categoryActions.setSelectedCategory,
   getWallpapers: wallpaperActions.getWallpapers,
   getTotalWallpaper: wallpaperActions.getTotalWallpaper,
 };

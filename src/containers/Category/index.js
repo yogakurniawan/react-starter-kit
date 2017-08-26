@@ -21,55 +21,55 @@ class Category extends Component { // eslint-disable-line react/prefer-stateless
   componentDidMount() {
     const {
       setTotalWallpaper,
-      category,
       params,
       getWallpapersByCategory,
     } = this.props;
     const { page } = this.state;
-    const thisCategory = category.name ? category : params.category;
+    const thisCategory = params.category;
     setTotalWallpaper(thisCategory.total);
     getWallpapersByCategory({
       page,
-      category: category.name ? category : params.category,
+      category: thisCategory,
     });
   }
 
   componentWillReceiveProps(props) {
     const {
       setTotalWallpaper,
-      category,
       params,
+      getWallpapersByCategory,
     } = props;
     const { page } = this.state;
     this.setState({ page: parseInt(page, 10) });
-    const thisCategory = category.name ? category : params.category;
+    const thisCategory = params.category;
     setTotalWallpaper(thisCategory.total);
-    if (category.name !== params.category.name) {
-      this.setState({ page: 1 });
+    this.setState({ page: params.pageNumber });
+    if (params.pageNumber !== this.state.page) {
+      getWallpapersByCategory({
+        page: params.pageNumber,
+        category: thisCategory,
+      });
+      this.setState({ page: params.pageNumber });
     }
   }
 
   goToPage = (page) => {
     const {
-      category,
       params,
       getWallpapersByCategory,
     } = this.props;
     this.setState({ page: parseInt(page, 10) });
     getWallpapersByCategory({
       page,
-      category: category.name ? category : params.category,
+      category: params.category,
     });
   };
 
   render() {
-    const { category, params, total, width, wallpapers } = this.props;
+    const { params, total, width, wallpapers } = this.props;
     const { page } = this.state;
     const categoryFromRoute = params.category;
-    let route = category.name;
-    if (categoryFromRoute && !route) {
-      route = categoryFromRoute.name;
-    }
+    const route = categoryFromRoute.name;
     return (
       <div>
         <Grid>
@@ -102,10 +102,6 @@ class Category extends Component { // eslint-disable-line react/prefer-stateless
 Category.propTypes = {
   total: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
-  category: PropTypes.shape({
-    name: PropTypes.string,
-    id: PropTypes.string,
-  }).isRequired,
   getWallpapersByCategory: PropTypes.func.isRequired,
   setTotalWallpaper: PropTypes.func.isRequired,
   params: PropTypes.shape({
@@ -115,6 +111,7 @@ Category.propTypes = {
   wallpapers: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
+      code: PropTypes.string,
       thumbnail: PropTypes.string,
       original: PropTypes.string,
       categoryId: PropTypes.string,

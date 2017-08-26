@@ -7,11 +7,11 @@ export function escapeRegexCharacters(str) {
 }
 
 export function replaceSpaceWithDash(str) {
-  return str.replace(/\s+/g, '-').toLowerCase();
+  return str.replace(/\s+/g, '-');
 }
 
 export function replaceDashWithSpace(str) {
-  return str.replace(/-/g, ' ').toLowerCase();
+  return str.replace(/-/g, ' ');
 }
 
 export const loadItem = (key) => {

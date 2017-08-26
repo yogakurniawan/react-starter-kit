@@ -44,7 +44,13 @@ const selectSelectedIphoneModel = () => createSelector(
   state => state.getIn(['payload', 'selectedIphoneModel']),
 );
 
+const selectIphoneModel = () => createSelector(
+  global,
+  state => state.getIn(['payload', 'iphoneModel']),
+);
+
 export {
+  selectIphoneModel,
   selectSelectedIphoneModel,
   selectScreenWidth,
   selectCategories,

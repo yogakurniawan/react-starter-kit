@@ -51,7 +51,7 @@ function WallpaperCard({ wallpaper, onImageClick, onLabelClick }) {
                   key={Math.random()}
                   as="a"
                   onClick={onLabelClick}
-                  to={`/model/${replaceSpaceWithDash(model)}`}
+                  to={`/model/${replaceSpaceWithDash(model)}-${wallpaper.code}`}
                   component={Label}
                 >
                   {model}

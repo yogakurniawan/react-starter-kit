@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Grid, Loader } from 'semantic-ui-react';
 import WallpaperCard from '../../components/WallpaperCard';
-import { setSelectedIphoneModel } from '../../actions/global';
+import { setSelectedIphoneModel, getIphoneModelById } from '../../actions/global';
 import { saveItem } from '../../utils/common';
 import * as selectors from './selectors';
 
@@ -21,9 +21,11 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
   }
 
   onLabelClick = (wallpaper) => {
-    const { setIphoneModel } = this.props;
-    setIphoneModel(wallpaper.iphoneModelId);
-    saveItem('selectedIphoneModel', wallpaper.iphoneModelId);
+    const { setIphoneModel, selectedIphoneModel, getIphoneModel } = this.props;
+    if (selectedIphoneModel !== wallpaper.iphoneModelId) {
+      setIphoneModel(wallpaper.iphoneModelId);
+      getIphoneModel({ id: wallpaper.iphoneModelId });
+    }
   }
 
   render() {
@@ -67,11 +69,14 @@ BasePage.propTypes = {
   category: PropTypes.shape({
     name: PropTypes.string,
     id: PropTypes.string,
-  }).isRequired,
+  }),
+  selectedIphoneModel: PropTypes.string,
   setIphoneModel: PropTypes.func.isRequired,
+  getIphoneModel: PropTypes.func.isRequired,
   wallpapers: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
+      code: PropTypes.string,
       thumbnail: PropTypes.string,
       original: PropTypes.string,
       categoryId: PropTypes.string,
@@ -86,16 +91,20 @@ BasePage.defaultProps = {
   categoryFromRoute: null,
   categories: null,
   route: null,
+  category: null,
+  selectedIphoneModel: null,
 };
 
 const mapDispatchToProps = {
   setIphoneModel: setSelectedIphoneModel,
+  getIphoneModel: getIphoneModelById,
 };
 
 const mapStateToProps = createStructuredSelector({
   wallpapers: selectors.selectWallpapers(),
   category: selectors.selectSelectedCategory(),
   categories: selectors.selectCategories(),
+  selectedIphoneModel: selectors.selectSelectedIphoneModel(),
 });
 
 // Wrap the component to inject dispatch and state into it

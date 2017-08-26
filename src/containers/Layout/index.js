@@ -10,13 +10,6 @@ import BaseLayout from '../../components/BaseLayout';
 import * as selectors from '../BasePage/selectors';
 
 class Layout extends Component { // eslint-disable-line react/prefer-stateless-function
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeCategory: props.activeCategory,
-    };
-  }
-
   componentDidMount() {
     const {
       selectCategories,
@@ -52,15 +45,11 @@ class Layout extends Component { // eslint-disable-line react/prefer-stateless-f
   }
 
   render() {
-    const { children, categories, showCategories, activeCategory } = this.props;
-    let thisActiveCategory = activeCategory;
-    if (!thisActiveCategory) {
-      thisActiveCategory = this.state.activeCategory;
-    }
+    const { children, categories, showCategories, category } = this.props;
     return (
       <BaseLayout
         showCategories={showCategories}
-        activeCategory={thisActiveCategory}
+        activeCategory={category ? category.name : ''}
         onCategoryClick={this.handleCategoryClick}
         categories={categories}
       >
@@ -71,7 +60,6 @@ class Layout extends Component { // eslint-disable-line react/prefer-stateless-f
 }
 
 Layout.propTypes = {
-  activeCategory: PropTypes.string,
   showCategories: PropTypes.bool,
   loadCategoriesSuccess: PropTypes.func.isRequired,
   setWallpapers: PropTypes.func.isRequired,
@@ -96,10 +84,15 @@ Layout.propTypes = {
   ]).isRequired,
   setScreenSize: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired,
+  category: PropTypes.shape({
+    name: PropTypes.string,
+    id: PropTypes.string,
+  }),
 };
 
 Layout.defaultProps = {
   params: null,
+  category: null,
   activeCategory: null,
   categories: null,
   showCategories: true,
@@ -117,6 +110,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = createStructuredSelector({
   selectCategories: selectors.selectCategories(),
+  category: selectors.selectSelectedCategory(),
 });
 
 const enhancedLayout = Dimensions()(Layout);
