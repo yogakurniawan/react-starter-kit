@@ -17,7 +17,11 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
       thisCategory = categories.find(item => item.id === wallpaper.categoryId);
     }
 
-    saveItem('selectedWallpaper', { ...wallpaper, category: thisCategory.name });
+    saveItem('selectedWallpaper', {
+      ...wallpaper,
+      category: thisCategory.name,
+      total: thisCategory.total_wallpaper,
+    });
   }
 
   onLabelClick = (wallpaper) => {
@@ -43,12 +47,19 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
         <Grid.Row centered>
           {
             wallpapers.map(wallpaper => (
-              <WallpaperCard
-                onLabelClick={() => this.onLabelClick(wallpaper)}
-                onImageClick={() => this.onImageClick(wallpaper)}
+              <Grid.Column
+                style={{ marginBottom: 15, paddingRight: 20, paddingLeft: 20 }}
+                mobile={16}
+                tablet={5}
                 key={wallpaper.id}
-                wallpaper={wallpaper}
-              />
+                computer={4}
+              >
+                <WallpaperCard
+                  onLabelClick={() => this.onLabelClick(wallpaper)}
+                  onImageClick={() => this.onImageClick(wallpaper)}
+                  wallpaper={wallpaper}
+                />
+              </Grid.Column>
             ))
           }
         </Grid.Row>

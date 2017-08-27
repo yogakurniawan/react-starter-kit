@@ -18,7 +18,7 @@ async function action({ fetch, params, store }) {
     chunks: ['wallpaper'],
     title: 'Wallpaper Page',
     component: <Layout showCategories={false} categories={data}>
-      <Wallpaper name={params.name} />
+      <Wallpaper params={params} />
     </Layout>,
   };
 }

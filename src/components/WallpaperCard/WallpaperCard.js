@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Popup, Card, Label, Image } from 'semantic-ui-react';
+import { Popup, Card, Label, Image } from 'semantic-ui-react';
 import {
   IPHONE_MODELS,
 } from 'constants/index';
@@ -26,42 +26,35 @@ function WallpaperCard({ wallpaper, onImageClick, onLabelClick }) {
         {name}
       </Card.Header>);
   return (
-    <Grid.Column
-      style={{ marginBottom: 15, paddingRight: 20, paddingLeft: 20 }}
-      mobile={16}
-      tablet={5}
-      computer={4}
-    >
-      <Card fluid centered>
-        <Link
-          as="a"
-          src={wallpaper.thumbnail}
-          onClick={onImageClick}
-          to={`/wallpaper/${replaceSpaceWithDash(wallpaper.name)}`}
-          component={Image}
-        />
-        <Card.Content>
-          {WallpaperHeader}
-        </Card.Content>
-        <Card.Content extra>
-          <Label.Group size="mini" color="teal">
-            {
-              iphoneModels.map(model => (
-                <Link
-                  key={Math.random()}
-                  as="a"
-                  onClick={onLabelClick}
-                  to={`/model/${replaceSpaceWithDash(model)}-${wallpaper.code}`}
-                  component={Label}
-                >
-                  {model}
-                </Link>
-              ))
-            }
-          </Label.Group>
-        </Card.Content>
-      </Card>
-    </Grid.Column>
+    <Card fluid centered>
+      <Link
+        as="a"
+        src={wallpaper.thumbnail}
+        onClick={onImageClick}
+        to={`/wallpaper/${replaceSpaceWithDash(wallpaper.name)}`}
+        component={Image}
+      />
+      <Card.Content>
+        {WallpaperHeader}
+      </Card.Content>
+      <Card.Content extra>
+        <Label.Group size="mini" color="teal">
+          {
+            iphoneModels.map(model => (
+              <Link
+                key={Math.random()}
+                as="a"
+                onClick={onLabelClick}
+                to={`/model/${replaceSpaceWithDash(model)}-${wallpaper.code}`}
+                component={Label}
+              >
+                {model}
+              </Link>
+            ))
+          }
+        </Label.Group>
+      </Card.Content>
+    </Card>
   );
 }
 
