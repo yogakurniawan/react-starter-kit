@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Breadcrumb, Popup, Image, Button, Card, Grid, Header, Icon } from 'semantic-ui-react';
+import { Breadcrumb, Loader, Popup, Image, Button, Card, Grid, Header, Icon } from 'semantic-ui-react';
 import { loadItem, saveItem, replaceSpaceWithDash } from '../../utils/common';
 import history from '../../history';
 import { PER_PAGE } from '../../constants/index';
@@ -13,21 +13,28 @@ import * as selectors from '../BasePage/selectors';
 class Wallpaper extends Component { // eslint-disable-line react/prefer-stateless-function
 
   componentDidMount() {
-    const { getWallpapersByCategory, wallpapers } = this.props;
-    const wallpaperFromStorage = loadItem('selectedWallpaper');
-    const totalPage = wallpaperFromStorage.total / PER_PAGE;
-    if (!wallpaperFromStorage) {
+    const { getWallpapersByCategory, sendUpdateWallpaper, wallpapers } = this.props;
+    const wallpaper = loadItem('selectedWallpaper');
+    const totalView = wallpaper.total_view + 1;
+    const newWallpaper = { ...wallpaper, total_view: totalView };
+    const totalPage = wallpaper.total / PER_PAGE;
+    if (!wallpaper) {
       history.push('/');
     }
     if (!wallpapers.size) {
       getWallpapersByCategory({
         page: Math.floor(Math.random() * totalPage) + 1,
         category: {
-          id: wallpaperFromStorage.categoryId,
-          name: wallpaperFromStorage.category,
+          id: wallpaper.categoryId,
+          name: wallpaper.category,
         },
       });
     }
+    sendUpdateWallpaper({
+      id: wallpaper.id,
+      total_view: totalView,
+    });
+    saveItem('selectedWallpaper', newWallpaper);
   }
 
   componentWillReceiveProps() {
@@ -38,11 +45,27 @@ class Wallpaper extends Component { // eslint-disable-line react/prefer-stateles
   }
 
   onClick = (wallpaper) => {
+    const { sendUpdateWallpaper } = this.props;
     const selectedWallpaper = loadItem('selectedWallpaper');
-    saveItem('selectedWallpaper', { ...selectedWallpaper, ...wallpaper });
+    const totalView = wallpaper.total_view + 1;
+    const newWallpaper = { ...wallpaper, total_view: totalView };
+    sendUpdateWallpaper({
+      id: wallpaper.id,
+      total_view: totalView,
+    });
+    saveItem('selectedWallpaper', { ...selectedWallpaper, ...newWallpaper });
   }
 
   download = (url) => {
+    const { sendUpdateWallpaper } = this.props;
+    const wallpaper = loadItem('selectedWallpaper');
+    const totalDownload = wallpaper.total_download + 1;
+    sendUpdateWallpaper({
+      id: wallpaper.id,
+      total_download: wallpaper.total_download + 1,
+    });
+    const newWallpaper = { ...wallpaper, total_download: totalDownload };
+    saveItem('selectedWallpaper', newWallpaper);
     const tempLink = document.createElement('a');
     tempLink.style.display = 'none';
     tempLink.href = url;
@@ -80,6 +103,12 @@ class Wallpaper extends Component { // eslint-disable-line react/prefer-stateles
             </Grid.Column>
           </Grid.Row>
           <Grid.Row centered>
+            <Grid.Column width={12} textAlign="center">
+              <Icon link circular name="like" />
+              {`${wallpaper.total_like}`}
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row centered>
             <Grid.Column mobile={16} tablet={6} computer={4}>
               <Button fluid color="green" onClick={() => this.download(wallpaper.original)}>
                 <Icon name="cloud download" />Download Wallpaper
@@ -103,6 +132,13 @@ class Wallpaper extends Component { // eslint-disable-line react/prefer-stateles
             </Grid.Column>
           </Grid.Row>
           <Grid.Row centered>
+            {
+              !theWallpapers.length &&
+              <Loader
+                active
+                inline="centered"
+              />
+            }
             {
               theWallpapers.map(wall => (
                 <Grid.Column
@@ -152,6 +188,7 @@ Wallpaper.propTypes = {
     })).isRequired,
     PropTypes.object,
   ]).isRequired,
+  sendUpdateWallpaper: PropTypes.func.isRequired,
 };
 
 Wallpaper.defaultProps = {
@@ -159,6 +196,7 @@ Wallpaper.defaultProps = {
 };
 
 const mapDispatchToProps = {
+  sendUpdateWallpaper: wallpaperActions.updateWallpaper,
   getWallpapersByCategory: wallpaperActions.getWallpapersByCategory,
 };
 

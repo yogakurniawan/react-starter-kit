@@ -5,6 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { Grid, Loader } from 'semantic-ui-react';
 import WallpaperCard from '../../components/WallpaperCard';
 import { setSelectedIphoneModel, getIphoneModelById } from '../../actions/global';
+import { updateWallpaper } from '../../actions/wallpaper';
 import { saveItem } from '../../utils/common';
 import * as selectors from './selectors';
 
@@ -32,6 +33,14 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
     }
   }
 
+  onClickLike = (wallpaper) => {
+    const { sendUpdateWallpaper } = this.props;
+    sendUpdateWallpaper({
+      id: wallpaper.id,
+      total_like: wallpaper.total_like + 1,
+    });
+  }
+
   render() {
     const { wallpapers } = this.props;
     return (
@@ -44,17 +53,18 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
             inline="centered"
           />
         }
-        <Grid.Row centered>
+        <Grid.Row>
           {
             wallpapers.map(wallpaper => (
               <Grid.Column
-                style={{ marginBottom: 15, paddingRight: 20, paddingLeft: 20 }}
+                style={{ marginBottom: 15 }}
                 mobile={16}
                 tablet={5}
                 key={wallpaper.id}
-                computer={4}
+                computer={5}
               >
                 <WallpaperCard
+                  onClickLike={() => this.onClickLike(wallpaper)}
                   onLabelClick={() => this.onLabelClick(wallpaper)}
                   onImageClick={() => this.onImageClick(wallpaper)}
                   wallpaper={wallpaper}
@@ -83,6 +93,7 @@ BasePage.propTypes = {
   }),
   selectedIphoneModel: PropTypes.string,
   setIphoneModel: PropTypes.func.isRequired,
+  sendUpdateWallpaper: PropTypes.func.isRequired,
   getIphoneModel: PropTypes.func.isRequired,
   wallpapers: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.shape({
@@ -109,6 +120,7 @@ BasePage.defaultProps = {
 const mapDispatchToProps = {
   setIphoneModel: setSelectedIphoneModel,
   getIphoneModel: getIphoneModelById,
+  sendUpdateWallpaper: updateWallpaper,
 };
 
 const mapStateToProps = createStructuredSelector({

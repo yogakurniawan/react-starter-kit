@@ -4,9 +4,9 @@ import {
   LOAD_WALLPAPERS,
   LOAD_WALLPAPERS_SUCCESS,
   LOAD_WALLPAPERS_ERROR,
-  LOAD_WALLPAPER,
-  LOAD_WALLPAPER_SUCCESS,
-  LOAD_WALLPAPER_ERROR,
+  UPDATE_WALLPAPER,
+  UPDATE_WALLPAPER_SUCCESS,
+  UPDATE_WALLPAPER_ERROR,
   GET_TOTAL_WALLPAPER,
   GET_TOTAL_WALLPAPER_SUCCESS,
   GET_TOTAL_WALLPAPER_ERROR,
@@ -19,11 +19,13 @@ const initialState = fromJS({
     loadWallpapers: false,
     loadWallpaper: false,
     getTotalWallpaper: false,
+    sendLike: false,
   },
   error: {
     loadWallpapers: null,
     loadWallpaper: null,
     getTotalWallpaper: null,
+    sendLike: null,
   },
   payload: {
     wallpapers: [],
@@ -42,21 +44,6 @@ function wallpaper(state = initialState, action) {
     case SET_TOTAL_WALLPAPER:
       return state
         .setIn(['payload', 'total'], payload);
-    case LOAD_WALLPAPER:
-      return state
-        .setIn(['loading', 'loadWallpaper'], true)
-        .setIn(['error', 'loadWallpaper'], null)
-        .setIn(['payload', 'wallpaper'], null);
-    case LOAD_WALLPAPER_SUCCESS:
-      return state
-        .setIn(['loading', 'loadWallpaper'], false)
-        .setIn(['error', 'loadWallpaper'], null)
-        .setIn(['payload', 'wallpaper'], payload);
-    case LOAD_WALLPAPER_ERROR:
-      return state
-        .setIn(['error', 'loadWallpaper'], error)
-        .setIn(['loading', 'loadWallpaper'], false)
-        .setIn(['payload', 'wallpaper'], null);
     case LOAD_WALLPAPERS:
       return state
         .setIn(['loading', 'loadWallpapers'], true)
@@ -87,6 +74,28 @@ function wallpaper(state = initialState, action) {
         .setIn(['error', 'getTotalWallpaper'], error)
         .setIn(['loading', 'getTotalWallpaper'], false)
         .setIn(['payload', 'total'], 0);
+    case UPDATE_WALLPAPER:
+      return state
+        .setIn(['loading', 'sendLike'], true)
+        .setIn(['error', 'sendLike'], null);
+    case UPDATE_WALLPAPER_SUCCESS: {
+      const wallpaperList = state.getIn(['payload', 'wallpapers']).slice(0);
+      const newWallpaperList = wallpaperList.map((item) => {
+        let result = item;
+        if (result.id === payload.id) {
+          result = payload;
+        }
+        return result;
+      });
+      return state
+        .setIn(['loading', 'sendLike'], false)
+        .setIn(['error', 'sendLike'], null)
+        .setIn(['payload', 'wallpapers'], newWallpaperList);
+    }
+    case UPDATE_WALLPAPER_ERROR:
+      return state
+        .setIn(['error', 'sendLike'], error)
+        .setIn(['loading', 'sendLike'], false);
     default:
       return state;
   }

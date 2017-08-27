@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Popup, Card, Label, Image } from 'semantic-ui-react';
+import { Popup, Card, Label, Icon, Image } from 'semantic-ui-react';
 import {
   IPHONE_MODELS,
 } from 'constants/index';
 import Link from '../../components/Link';
 import { replaceSpaceWithDash } from '../../utils/common';
 
-function WallpaperCard({ wallpaper, onImageClick, onLabelClick }) {
+function WallpaperCard({ wallpaper, onImageClick, onLabelClick, onClickLike }) {
   const iphoneModels = IPHONE_MODELS[wallpaper.iphoneModelId];
   const name = wallpaper.name.length > 45 ?
                 `${wallpaper.name.substring(0, 45)} ...` : wallpaper.name;
@@ -26,7 +26,7 @@ function WallpaperCard({ wallpaper, onImageClick, onLabelClick }) {
         {name}
       </Card.Header>);
   return (
-    <Card fluid centered>
+    <Card fluid>
       <Link
         as="a"
         src={wallpaper.thumbnail}
@@ -36,6 +36,20 @@ function WallpaperCard({ wallpaper, onImageClick, onLabelClick }) {
       />
       <Card.Content>
         {WallpaperHeader}
+      </Card.Content>
+      <Card.Content extra>
+        <a>
+          <Icon name="like" onClick={onClickLike} />
+          {`${wallpaper.total_like}`}
+        </a>
+        <div style={{ float: 'right' }}>
+          <span style={{ marginRight: 10 }}>
+            {`${wallpaper.total_download}`} Downloads
+          </span>
+          <span>
+            {`${wallpaper.total_view}`} Views
+          </span>
+        </div>
       </Card.Content>
       <Card.Content extra>
         <Label.Group size="mini" color="teal">
@@ -69,11 +83,13 @@ WallpaperCard.propTypes = {
   }).isRequired,
   onImageClick: PropTypes.func,
   onLabelClick: PropTypes.func,
+  onClickLike: PropTypes.func,
 };
 
 WallpaperCard.defaultProps = {
   onImageClick: null,
   onLabelClick: null,
+  onClickLike: null,
 };
 
 export default WallpaperCard;

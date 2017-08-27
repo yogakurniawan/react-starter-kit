@@ -1,6 +1,7 @@
+import axios from 'axios';
 import {
   LOAD_WALLPAPERS,
-  LOAD_WALLPAPER,
+  UPDATE_WALLPAPER,
   LOAD_WALLPAPERS_SUCCESS,
   SET_TOTAL_WALLPAPER,
   GET_TOTAL_WALLPAPER,
@@ -70,16 +71,6 @@ export function getWallpapersByIphoneModel({ page, modelId }) {
   };
 }
 
-export function getWallpaper({ id }) {
-  const queryParams = {
-    'filter[where][id]': id,
-  };
-  return {
-    type: LOAD_WALLPAPER,
-    promise: request(WALLPAPERS_API, { queryParams }),
-  };
-}
-
 export function getTotalWallpaper() {
   return {
     type: GET_TOTAL_WALLPAPER,
@@ -95,5 +86,12 @@ export function getWallpapers({ page }) {
   return {
     type: LOAD_WALLPAPERS,
     promise: request(WALLPAPERS_API, { queryParams }),
+  };
+}
+
+export function updateWallpaper(data) {
+  return {
+    type: UPDATE_WALLPAPER,
+    promise: axios.put(WALLPAPERS_API, data),
   };
 }

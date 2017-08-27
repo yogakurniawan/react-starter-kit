@@ -26,7 +26,7 @@ class Layout extends React.Component {
           <ChildrenWrapper>
             <Grid>
               {!isMobileOrTablet && showCategories &&
-                <Grid.Column style={{ paddingRight: 0 }} mobile={16} tablet={4} computer={3}>
+                <Grid.Column mobile={16} tablet={4} computer={4}>
                   <VerticalMenu
                     activeCategory={activeCategory}
                     onCategoryClick={onCategoryClick}
@@ -37,7 +37,7 @@ class Layout extends React.Component {
                 <Grid.Column
                   mobile={16}
                   tablet={showCategories ? 12 : 16}
-                  computer={showCategories ? 13 : 16}
+                  computer={showCategories ? 12 : 16}
                 >
                   {this.props.children}
                 </Grid.Column>}
