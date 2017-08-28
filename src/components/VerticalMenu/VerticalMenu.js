@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Menu, Header, Label } from 'semantic-ui-react';
+import { replaceSpaceWithDash } from '../../utils/common';
 import Link from '../../components/Link';
 
 export default class VerticalMenu extends Component {
   handleItemClick = (event) => {
     event.stopPropagation();
-    const name = event.currentTarget.dataset.name;
     const id = event.currentTarget.dataset.id;
-    const { onCategoryClick } = this.props;
-    onCategoryClick({ name, id });
-    this.setState({ activeItem: name });
+    const { onClick } = this.props;
+    onClick({ id });
   };
 
   render() {
-    const { menuItems, activeCategory } = this.props;
+    const { menuItems, activeItem, title, name } = this.props;
     if (!menuItems.length) {
       return (
         <Menu vertical>
@@ -28,25 +27,24 @@ export default class VerticalMenu extends Component {
     }
     return (
       <div style={{ marginTop: 25 }}>
-        <Header as="h4">Categories</Header>
+        <Header as="h4">{title}</Header>
         <Menu vertical>
           {
             menuItems.map(item => (
               <Link
-                to={`/category/${item.name}`}
+                to={`/${name}/${replaceSpaceWithDash(item.name)}`}
                 key={item.name}
-                data-name={item.name}
                 data-id={item.id}
-                active={activeCategory === item.name}
+                active={activeItem === item.name}
                 onClick={this.handleItemClick}
                 component={Menu.Item}
               >
                 {
-                  activeCategory === item.name &&
+                  activeItem === item.name &&
                     <Label color="teal">{item.total_wallpaper}</Label>
                 }
                 {
-                  activeCategory !== item.name &&
+                  activeItem !== item.name &&
                     <Label>{item.total_wallpaper}</Label>
                 }
                 {item.name}
@@ -60,17 +58,21 @@ export default class VerticalMenu extends Component {
 }
 
 VerticalMenu.propTypes = {
+  name: PropTypes.string,
+  title: PropTypes.string,
+  activeItem: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
   menuItems: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
     })),
     PropTypes.object,
   ]),
-  activeCategory: PropTypes.string,
-  onCategoryClick: PropTypes.func.isRequired,
 };
 
 VerticalMenu.defaultProps = {
   menuItems: [],
-  activeCategory: null,
+  title: null,
+  name: null,
+  activeItem: null,
 };

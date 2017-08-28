@@ -6,22 +6,37 @@ import * as globalActions from '../../actions/global';
 
 async function action({ fetch, params, store }) {
   const state = store.getState();
-  const categoryReducer = state.get('category');
   const globalReducer = state.get('global');
   const modelId = globalReducer.getIn(['payload', 'selectedIphoneModel']);
   const model = globalReducer.getIn(['payload', 'iphoneModel']);
+  const categoryReducer = state.get('category');
+  const iphoneModelReducer = state.get('iphoneModel');
   const categories = categoryReducer.getIn(['payload', 'categories']);
-  let data = categories;
-  let thisIphoneModel = model;
-  if (Immutable.Map.isMap(thisIphoneModel)) {
-    thisIphoneModel = model.toObject();
-  }
-  if (!data.length) {
+  const iphoneModels = iphoneModelReducer.getIn(['payload', 'iphoneModels']);
+  let categoriesData = categories;
+  let iphoneModelsData = iphoneModels;
+
+  // Category
+  if (!categoriesData.length) {
     const resp = await fetch('/api/Categories', {
       method: 'GET',
     });
-    data = await resp.json();
-    if (!data) throw new Error('Failed to load the categories.');
+    categoriesData = await resp.json();
+    if (!categoriesData) throw new Error('Failed to load the categories.');
+  }
+
+  // Iphone Model
+  if (!iphoneModelsData.length) {
+    const resp = await fetch('/api/IphoneModels', {
+      method: 'GET',
+    });
+    iphoneModelsData = await resp.json();
+    if (!iphoneModelsData) throw new Error('Failed to load the categories.');
+  }
+
+  let thisIphoneModel = model;
+  if (Immutable.Map.isMap(thisIphoneModel)) {
+    thisIphoneModel = model.toObject();
   }
   const { pageNumber, iphoneModel } = params;
   if (!thisIphoneModel) {
@@ -39,6 +54,7 @@ async function action({ fetch, params, store }) {
     store.dispatch(globalActions.setIphoneModel(thisIphoneModel));
     if (!thisIphoneModel) throw new Error('Failed to load the iphone models.');
   }
+
   const parameters = {
     pageNumber: pageNumber ? parseInt(pageNumber, 10) : 1,
     iphoneModel: {
@@ -47,15 +63,18 @@ async function action({ fetch, params, store }) {
       route: iphoneModel,
     },
   };
+
   const component = (
     <Layout
-      categories={data}
+      iphoneModels={iphoneModelsData}
+      categories={categoriesData}
     >
       <IphoneModel params={parameters} />
     </Layout>);
   return {
+    description: `Download free ${iphoneModel} Wallpapers and iPod Touch Wallpapers HD`,
     chunks: ['iphone-model'],
-    title: 'Iphone Model Page',
+    title: `Free ${iphoneModel} Wallpapers and iPod Touch Wallpapers HD`,
     component,
   };
 }

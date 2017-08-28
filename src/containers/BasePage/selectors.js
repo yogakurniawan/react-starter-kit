@@ -3,6 +3,7 @@ import { createSelector } from 'reselect';
 const wallpaper = state => state.get('wallpaper');
 const category = state => state.get('category');
 const global = state => state.get('global');
+const iphoneModel = state => state.get('iphoneModel');
 
 const selectWallpapers = () => createSelector(
   wallpaper,
@@ -49,7 +50,13 @@ const selectIphoneModel = () => createSelector(
   state => state.getIn(['payload', 'iphoneModel']),
 );
 
+const selectIphoneModels = () => createSelector(
+  iphoneModel,
+  state => state.getIn(['payload', 'iphoneModels']),
+);
+
 export {
+  selectIphoneModels,
   selectIphoneModel,
   selectSelectedIphoneModel,
   selectScreenWidth,

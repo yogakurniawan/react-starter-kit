@@ -15,9 +15,10 @@ async function action({ fetch, params, store }) {
     if (!data) throw new Error('Failed to load the categories.');
   }
   return {
+    description: `Download ${params.name} free`,
     chunks: ['wallpaper'],
-    title: 'Wallpaper Page',
-    component: <Layout showCategories={false} categories={data}>
+    title: `${params.name} - Free Download`,
+    component: <Layout showSideMenu={false} categories={data}>
       <Wallpaper params={params} />
     </Layout>,
   };

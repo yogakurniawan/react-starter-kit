@@ -12,7 +12,16 @@ import Theme from '../../utils/theme';
 
 class Layout extends React.Component {
   render() {
-    const { width, categories, showCategories, onCategoryClick, activeCategory } = this.props;
+    const {
+      iphoneModels,
+      width,
+      categories,
+      showSideMenu,
+      onCategoryClick,
+      activeCategory,
+      onIphoneModelClick,
+      activeModel,
+    } = this.props;
     const isMobileOrTablet = width <= 1024;
     const isSmallMobile = width <= 320;
     return (
@@ -25,19 +34,28 @@ class Layout extends React.Component {
           />
           <ChildrenWrapper>
             <Grid>
-              {!isMobileOrTablet && showCategories &&
+              {!isMobileOrTablet && showSideMenu &&
                 <Grid.Column mobile={16} tablet={4} computer={4}>
                   <VerticalMenu
-                    activeCategory={activeCategory}
-                    onCategoryClick={onCategoryClick}
+                    name="model"
+                    title="Choose your iPhone"
+                    activeItem={activeModel}
+                    onClick={onIphoneModelClick}
+                    menuItems={iphoneModels}
+                  />
+                  <VerticalMenu
+                    name="category"
+                    title="Categories"
+                    activeItem={activeCategory}
+                    onClick={onCategoryClick}
                     menuItems={categories}
                   />
                 </Grid.Column>}
               {!isMobileOrTablet &&
                 <Grid.Column
                   mobile={16}
-                  tablet={showCategories ? 12 : 16}
-                  computer={showCategories ? 12 : 16}
+                  tablet={showSideMenu ? 12 : 16}
+                  computer={showSideMenu ? 12 : 16}
                 >
                   {this.props.children}
                 </Grid.Column>}
@@ -53,23 +71,37 @@ class Layout extends React.Component {
 }
 
 Layout.propTypes = {
-  showCategories: PropTypes.bool,
-  width: PropTypes.number.isRequired,
+  showSideMenu: PropTypes.bool,
+  activeModel: PropTypes.string,
   activeCategory: PropTypes.string,
-  onCategoryClick: PropTypes.func.isRequired,
+  width: PropTypes.number.isRequired,
   children: PropTypes.node.isRequired,
+  onCategoryClick: PropTypes.func.isRequired,
+  onIphoneModelClick: PropTypes.func.isRequired,
   categories: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
+      id: PropTypes.string,
+      total_wallpaper: PropTypes.number,
     })),
     PropTypes.object,
+  ]),
+  iphoneModels: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string,
+      id: PropTypes.string,
+      code: PropTypes.string,
+      total_wallpaper: PropTypes.number,
+    })),
   ]),
 };
 
 Layout.defaultProps = {
+  activeModel: null,
   activeCategory: null,
   categories: null,
-  showCategories: true,
+  iphoneModels: null,
+  showSideMenu: true,
 };
 
 const enhancedLayout = Dimensions()(Layout);
