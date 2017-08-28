@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Dropdown, Input, Menu } from 'semantic-ui-react';
 import Link from '../../components/Link';
+import logoUrl from './iphonewallszone.png';
 
 class Header extends React.Component {
   constructor(props) {
@@ -19,7 +20,11 @@ class Header extends React.Component {
     return (
       <Menu color="teal" inverted size={miniHeader ? 'mini' : 'tiny'} fixed="top" stackable floated>
         <Menu.Item>
-          <h4>Logo</h4>
+          <img
+            src={logoUrl}
+            style={{ width: 230 }}
+            alt="Iphone Walls Zone"
+          />
         </Menu.Item>
         <Link
           to="/"

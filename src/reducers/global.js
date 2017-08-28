@@ -2,7 +2,6 @@ import { fromJS } from 'immutable';
 
 import {
   SET_SCREEN_SIZE,
-  SET_ACTIVE_CATEGORY,
   SET_SELECTED_IPHONE_MODEL,
   SET_IPHONE_MODEL,
   LOAD_IPHONE_MODEL,
@@ -51,9 +50,6 @@ function global(state = initialState, action) {
     case SET_SCREEN_SIZE:
       return state
         .setIn(['payload', 'width'], payload);
-    case SET_ACTIVE_CATEGORY:
-      return state
-        .setIn(['payload', 'activeCategory'], payload);
     default:
       return state;
   }

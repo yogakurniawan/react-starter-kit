@@ -6,19 +6,19 @@ import { replaceSpaceWithDash } from '../../utils/common';
 
 function WallpaperCard({ wallpaper, iphoneModels, onImageClick, onLabelClick, onClickLike }) {
   const name = wallpaper.name.length > 45 ?
-                `${wallpaper.name.substring(0, 45)} ...` : wallpaper.name;
+    `${wallpaper.name.substring(0, 45)} ...` : wallpaper.name;
   const iphoneModel = iphoneModels.find(item => item.id === wallpaper.iphoneModelId);
   const WallpaperHeader =
     wallpaper.name.length > 45 ?
-    (<Popup
-      trigger={
-        <Card.Header style={{ fontSize: '1em' }}>
-          {name}
-        </Card.Header>
-      }
-      content={wallpaper.name}
-      basic
-    />) :
+      (<Popup
+        trigger={
+          <Card.Header style={{ fontSize: '1em' }}>
+            {name}
+          </Card.Header>
+        }
+        content={wallpaper.name}
+        basic
+      />) :
       (<Card.Header style={{ fontSize: '1em' }}>
         {name}
       </Card.Header>);
@@ -49,19 +49,18 @@ function WallpaperCard({ wallpaper, iphoneModels, onImageClick, onLabelClick, on
         </div>
       </Card.Content>
       <Card.Content extra>
-        <Label.Group size="mini" color="teal">
-          {
-            <Link
-              key={Math.random()}
-              as="a"
-              onClick={onLabelClick}
-              to={`/model/${iphoneModel.meta_route}`}
-              component={Label}
-            >
-              {iphoneModel.name}
-            </Link>
-          }
-        </Label.Group>
+        <Link
+          basic
+          size="mini"
+          color="teal"
+          key={Math.random()}
+          as="a"
+          onClick={onLabelClick}
+          to={`/model/${iphoneModel.meta_route}`}
+          component={Label}
+        >
+          {iphoneModel.name}
+        </Link>
       </Card.Content>
     </Card>
   );
