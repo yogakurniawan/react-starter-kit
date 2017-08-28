@@ -42,7 +42,7 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
   }
 
   render() {
-    const { wallpapers } = this.props;
+    const { wallpapers, selectIphoneModels } = this.props;
     return (
       <Grid>
         {
@@ -64,6 +64,7 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
                 computer={5}
               >
                 <WallpaperCard
+                  iphoneModels={selectIphoneModels}
                   onClickLike={() => this.onClickLike(wallpaper)}
                   onLabelClick={() => this.onLabelClick(wallpaper)}
                   onImageClick={() => this.onImageClick(wallpaper)}
@@ -95,6 +96,16 @@ BasePage.propTypes = {
   setIphoneModel: PropTypes.func.isRequired,
   sendUpdateWallpaper: PropTypes.func.isRequired,
   getIphoneModel: PropTypes.func.isRequired,
+  selectIphoneModels: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string,
+      id: PropTypes.string,
+      code: PropTypes.string,
+      meta_route: PropTypes.string,
+      total_wallpaper: PropTypes.number,
+    })),
+    PropTypes.object,
+  ]),
   wallpapers: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
@@ -110,6 +121,7 @@ BasePage.propTypes = {
 };
 
 BasePage.defaultProps = {
+  selectIphoneModels: null,
   categoryFromRoute: null,
   categories: null,
   route: null,
@@ -127,6 +139,7 @@ const mapStateToProps = createStructuredSelector({
   wallpapers: selectors.selectWallpapers(),
   category: selectors.selectSelectedCategory(),
   categories: selectors.selectCategories(),
+  selectIphoneModels: selectors.selectIphoneModels(),
   selectedIphoneModel: selectors.selectSelectedIphoneModel(),
 });
 

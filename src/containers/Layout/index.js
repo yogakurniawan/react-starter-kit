@@ -26,11 +26,7 @@ class Layout extends Component { // eslint-disable-line react/prefer-stateless-f
     }
 
     if (!selectIphoneModels.size && iphoneModels) {
-      setIphoneModels(iphoneModels.map((item) => {
-        const model = item;
-        model.name = `${model.name}-${model.code}`;
-        return model;
-      }));
+      setIphoneModels(iphoneModels);
     }
     this.props.setScreenSize(width);
   }
@@ -44,10 +40,12 @@ class Layout extends Component { // eslint-disable-line react/prefer-stateless-f
       setSelectedCategory,
       setWallpapers,
       categories,
+      setIphoneModel,
       getWallpapersByCategory,
     } = this.props;
     const category = categories.find(item => item.id === id);
     setWallpapers([]);
+    setIphoneModel(null);
     setSelectedCategory(category);
     getWallpapersByCategory({
       page: 1,
@@ -58,12 +56,16 @@ class Layout extends Component { // eslint-disable-line react/prefer-stateless-f
   handleIphoneModelClick = ({ id }) => {
     const {
       setSelectedIphoneModel,
+      setSelectedCategory,
       setWallpapers,
       iphoneModels,
+      setIphoneModel,
       getWallpapersByIphoneModel,
     } = this.props;
     const iphoneModel = iphoneModels.find(item => item.id === id);
     setWallpapers([]);
+    setSelectedCategory(null);
+    setIphoneModel(iphoneModel);
     setSelectedIphoneModel(iphoneModel.id);
     getWallpapersByIphoneModel({
       page: 1,
@@ -102,6 +104,7 @@ Layout.propTypes = {
   children: PropTypes.node.isRequired,
   setWallpapers: PropTypes.func.isRequired,
   setScreenSize: PropTypes.func.isRequired,
+  setIphoneModel: PropTypes.func.isRequired,
   setIphoneModels: PropTypes.func.isRequired,
   setSelectedCategory: PropTypes.func.isRequired,
   loadCategoriesSuccess: PropTypes.func.isRequired,
@@ -121,6 +124,7 @@ Layout.propTypes = {
       name: PropTypes.string,
       id: PropTypes.string,
       code: PropTypes.string,
+      meta_route: PropTypes.string,
       total_wallpaper: PropTypes.number,
     })),
     PropTypes.object,
@@ -130,6 +134,7 @@ Layout.propTypes = {
       name: PropTypes.string,
       id: PropTypes.string,
       code: PropTypes.string,
+      meta_route: PropTypes.string,
       total_wallpaper: PropTypes.number,
     })),
     PropTypes.object,
@@ -148,6 +153,7 @@ Layout.propTypes = {
   }),
   iphoneModel: PropTypes.shape({
     name: PropTypes.string,
+    meta_route: PropTypes.string,
     total_wallpaper: PropTypes.number,
     code: PropTypes.string,
     id: PropTypes.string,
@@ -161,6 +167,7 @@ Layout.defaultProps = {
   iphoneModel: null,
   categories: null,
   iphoneModels: null,
+  setIphoneModel: null,
   selectIphoneModels: null,
   showSideMenu: true,
 };
@@ -169,6 +176,7 @@ const mapDispatchToProps = {
   setPage: wallpaperActions.setPage,
   setScreenSize: globalActions.setScreenSize,
   setWallpapers: wallpaperActions.setWallpapers,
+  setIphoneModel: globalActions.setIphoneModel,
   setIphoneModels: iphoneModelActions.setIphoneModels,
   getCategoryByName: categoryActions.getCategoryByName,
   setSelectedCategory: categoryActions.setSelectedCategory,
@@ -182,7 +190,7 @@ const mapStateToProps = createStructuredSelector({
   selectCategories: selectors.selectCategories(),
   selectIphoneModels: selectors.selectIphoneModels(),
   category: selectors.selectSelectedCategory(),
-  iphoneModel: selectors.selectSelectedIphoneModel(),
+  iphoneModel: selectors.selectIphoneModel(),
 });
 
 const enhancedLayout = Dimensions()(Layout);

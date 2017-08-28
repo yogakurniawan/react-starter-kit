@@ -1,16 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Popup, Card, Label, Icon, Image } from 'semantic-ui-react';
-import {
-  IPHONE_MODELS,
-} from 'constants/index';
 import Link from '../../components/Link';
 import { replaceSpaceWithDash } from '../../utils/common';
 
-function WallpaperCard({ wallpaper, onImageClick, onLabelClick, onClickLike }) {
-  const iphoneModels = IPHONE_MODELS[wallpaper.iphoneModelId];
+function WallpaperCard({ wallpaper, iphoneModels, onImageClick, onLabelClick, onClickLike }) {
   const name = wallpaper.name.length > 45 ?
                 `${wallpaper.name.substring(0, 45)} ...` : wallpaper.name;
+  const iphoneModel = iphoneModels.find(item => item.id === wallpaper.iphoneModelId);
   const WallpaperHeader =
     wallpaper.name.length > 45 ?
     (<Popup
@@ -54,17 +51,15 @@ function WallpaperCard({ wallpaper, onImageClick, onLabelClick, onClickLike }) {
       <Card.Content extra>
         <Label.Group size="mini" color="teal">
           {
-            iphoneModels.map(model => (
-              <Link
-                key={Math.random()}
-                as="a"
-                onClick={onLabelClick}
-                to={`/model/${replaceSpaceWithDash(model)}-${wallpaper.code}`}
-                component={Label}
-              >
-                {model}
-              </Link>
-            ))
+            <Link
+              key={Math.random()}
+              as="a"
+              onClick={onLabelClick}
+              to={`/model/${iphoneModel.meta_route}`}
+              component={Label}
+            >
+              {iphoneModel.name}
+            </Link>
           }
         </Label.Group>
       </Card.Content>
@@ -73,6 +68,15 @@ function WallpaperCard({ wallpaper, onImageClick, onLabelClick, onClickLike }) {
 }
 
 WallpaperCard.propTypes = {
+  iphoneModels: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string,
+      id: PropTypes.string,
+      code: PropTypes.string,
+      meta_route: PropTypes.string,
+      total_wallpaper: PropTypes.number,
+    })),
+  ]),
   wallpaper: PropTypes.shape({
     name: PropTypes.string,
     thumbnail: PropTypes.string,
@@ -87,6 +91,7 @@ WallpaperCard.propTypes = {
 };
 
 WallpaperCard.defaultProps = {
+  iphoneModels: null,
   onImageClick: null,
   onLabelClick: null,
   onClickLike: null,

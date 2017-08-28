@@ -7,7 +7,6 @@ import * as globalActions from '../../actions/global';
 async function action({ fetch, params, store }) {
   const state = store.getState();
   const globalReducer = state.get('global');
-  const modelId = globalReducer.getIn(['payload', 'selectedIphoneModel']);
   const model = globalReducer.getIn(['payload', 'iphoneModel']);
   const categoryReducer = state.get('category');
   const iphoneModelReducer = state.get('iphoneModel');
@@ -39,27 +38,20 @@ async function action({ fetch, params, store }) {
     thisIphoneModel = model.toObject();
   }
   const { pageNumber, iphoneModel } = params;
-  if (!thisIphoneModel) {
-    let url = `/api/IphoneModels/${modelId}`;
-    if (!modelId) {
-      url = `/api/IphoneModels?filter[where][code]=${iphoneModel.substring(iphoneModel.lastIndexOf('-') + 1)}`;
-    }
-    const resp = await fetch(url, {
-      method: 'GET',
-    });
-    thisIphoneModel = await resp.json();
-    if (Array.isArray(thisIphoneModel)) {
-      thisIphoneModel = thisIphoneModel[0];
-    }
-    store.dispatch(globalActions.setIphoneModel(thisIphoneModel));
-    if (!thisIphoneModel) throw new Error('Failed to load the iphone models.');
+  const url = `/api/IphoneModels?filter[where][meta_route]=${iphoneModel}`;
+  const resp = await fetch(url, {
+    method: 'GET',
+  });
+  thisIphoneModel = await resp.json();
+  if (Array.isArray(thisIphoneModel)) {
+    thisIphoneModel = thisIphoneModel[0];
   }
-
+  store.dispatch(globalActions.setIphoneModel(thisIphoneModel));
+  if (!thisIphoneModel) throw new Error('Failed to load the iphone models.');
   const parameters = {
     pageNumber: pageNumber ? parseInt(pageNumber, 10) : 1,
     iphoneModel: {
-      total: thisIphoneModel.total_wallpaper,
-      name: thisIphoneModel.name,
+      ...thisIphoneModel,
       route: iphoneModel,
     },
   };

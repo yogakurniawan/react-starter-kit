@@ -19,7 +19,6 @@ const initialState = fromJS({
   },
   payload: {
     width: null,
-    activeCategory: null,
     selectedIphoneModel: null,
     iphoneModel: null,
   },

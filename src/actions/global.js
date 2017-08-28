@@ -1,6 +1,5 @@
 import {
   SET_SCREEN_SIZE,
-  SET_ACTIVE_CATEGORY,
   SET_SELECTED_IPHONE_MODEL,
   SET_IPHONE_MODEL,
   LOAD_IPHONE_MODEL,
@@ -19,17 +18,10 @@ export function setScreenSize(width) {
   };
 }
 
-export function setActiveCategory(category) {
-  return {
-    type: SET_ACTIVE_CATEGORY,
-    payload: category,
-  };
-}
-
-export function setSelectedIphoneModel(model) {
+export function setSelectedIphoneModel(id) {
   return {
     type: SET_SELECTED_IPHONE_MODEL,
-    payload: model,
+    payload: id,
   };
 }
 

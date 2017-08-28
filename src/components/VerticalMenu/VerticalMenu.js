@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Menu, Header, Label } from 'semantic-ui-react';
-import { replaceSpaceWithDash } from '../../utils/common';
 import Link from '../../components/Link';
 
 export default class VerticalMenu extends Component {
@@ -13,7 +12,7 @@ export default class VerticalMenu extends Component {
   };
 
   render() {
-    const { menuItems, activeItem, title, name } = this.props;
+    const { menuItems, activeItem, metaRoute, title, name } = this.props;
     if (!menuItems.length) {
       return (
         <Menu vertical>
@@ -32,7 +31,7 @@ export default class VerticalMenu extends Component {
           {
             menuItems.map(item => (
               <Link
-                to={`/${name}/${replaceSpaceWithDash(item.name)}`}
+                to={`/${name}/${item[metaRoute]}`}
                 key={item.name}
                 data-id={item.id}
                 active={activeItem === item.name}
@@ -59,6 +58,7 @@ export default class VerticalMenu extends Component {
 
 VerticalMenu.propTypes = {
   name: PropTypes.string,
+  metaRoute: PropTypes.string,
   title: PropTypes.string,
   activeItem: PropTypes.string,
   onClick: PropTypes.func.isRequired,
@@ -71,6 +71,7 @@ VerticalMenu.propTypes = {
 };
 
 VerticalMenu.defaultProps = {
+  metaRoute: null,
   menuItems: [],
   title: null,
   name: null,

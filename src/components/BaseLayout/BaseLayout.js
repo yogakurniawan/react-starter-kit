@@ -38,6 +38,7 @@ class Layout extends React.Component {
                 <Grid.Column mobile={16} tablet={4} computer={4}>
                   <VerticalMenu
                     name="model"
+                    metaRoute="meta_route"
                     title="Choose your iPhone"
                     activeItem={activeModel}
                     onClick={onIphoneModelClick}
@@ -45,6 +46,7 @@ class Layout extends React.Component {
                   />
                   <VerticalMenu
                     name="category"
+                    metaRoute="name"
                     title="Categories"
                     activeItem={activeCategory}
                     onClick={onCategoryClick}
@@ -91,6 +93,7 @@ Layout.propTypes = {
       name: PropTypes.string,
       id: PropTypes.string,
       code: PropTypes.string,
+      meta_route: PropTypes.string,
       total_wallpaper: PropTypes.number,
     })),
   ]),

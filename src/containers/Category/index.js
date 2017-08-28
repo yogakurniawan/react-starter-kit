@@ -6,6 +6,7 @@ import { Grid, Header } from 'semantic-ui-react';
 import * as wallpaperActions from 'actions/wallpaper';
 import Pagination from '../../components/Pagination';
 import { PER_PAGE } from '../../constants/index';
+import * as globalActions from '../../actions/global';
 import BasePage from '../BasePage';
 import * as selectors from '../BasePage/selectors';
 
@@ -23,10 +24,12 @@ class Category extends Component { // eslint-disable-line react/prefer-stateless
       setTotalWallpaper,
       params,
       getWallpapersByCategory,
+      setIphoneModel,
     } = this.props;
     const { page } = this.state;
     const thisCategory = params.category;
     setTotalWallpaper(thisCategory.total);
+    setIphoneModel(null);
     getWallpapersByCategory({
       page,
       category: thisCategory,
@@ -102,6 +105,7 @@ class Category extends Component { // eslint-disable-line react/prefer-stateless
 Category.propTypes = {
   total: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
+  setIphoneModel: PropTypes.func.isRequired,
   getWallpapersByCategory: PropTypes.func.isRequired,
   setTotalWallpaper: PropTypes.func.isRequired,
   params: PropTypes.shape({
@@ -127,6 +131,7 @@ Category.defaultProps = {
 };
 
 const mapDispatchToProps = {
+  setIphoneModel: globalActions.setIphoneModel,
   setPage: wallpaperActions.setPage,
   getWallpapersByCategory: wallpaperActions.getWallpapersByCategory,
   setTotalWallpaper: wallpaperActions.setTotalWallpaper,

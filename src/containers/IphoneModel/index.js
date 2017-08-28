@@ -6,7 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { Grid, Header } from 'semantic-ui-react';
 import * as wallpaperActions from 'actions/wallpaper';
 import * as categoryActions from '../../actions/category';
-import { setSelectedIphoneModel } from '../../actions/global';
+import * as globalActions from '../../actions/global';
 import { replaceDashWithSpace } from '../../utils/common';
 import Pagination from '../../components/Pagination';
 import { PER_PAGE } from '../../constants/index';
@@ -18,6 +18,7 @@ class IphoneModel extends Component { // eslint-disable-line react/prefer-statel
     const { params } = props;
     super(props);
     this.state = {
+      metaRoute: params.iphoneModel.meta_route,
       page: params.pageNumber,
     };
   }
@@ -28,16 +29,13 @@ class IphoneModel extends Component { // eslint-disable-line react/prefer-statel
       params,
       getWallpapersByIphoneModel,
       selectedIphoneModel,
-      setIphoneModel,
+      setSelectedIphoneModel,
       selectIphoneModel,
       setSelectedCategory,
     } = this.props;
     const { iphoneModel, pageNumber } = params;
-    let modelId = selectedIphoneModel;
-    if (!modelId) {
-      const route = iphoneModel.route;
-      modelId = route.substring(route.lastIndexOf('-') + 1);
-      setIphoneModel(modelId);
+    if (!selectedIphoneModel) {
+      setSelectedIphoneModel(iphoneModel.id);
     }
 
     let thisIphoneModel = selectIphoneModel;
@@ -47,7 +45,7 @@ class IphoneModel extends Component { // eslint-disable-line react/prefer-statel
     setTotalWallpaper(thisIphoneModel.total_wallpaper);
     getWallpapersByIphoneModel({
       page: pageNumber,
-      modelId,
+      modelId: iphoneModel.id,
     });
     setSelectedCategory(null);
   }
@@ -66,12 +64,15 @@ class IphoneModel extends Component { // eslint-disable-line react/prefer-statel
     if (thisIphoneModel) {
       setTotalWallpaper(thisIphoneModel.total_wallpaper);
     }
-    if (params.pageNumber !== this.state.page) {
+
+    if (params.pageNumber !== this.state.page
+        || params.iphoneModel.meta_route !== this.state.metaRoute) {
       getWallpapersByIphoneModel({
         page: params.pageNumber,
         modelId: selectIphoneModel.id,
       });
       this.setState({ page: params.pageNumber });
+      this.setState({ metaRoute: params.iphoneModel.meta_route });
     }
   }
 
@@ -127,13 +128,14 @@ IphoneModel.propTypes = {
   selectIphoneModel: PropTypes.shape({
     name: PropTypes.string,
     total_wallpaper: PropTypes.number,
+    meta_route: PropTypes.string,
     code: PropTypes.string,
     id: PropTypes.string,
   }),
   selectedIphoneModel: PropTypes.string,
   getWallpapersByIphoneModel: PropTypes.func.isRequired,
   setTotalWallpaper: PropTypes.func.isRequired,
-  setIphoneModel: PropTypes.func.isRequired,
+  setSelectedIphoneModel: PropTypes.func.isRequired,
   params: PropTypes.shape({
     category: PropTypes.object,
     pageNumber: PropTypes.number,
@@ -161,7 +163,7 @@ IphoneModel.defaultProps = {
 
 const mapDispatchToProps = {
   setSelectedCategory: categoryActions.setSelectedCategory,
-  setIphoneModel: setSelectedIphoneModel,
+  setSelectedIphoneModel: globalActions.setSelectedIphoneModel,
   setPage: wallpaperActions.setPage,
   getWallpapersByIphoneModel: wallpaperActions.getWallpapersByIphoneModel,
   setTotalWallpaper: wallpaperActions.setTotalWallpaper,
