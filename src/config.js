@@ -20,6 +20,6 @@ module.exports = {
   // Web analytics
   analytics: {
     // https://analytics.google.com/
-    googleTrackingId: process.env.GOOGLE_TRACKING_ID, // UA-XXXXX-X
+    googleTrackingId: process.env.GOOGLE_TRACKING_ID || 'UA-97981820-3', // UA-XXXXX-X
   },
 };
