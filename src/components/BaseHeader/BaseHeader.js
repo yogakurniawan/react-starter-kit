@@ -8,6 +8,7 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      display: false,
       activeItem: '',
     };
   }
@@ -16,7 +17,7 @@ class Header extends React.Component {
 
   render() {
     const { miniHeader, categories, isMobileOrTablet } = this.props;
-    const { activeItem } = this.state;
+    const { activeItem, display } = this.state;
     return (
       <Menu color="teal" inverted size={miniHeader ? 'mini' : 'tiny'} fixed="top" stackable floated>
         <Menu.Item>
@@ -33,12 +34,14 @@ class Header extends React.Component {
         >
           Home
         </Link>
-        <Menu.Item
-          name="MyCollection"
-          active={activeItem === 'MyCollection'}
-          content="My Collection"
-          onClick={this.handleItemClick}
-        />
+        {
+          display && <Menu.Item
+            name="MyCollection"
+            active={activeItem === 'MyCollection'}
+            content="My Collection"
+            onClick={this.handleItemClick}
+          />
+        }
         {isMobileOrTablet &&
           <Dropdown scrolling item text="Category">
             <Dropdown.Menu>
@@ -50,18 +53,23 @@ class Header extends React.Component {
             </Dropdown.Menu>
           </Dropdown>
         }
-        <Dropdown item text="Top Wallpapers">
-          <Dropdown.Menu>
-            <Dropdown.Item>Top Liked</Dropdown.Item>
-            <Dropdown.Item>Top Viewed</Dropdown.Item>
-            <Dropdown.Item>Top Downloaded</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-        <Menu.Menu>
-          <Menu.Item>
-            <Input icon="search" placeholder="Search..." />
-          </Menu.Item>
-        </Menu.Menu>
+        {
+          display && <Dropdown item text="Top Wallpapers">
+            <Dropdown.Menu>
+              <Dropdown.Item>Top Liked</Dropdown.Item>
+              <Dropdown.Item>Top Viewed</Dropdown.Item>
+              <Dropdown.Item>Top Downloaded</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        }
+        {
+          display &&
+          <Menu.Menu>
+            <Menu.Item>
+              <Input icon="search" placeholder="Search..." />
+            </Menu.Item>
+          </Menu.Menu>
+        }
       </Menu>
     );
   }

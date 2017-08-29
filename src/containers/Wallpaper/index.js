@@ -160,9 +160,10 @@ class Wallpaper extends Component { // eslint-disable-line react/prefer-stateles
               </Button>
             </Grid.Column>
           </Grid.Row>
-          <Grid.Row>
-            <Grid.Column width={16}>
+          <Grid.Row centered>
+            <Grid.Column width={4}>
               <Card
+                fluid
                 centered
                 raised
                 image={wallpaper.original}

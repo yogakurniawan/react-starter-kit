@@ -61,7 +61,7 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
                 mobile={16}
                 tablet={5}
                 key={wallpaper.id}
-                computer={5}
+                computer={4}
               >
                 <WallpaperCard
                   iphoneModels={iphoneModels}
