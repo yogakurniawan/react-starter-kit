@@ -5,12 +5,13 @@ import Link from '../../components/Link';
 import { replaceSpaceWithDash } from '../../utils/common';
 
 function WallpaperCard({ wallpaper, iphoneModels, onImageClick, onLabelClick, onClickLike }) {
-  const name = wallpaper.name.length > 45 ?
-    `${wallpaper.name.substring(0, 45)} ...` : wallpaper.name;
+  const name = wallpaper.name.length > 40 ?
+    `${wallpaper.name.substring(0, 40)} ...` : wallpaper.name;
   const iphoneModel = iphoneModels.find(item => item.id === wallpaper.iphoneModelId);
   const WallpaperHeader =
-    wallpaper.name.length > 45 ?
+    wallpaper.name.length > 40 ?
       (<Popup
+        inverted
         trigger={
           <Card.Header style={{ fontSize: '1em' }}>
             {name}
@@ -35,10 +36,18 @@ function WallpaperCard({ wallpaper, iphoneModels, onImageClick, onLabelClick, on
         {WallpaperHeader}
       </Card.Content>
       <Card.Content extra>
-        <a>
-          <Icon name="like" onClick={onClickLike} />
-          {`${wallpaper.total_like}`}
-        </a>
+        <Popup
+          trigger={
+            <a>
+              <Icon name="like" onClick={onClickLike} />
+              {`${wallpaper.total_like}`}
+            </a>
+          }
+          inverted
+          size="mini"
+          content="Like"
+          position="top center"
+        />
         <div style={{ float: 'right' }}>
           <span style={{ marginRight: 10 }}>
             {`${wallpaper.total_download}`} Downloads
@@ -56,10 +65,10 @@ function WallpaperCard({ wallpaper, iphoneModels, onImageClick, onLabelClick, on
           key={Math.random()}
           as="a"
           onClick={onLabelClick}
-          to={`/model/${iphoneModel.meta_route}`}
+          to={`/model/${iphoneModel && iphoneModel.meta_route}`}
           component={Label}
         >
-          {iphoneModel.name}
+          {iphoneModel && iphoneModel.name}
         </Link>
       </Card.Content>
     </Card>

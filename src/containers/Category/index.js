@@ -82,7 +82,7 @@ class Category extends Component { // eslint-disable-line react/prefer-stateless
             </Grid.Column>
           </Grid.Row>
         </Grid>
-        <BasePage />
+        <BasePage iphoneModels={params.iphoneModels} />
         <Grid>
           {wallpapers.length > 0 && <Grid.Row columns={1}>
             <Grid.Column textAlign="center">

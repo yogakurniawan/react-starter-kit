@@ -32,6 +32,7 @@ async function action({ fetch, params, store }) {
   const { pageNumber } = params;
   const parameters = {
     pageNumber: pageNumber ? parseInt(pageNumber, 10) : 1,
+    iphoneModels: iphoneModelsData,
   };
   const component = (
     <Layout

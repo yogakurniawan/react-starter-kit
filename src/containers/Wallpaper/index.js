@@ -56,6 +56,17 @@ class Wallpaper extends Component { // eslint-disable-line react/prefer-stateles
     saveItem('selectedWallpaper', { ...selectedWallpaper, ...newWallpaper });
   }
 
+  onClickLike = (wallpaper) => {
+    const { sendUpdateWallpaper } = this.props;
+    const totalLike = wallpaper.total_like + 1;
+    const newWallpaper = { ...wallpaper, total_like: totalLike };
+    sendUpdateWallpaper({
+      id: wallpaper.id,
+      total_like: totalLike,
+    });
+    saveItem('selectedWallpaper', newWallpaper);
+  }
+
   download = (url) => {
     const { sendUpdateWallpaper } = this.props;
     const wallpaper = loadItem('selectedWallpaper');
@@ -104,8 +115,42 @@ class Wallpaper extends Component { // eslint-disable-line react/prefer-stateles
           </Grid.Row>
           <Grid.Row centered>
             <Grid.Column width={12} textAlign="center">
-              <Icon link circular name="like" />
-              {`${wallpaper.total_like}`}
+              <span style={{ marginRight: 20 }}>
+                <Popup
+                  trigger={<Icon onClick={() => this.onClickLike(wallpaper)} link circular name="like" />}
+                  inverted
+                  size="mini"
+                  content="Like"
+                  position="top center"
+                />
+                <Popup
+                  trigger={<span>{`${wallpaper.total_like}`}</span>}
+                  inverted
+                  size="mini"
+                  content="Total Like"
+                  position="top center"
+                />
+              </span>
+              <span style={{ marginRight: 20 }}>
+                <Icon circular name="eye" />
+                <Popup
+                  trigger={<span>{`${wallpaper.total_view}`}</span>}
+                  inverted
+                  size="mini"
+                  content="Total View"
+                  position="top center"
+                />
+              </span>
+              <span>
+                <Icon circular name="cloud download" />
+                <Popup
+                  trigger={<span>{`${wallpaper.total_download}`}</span>}
+                  inverted
+                  size="mini"
+                  content="Total View"
+                  position="top center"
+                />
+              </span>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row centered>
@@ -149,6 +194,7 @@ class Wallpaper extends Component { // eslint-disable-line react/prefer-stateles
                   computer={3}
                 >
                   <Popup
+                    inverted
                     position="bottom center"
                     trigger={
                       <Link

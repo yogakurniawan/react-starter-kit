@@ -54,7 +54,7 @@ class Home extends Component { // eslint-disable-line react/prefer-stateless-fun
   }
 
   render() {
-    const { total, width, wallpapers } = this.props;
+    const { total, width, wallpapers, params } = this.props;
     const { page } = this.state;
     return (
       <div>
@@ -65,7 +65,7 @@ class Home extends Component { // eslint-disable-line react/prefer-stateless-fun
             </Grid.Column>
           </Grid.Row>
         </Grid>
-        <BasePage />
+        <BasePage iphoneModels={params.iphoneModels} />
         <Grid>
           {wallpapers.length > 0 && <Grid.Row columns={1}>
             <Grid.Column textAlign="center">

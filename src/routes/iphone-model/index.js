@@ -54,6 +54,7 @@ async function action({ fetch, params, store }) {
       ...thisIphoneModel,
       route: iphoneModel,
     },
+    iphoneModels: iphoneModelsData,
   };
 
   const component = (
@@ -64,9 +65,9 @@ async function action({ fetch, params, store }) {
       <IphoneModel params={parameters} />
     </Layout>);
   return {
-    description: `Download free ${iphoneModel} Wallpapers and iPod Touch Wallpapers HD`,
+    description: `Download free ${thisIphoneModel.name} Wallpapers and iPod Touch Wallpapers HD`,
     chunks: ['iphone-model'],
-    title: `Free ${iphoneModel} Wallpapers and iPod Touch Wallpapers HD`,
+    title: `Free ${thisIphoneModel.name} Wallpapers and iPod Touch Wallpapers HD`,
     component,
   };
 }

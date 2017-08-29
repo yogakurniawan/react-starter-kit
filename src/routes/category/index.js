@@ -38,6 +38,7 @@ async function action({ fetch, params, store }) {
       name: category,
       id: selectedCategory.id,
     },
+    iphoneModels: iphoneModelsData,
   };
   const component = (
     <Layout
