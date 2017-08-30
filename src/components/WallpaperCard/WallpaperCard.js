@@ -24,7 +24,7 @@ function WallpaperCard({ wallpaper, iphoneModels, onImageClick, onLabelClick, on
         {name}
       </Card.Header>);
   return (
-    <Card>
+    <Card centered fluid>
       <Link
         as="a"
         src={wallpaper.thumbnail}
