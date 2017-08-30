@@ -1,6 +1,7 @@
 import React from 'react';
 import Layout from '../../containers/Layout';
 import Wallpaper from '../../containers/Wallpaper';
+import { replaceDashWithSpace } from '../../utils/common';
 
 async function action({ fetch, params, store }) {
   const state = store.getState();
@@ -15,9 +16,9 @@ async function action({ fetch, params, store }) {
     if (!data) throw new Error('Failed to load the categories.');
   }
   return {
-    description: `Download ${params.name} free`,
+    description: `Download ${replaceDashWithSpace(params.name)} free`,
     chunks: ['wallpaper'],
-    title: `${params.name} - Free Download`,
+    title: `${replaceDashWithSpace(params.name)} - Free Download`,
     component: <Layout showSideMenu={false} categories={data}>
       <Wallpaper params={params} />
     </Layout>,

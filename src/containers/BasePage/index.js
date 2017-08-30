@@ -42,11 +42,13 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
   }
 
   render() {
-    const { wallpapers, iphoneModels } = this.props;
+    const { wallpapers, iphoneModels, params } = this.props;
+    const wallpapersFromParam = params ? params.wallpapers : [];
+    const theWallpapers = wallpapers.length ? wallpapers : wallpapersFromParam;
     return (
       <Grid>
         {
-          !wallpapers.length &&
+          !theWallpapers.length &&
           <Loader
             active
             style={{ marginTop: '50vh' }}
@@ -55,10 +57,10 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
         }
         <Grid.Row centered>
           {
-            wallpapers.map(wallpaper => (
+            theWallpapers.map(wallpaper => (
               <Grid.Column
                 style={{ marginBottom: 15 }}
-                mobile={16}
+                mobile={14}
                 tablet={5}
                 key={wallpaper.id}
                 computer={5}
@@ -80,6 +82,9 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
 }
 
 BasePage.propTypes = {
+  params: PropTypes.shape({
+    pageNumber: PropTypes.number,
+  }),
   categories: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
@@ -121,6 +126,7 @@ BasePage.propTypes = {
 };
 
 BasePage.defaultProps = {
+  params: null,
   iphoneModels: null,
   categoryFromRoute: null,
   categories: null,

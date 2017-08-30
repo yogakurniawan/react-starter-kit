@@ -65,7 +65,10 @@ class Home extends Component { // eslint-disable-line react/prefer-stateless-fun
             </Grid.Column>
           </Grid.Row>
         </Grid>
-        <BasePage iphoneModels={params.iphoneModels} />
+        <BasePage
+          params={params}
+          iphoneModels={params.iphoneModels}
+        />
         <Grid>
           {wallpapers.length > 0 && <Grid.Row columns={1}>
             <Grid.Column textAlign="center">
