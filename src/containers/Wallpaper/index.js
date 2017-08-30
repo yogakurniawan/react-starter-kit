@@ -161,7 +161,7 @@ class Wallpaper extends Component { // eslint-disable-line react/prefer-stateles
             </Grid.Column>
           </Grid.Row>
           <Grid.Row centered>
-            <Grid.Column width={4}>
+            <Grid.Column mobile={16} tablet={8} computer={4}>
               <Card
                 fluid
                 centered

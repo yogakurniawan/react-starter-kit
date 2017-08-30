@@ -53,7 +53,7 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
             inline="centered"
           />
         }
-        <Grid.Row>
+        <Grid.Row centered>
           {
             wallpapers.map(wallpaper => (
               <Grid.Column
@@ -61,7 +61,7 @@ class BasePage extends Component { // eslint-disable-line react/prefer-stateless
                 mobile={16}
                 tablet={5}
                 key={wallpaper.id}
-                computer={4}
+                computer={5}
               >
                 <WallpaperCard
                   iphoneModels={iphoneModels}

@@ -47,7 +47,14 @@ class Header extends React.Component {
             <Dropdown.Menu>
               {
                 categories && categories.map(category => (
-                  <Dropdown.Item key={Math.random()}>{category.name}</Dropdown.Item>
+                  <Link
+                    as="a"
+                    to={`/category/${category.name}`}
+                    key={Math.random()}
+                    component={Dropdown.Item}
+                  >
+                    {category.name}
+                  </Link>
                 ))
               }
             </Dropdown.Menu>
