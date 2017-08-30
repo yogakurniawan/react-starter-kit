@@ -31,6 +31,7 @@ class Html extends React.Component {
           <meta charSet="utf-8" />
           <meta httpEquiv="x-ua-compatible" content="ie=edge" />
           <title>{title}</title>
+          <meta name="google-site-verification" content="FTBhgLUyRcmYTRn7Z1hv9g9VlnYHY4U9XFhxhWJ5084" />
           <meta name="apple-mobile-web-app-title" content="iPhoneWallsZone" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="description" content={description} />
