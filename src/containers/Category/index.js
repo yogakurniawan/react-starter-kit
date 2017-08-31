@@ -16,6 +16,7 @@ class Category extends Component { // eslint-disable-line react/prefer-stateless
     super(props);
     this.state = {
       page: params.pageNumber,
+      category: '',
     };
   }
 
@@ -42,17 +43,18 @@ class Category extends Component { // eslint-disable-line react/prefer-stateless
       params,
       getWallpapersByCategory,
     } = props;
-    const { page } = this.state;
-    this.setState({ page: parseInt(page, 10) });
     const thisCategory = params.category;
     setTotalWallpaper(thisCategory.total);
-    this.setState({ page: params.pageNumber });
-    if (params.pageNumber !== this.state.page) {
+    this.setState({
+      page: params.pageNumber,
+      category: thisCategory.name,
+    });
+    if (params.pageNumber !== this.state.page
+        || thisCategory.name !== this.state.category) {
       getWallpapersByCategory({
         page: params.pageNumber,
         category: thisCategory,
       });
-      this.setState({ page: params.pageNumber });
     }
   }
 
