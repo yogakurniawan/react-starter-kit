@@ -1,0 +1,47 @@
+.h1 {
+  color: #dd5555;
+  font-weight: normal;
+}
+
+.p {
+  font-size: 18px;
+  font-weight: 300;
+  text-align: center;
+}
+
+.wrapper {
+  margin: 10px auto;
+}
+
+@media (max-width: 360px) {
+  .wrapper h1 {
+    font-size: 1.5em;
+  }
+  .wrapper p {
+    font-size: 0.85em;
+  }
+}
+
+@media (max-width: 414px) {
+  .wrapper svg {
+    margin-bottom: 8px;
+    height: 18px;
+  }
+  .wrapper h1 {
+    font-size: 1.6em;
+  }
+  .wrapper p {
+    font-size: 17px;
+  }
+}
+
+.wrapper svg {
+  cursor: pointer;
+  color: #dd5555;
+  margin-bottom: 11px;
+  margin-right: 7px;
+}
+
+.wrapper span {
+  display: inline-block;
+}

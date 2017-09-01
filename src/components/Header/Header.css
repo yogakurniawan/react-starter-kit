@@ -1,28 +1,3 @@
-/**
- * React Starter Kit (https://www.reactstarterkit.com/)
- *
- * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
-@import '../variables.css';
-:root {
-  --brand-color: #61dafb;
-}
-
-.root {
-  background: #373277;
-  color: #fff;
-}
-
-.container {
-  margin: 0 auto;
-  padding: 20px 0;
-  max-width: var(--max-content-width);
-}
-
 .fixedHeaderContainer {
   box-sizing: border-box;
   background: #dd5555;
@@ -119,6 +94,9 @@
 }
 
 @media only screen and (min-width: 1024px) {
+  .liWrapper {
+    flex: 0.3;
+  }
   .liWrapper a {
     border: 0;
     color: #e8e8e8;
@@ -163,7 +141,7 @@
   position: absolute;
   top: 15px;
   right: 10px;
-  flex: 3 !important;
+  flex: 2 !important;
   width: 50%;
 }
 
@@ -172,6 +150,85 @@
     position: relative;
     top: auto;
     right: auto;
-    padding-left: 10px;
   }
+}
+
+.autoSuggestWrapper {
+  width: 100%;
+}
+
+.autoSuggestWrapper .react-autosuggest__container {
+  position: relative;
+}
+
+.autoSuggestWrapper .react-autosuggest__suggestions-container {
+  display: none;
+}
+
+.autoSuggestWrapper .react-autosuggest__container--open .react-autosuggest__input {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.autoSuggestWrapper .react-autosuggest__suggestions-container--open {
+  display: block;
+  position: relative;
+  background-color: #f9f9f9;
+  font-weight: 300;
+  font-size: 0.875em;
+  color: #2c3e50;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  z-index: 2;
+}
+
+.autoSuggestWrapper .react-autosuggest__suggestions-list {
+  margin: 0;
+  padding: 0;
+  color: #2c3e50;
+  border: 1px solid #bdc3c7;
+  border-top: none;
+  list-style-type: none;
+}
+
+.autoSuggestWrapper .react-autosuggest__suggestion {
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+.autoSuggestWrapper .react-autosuggest__suggestion--highlighted {
+  background-color: rgba(189, 195, 199, 0.31);
+}
+
+.autoSuggestWrapper input {
+  border: 1px solid #bdc3c7;
+  border-bottom: none;
+  color: #2c3e50;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  padding: 5px 0;
+  padding-left: 10px;
+  line-height: 1.4;
+  font-size: 14px;
+  width: 97%;
+  outline: 0;
+  box-shadow: none;
+}
+
+.inputGroupButton {
+  color: #bdc3c7;
+  position: absolute;
+  padding: 7px;
+  pointer-events: none;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1;
+  display: inline-block;
+  right: 5px;
+  top: -1px;
+}
+
+.thumbnail {
+  width: 10%;
+  margin: 0;
+  display: inline;
 }
